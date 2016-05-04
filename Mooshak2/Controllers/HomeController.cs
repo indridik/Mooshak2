@@ -12,7 +12,6 @@ namespace Mooshak2.Controllers
     {
         public ActionResult Index()
         {
-                
             return View();
         }
 
