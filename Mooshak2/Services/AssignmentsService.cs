@@ -39,8 +39,6 @@ namespace Mooshak2.Services
             }
 
             return viewModel;
-            // TODO:
-            return null;
         }
 
         public AssignmentViewModel GetAssignmentByID(int assignmentID)
