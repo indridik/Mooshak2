@@ -16,3 +16,4 @@ namespace Mooshak2.Models.ViewModels
         /// </summary>
         public string FullName { get; set; }
     }
+}
