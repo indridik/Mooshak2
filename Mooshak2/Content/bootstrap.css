@@ -30,6 +30,13 @@
     border-radius: 25px;
 }
 
+#tab{
+   display: inline;
+   float: right;
+   text-align: right;
+}
+
+
 article,
 aside,
 details,
