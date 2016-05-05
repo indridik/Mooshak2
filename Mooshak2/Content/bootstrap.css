@@ -35,6 +35,12 @@
    float: right;
    text-align: right;
 }
+#tableMembers{
+    font-style: italic;
+    font-size: 16px;
+    border-color: white;
+    border-style: none;
+}
 
 
 article,

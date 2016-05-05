@@ -21,13 +21,10 @@ namespace Mooshak2.Models.Entities
         /// </summary>
         public int AssignmentID { get; set; }
 
-
-
         /// <summary>
         /// nafnið á liðinn
         /// </summary>
         public string Title { get; set; }
-
 
         /// <summary>
         /// reppar vægi þessa liðs. T.d. 15% væri 15. (Passa að það stemmi þá uppí 100)

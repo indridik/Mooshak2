@@ -24,7 +24,7 @@ namespace Mooshak2.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Hópmeðlimir.";
 
             return View();
         }
