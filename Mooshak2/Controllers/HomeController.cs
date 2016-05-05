@@ -17,7 +17,7 @@ namespace Mooshak2.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "Mooshak 2.0";
 
             return View();
         }
