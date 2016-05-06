@@ -35,6 +35,7 @@
     padding: 15px;
     border: 2px solid #AAAAAA; 
     border-radius: 25px;
+    background-color: #CCCCFF;
 }
 
 #tab{
@@ -47,8 +48,12 @@
     font-size: 16px;
     border-color: white;
     border-style: none;
+    background-color: #CCCCFF;
 }
+#about{
 
+    background-color:#CCCCFF;
+}
 
 article,
 aside,
@@ -344,8 +349,9 @@ body {
   font-size: 14px;
   line-height: 1.428571429;
   color: #333333;
-  background-color: #ffffff;
+  background-color: #ffffcc;
 }
+
 
 input,
 button,
