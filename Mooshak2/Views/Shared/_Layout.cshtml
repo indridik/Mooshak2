@@ -36,7 +36,14 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Mooshak inc.</p>
+            <div class="navbar-form">
+                <ul class="nav nav-tabs">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+            <li><p>&copy; @DateTime.Now.Year - Mooshak inc.</p></li>
         </footer>
     </div>
 
