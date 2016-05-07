@@ -8,9 +8,13 @@ namespace Mooshak2.Controllers
         public ActionResult Index()
         {
             IdentityManager manager = new IdentityManager();
-            if(!manager.RoleExists("Teachers"))
+            if(!manager.RoleExists("Administrators"))
             {
                 manager.CreateRole("Administrators");
+            }
+            if(!manager.RoleExists("Teachers"))
+            {
+                manager.CreateRole("Teachers");
             }
             return View();
         }
