@@ -8,10 +8,10 @@ namespace Mooshak2.Controllers
         public ActionResult Index()
         {
             IdentityManager manager = new IdentityManager();
-            if (!manager.UserExists("admin"))
+            if (!manager.UserExists("admin@ru.is"))
             {
                 ApplicationUser newAdmin = new ApplicationUser();
-                newAdmin.UserName = "admin";
+                newAdmin.UserName = "admin@ru.is";
                 manager.CreateUser(newAdmin, "123456");
                 manager.AddUserToRole(newAdmin.Id, "Administrators");
             }
