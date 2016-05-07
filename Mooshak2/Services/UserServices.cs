@@ -16,7 +16,7 @@ namespace Mooshak2.Services
         {
             _db = new ApplicationDbContext();
         }
-        public UserViewModel GetUserByID(int userID)
+       /* public UserViewModel GetUserByID(int userID)
         {
             var user = _db.Users.Where(x => x.UserID == userID).SingleOrDefault();
             if (user == null)
@@ -31,7 +31,7 @@ namespace Mooshak2.Services
             };
 
             return viewModel;
-        }
+        }*/
 
         public List<StudentViewModel> GetAllStudents()
         {
