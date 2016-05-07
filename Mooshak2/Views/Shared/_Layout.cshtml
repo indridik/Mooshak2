@@ -9,8 +9,6 @@
 
 </head>
 <body>
-    @if (Request.IsAuthenticated)
-    {
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -24,26 +22,20 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    @if (User.IsInRole("Administrators"))
+                    {
+                        <li>@Html.ActionLink("Admin", "Admin", "Home")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    }
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <div class="navbar-form">
-                <ul class="nav nav-tabs">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
-            <li><p>&copy; @DateTime.Now.Year - Mooshak inc.</p></li>
+            <p>&copy; @DateTime.Now.Year - Mooshak inc. &nbsp; @Html.ActionLink("Contact", "Contact", "Home") &nbsp; @Html.ActionLink("About", "About", "Home")</p>
         </footer>
     </div>
 

@@ -208,7 +208,7 @@
     <Compile Include="Models\Entities\Course.cs" />
     <Compile Include="Models\Entities\CourseStudent.cs" />
     <Compile Include="Models\Entities\CourseTeacher.cs" />
-    <Compile Include="Models\Entities\User.cs" />
+    <Compile Include="Models\Entities\Submission.cs" />
     <Compile Include="Models\IdentityManager.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -284,6 +284,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Home\Admin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

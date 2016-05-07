@@ -5,6 +5,7 @@ namespace Mooshak2.Controllers
 {
     public class HomeController : Controller
     {
+        [Authorize]
         public ActionResult Index()
         {
             return View();
@@ -21,6 +22,11 @@ namespace Mooshak2.Controllers
         {
             ViewBag.Message = "Hópmeðlimir.";
 
+            return View();
+        }
+        [Authorize(Roles = "Administrators")]
+        public ActionResult Admin()
+        {
             return View();
         }
     }
