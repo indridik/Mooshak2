@@ -18,7 +18,7 @@ namespace Mooshak2.Services
         }
         public UserViewModel GetUserByID(int userID)
         {
-            var user = _db.Users.Where(x => x.userID == userID).SingleOrDefault();
+            var user = _db.Users.Where(x => x.UserID == userID).SingleOrDefault();
             if (user == null)
             {
                 //TODO: henda error
@@ -33,25 +33,21 @@ namespace Mooshak2.Services
             return viewModel;
         }
 
-         public List<UserViewModel> GetAllUsersOfType(int userType)
-         {
-            List<UserViewModel> viewModel = new List<UserViewModel>();
-            var users = _db.Users.Where(x => x.UserType == userType).ToList();
-            if(users == null)
+        public List<StudentViewModel> GetAllStudents()
+        {
+            var result = _db.CourseStudents.ToList();
+            List<StudentViewModel> students = new List<StudentViewModel>();
+            foreach(var student in result)
             {
-                //TODO: throwa error maaarrr
-                return null;
+                StudentViewModel newStudent = new StudentViewModel();
+                newStudent.UserName = student.UserName;
+                students.Add(newStudent);
             }
-            foreach(var uss in users)
-            {
-                UserViewModel tempUser = new UserViewModel();
-                tempUser.ID = uss.ID;
-                tempUser.FullName = uss.FullName;
-                tempUser.UserName = uss.UserName;
-                tempUser.UserType = uss.UserType;
-                viewModel.Add(tempUser);
-            }
-            return viewModel;
-         }
+
+            return students;
+        }
+
+        
+
     }
 }
