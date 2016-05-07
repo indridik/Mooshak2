@@ -17,14 +17,13 @@ namespace Mooshak2.Services
 
         public StudentViewModel GetStudentByID(int studentID)
         {
-            var student = _db.Users.SingleOrDefault(x => x.ID == studentID);
+            var student = _db.CourseStudents.SingleOrDefault(x => x.ID == studentID);
             if(student == null)
             {
                 return null;
             }
             var viewModel = new StudentViewModel
             {
-                FullName = student.FullName,
                 UserName = student.UserName
             };
             return viewModel;
@@ -37,7 +36,7 @@ namespace Mooshak2.Services
             {
                 return null;
             }
-
+            
             return null;
         }
 
