@@ -18,7 +18,7 @@ namespace Mooshak2.Services
         }
         public UserViewModel GetUserByID(int userID)
         {
-            var user = _db.Users.SingleOrDefault(x => x.ID == userID);
+            var user = _db.Users.Where(x => x.userID == userID).SingleOrDefault();
             if (user == null)
             {
                 //TODO: henda error
@@ -26,10 +26,8 @@ namespace Mooshak2.Services
             }
             UserViewModel viewModel = new UserViewModel
             {
-                ID = user.ID,
+                ID = user.UserID,
                 UserName = user.UserName,
-                FullName = user.FullName,
-                UserType = user.UserType
             };
 
             return viewModel;
