@@ -208,7 +208,7 @@
     <Compile Include="Models\Entities\Course.cs" />
     <Compile Include="Models\Entities\CourseStudent.cs" />
     <Compile Include="Models\Entities\CourseTeacher.cs" />
-    <Compile Include="Models\Entities\User.cs" />
+    <Compile Include="Models\Entities\Submission.cs" />
     <Compile Include="Models\IdentityManager.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

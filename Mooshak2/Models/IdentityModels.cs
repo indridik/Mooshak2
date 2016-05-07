@@ -27,6 +27,7 @@ namespace Mooshak2.Models
         public DbSet<Course>              Courses        { get; set; }
         public DbSet<CourseStudent>       CourseStudents { get; set; }
         public DbSet<CourseTeacher>       CourseTeachers { get; set; }
+        public DbSet<Submission>          Submissions    { get; set; }
 
         public DbSet<User> Users { get; set; }  //Þurfum að re-name-a í eitthvað annað. 
         public ApplicationDbContext()
