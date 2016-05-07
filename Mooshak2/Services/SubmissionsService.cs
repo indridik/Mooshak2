@@ -15,21 +15,37 @@ namespace Mooshak2.Services
             _db = new ApplicationDbContext();
         }
 
-        public SubmissionViewModel GetStudentByID(int studentID)
+        public StudentViewModel GetStudentByID(int studentID)
         {
+            var student = _db.Users.SingleOrDefault(x => x.ID == studentID);
+            if(student == null)
+            {
+                return null;
+            }
+            var viewModel = new StudentViewModel
+            {
+                FullName = student.FullName,
+                UserName = student.UserName
+            };
+            return viewModel;
+        }
+
+        public SubmissionViewModel GetMilestone(int assignmentID, string milestoneTitle)
+        {
+            var assignment = _db.Assignments.SingleOrDefault(x => x.ID == assignmentID);
+            if(assignment == null)
+            {
+                return null;
+            }
+
             return null;
         }
 
-        public SubmissionViewModel GetMilestone(int assignmentID, string MilestoneTitle)
+        public SubmissionViewModel GetResult(string milestoneResult)
         {
             return null;
         }
-
-        public SubmissionViewModel GetResult(string MilestoneResult)
-        {
-            return null;
-        }
-        public SubmissionViewModel GetLanguage(string AssignmentLanguage)
+        public SubmissionViewModel GetLanguage(string sssignmentLanguage)
         {
             return null;
         }
@@ -38,9 +54,21 @@ namespace Mooshak2.Services
         {
             return null;
         }
-        public SubmissionViewModel GetCourseByID(int CourseID)
+        public CourseViewModel GetCourseByID(int courseID)
         {
-            return null;
+            var course = _db.Courses.SingleOrDefault(x => x.ID == courseID);
+            if(course == null)
+            {
+                //TODO: Throwa error
+                return null;
+            }
+
+            var viewModel = new CourseViewModel
+            {
+                ID = course.ID,
+                Name = course.Name
+            };
+            return viewModel;
         }
 
     }
