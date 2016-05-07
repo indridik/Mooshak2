@@ -29,7 +29,7 @@ namespace Mooshak2.Models
         public DbSet<CourseTeacher>       CourseTeachers { get; set; }
         public DbSet<Submission>          Submissions    { get; set; }
 
-        public DbSet<User> Users { get; set; }  //Þurfum að re-name-a í eitthvað annað. 
+        
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
