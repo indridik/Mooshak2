@@ -8,7 +8,19 @@
 @using (Html.BeginForm("CreateUser", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    @*@<h4>Create a new account.</h4>*@
+    if (ViewBag.result == "User successfully created")
+    {
+        <div class="alert alert-success" role="alert">
+            <p>@ViewBag.result</p>
+        </div>
+    }
+    if (ViewBag.result == "Failed creating user")
+    {
+        <div class="alert alert-danger" role="alert">
+            <p>@ViewBag.result</p>
+        </div>
+    }
+
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
