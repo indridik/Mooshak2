@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Mooshak2.Models.Entities.Course>
+@{
     ViewBag.Title = "Welcome to Mooshak 2.0";
 }
 @{ 
@@ -16,7 +17,10 @@
 </div>
 <select class="form-control" id="courses">
     <option>Choose a course</option>
-    <option>Gagnskipan</option>
+    @foreach(var course in Model)
+    {
+        <option name="@course.ID" id="@course.ID">@course.Name</option>
+    }
 </select>
 
 <style>
@@ -25,8 +29,6 @@
         font-size: 30px;
         visibility:hidden;
     }
-
-
 </style>
 
 
