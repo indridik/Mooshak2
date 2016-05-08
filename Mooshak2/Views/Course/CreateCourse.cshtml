@@ -10,18 +10,19 @@
 @using (Html.BeginForm())
 { 
     @Html.AntiForgeryToken()
+    if (ViewBag.result == "Course already exists!")
+    {
+        <div class="alert alert-warning" role="alert">
+            <p>@ViewBag.result</p>
+        </div>
+    }
     if (ViewBag.result == "Course successfully created!")
     {
         <div class="alert alert-success" role="alert">
             <p>@ViewBag.result</p>
         </div>
     }
-    if (ViewBag.result == "Failed creating course")
-    {
-        <div class="alert alert-danger" role="alert">
-            <p>@ViewBag.result</p>
-        </div>
-    }
+
 
     <div class="form-horizontal">
         <h4>Course</h4>
