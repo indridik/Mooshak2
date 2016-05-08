@@ -1,5 +1,8 @@
 ﻿using Mooshak2.Models;
+using Mooshak2.Models.Entities;
 using System.Web.Mvc;
+using Mooshak2.Models.ViewModels;
+using System.Linq;
 
 namespace Mooshak2.Controllers
 {
@@ -8,7 +11,9 @@ namespace Mooshak2.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            ApplicationDbContext _db = new ApplicationDbContext();
+            var model = _db.Courses.ToList();
+            return View(model);
         }
 
         public ActionResult About()
