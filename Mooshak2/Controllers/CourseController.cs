@@ -20,7 +20,7 @@ namespace Mooshak2.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrators")]
-        public async Task<ActionResult> CreateCourse(CourseViewModel model)
+        public async Task<ActionResult> CreateCourse(Course model)
         {
             ApplicationDbContext _db = new ApplicationDbContext();
             var exists = _db.Courses.SingleOrDefault(x => x.Name == model.Name);
@@ -30,19 +30,10 @@ namespace Mooshak2.Controllers
                 _db.Courses.Add(course);
                 _db.SaveChanges();
 
-                var check = _db.Courses.SingleOrDefault(x => x.Name == model.Name);
-                if (check == null)
-                {
-                    ///Throw error, (returna í View með modeli í)
-                    ViewBag.result = "Failed creating course";
-
-                }
-                else
-                {
-                    ViewBag.result = "Course successfully created!";
-                    return View();
-                }
+                ViewBag.result = "Course successfully created!";
+                return View();
             }
+            ViewBag.result = "Course already exists!";
             return View(model);
 
         }
