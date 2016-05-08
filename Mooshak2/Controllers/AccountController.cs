@@ -182,7 +182,8 @@ namespace Mooshak2.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     // setja skilaboð til admins eftir að hann er búinn að búa til aðgang
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.result = "User successfully created";
+                    return View();
                 }
                 AddErrors(result);
             }
