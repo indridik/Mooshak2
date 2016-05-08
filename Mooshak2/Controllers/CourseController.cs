@@ -20,7 +20,7 @@ namespace Mooshak2.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Administrators")]
-        public async Task<ActionResult> CreateCourse(Course model)
+        public ActionResult CreateCourse(Course model)
         {
             ApplicationDbContext _db = new ApplicationDbContext();
             var exists = _db.Courses.SingleOrDefault(x => x.Name == model.Name);
