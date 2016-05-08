@@ -3,6 +3,6 @@
 //synir verkefni thegar valid er namskeid
 $(document).ready(function () {
     $('#courses').change(function () {
-        $('#assignments').css("visibility", "visible");
+        $('#assignments').css('visibility', 'visible');
     });
 });
