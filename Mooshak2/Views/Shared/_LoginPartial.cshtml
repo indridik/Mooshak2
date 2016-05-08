@@ -11,7 +11,7 @@
         </li>
         @if (User.IsInRole("Administrators"))
         {
-            <li>@Html.ActionLink("Register", "Register", "Account")</li>
+            <li>@Html.ActionLink("Create new user", "Register", "Account")</li>
         }
         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     </ul>
