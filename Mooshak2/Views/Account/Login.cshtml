@@ -1,7 +1,7 @@
 ﻿@using Mooshak2.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Welcome to Mooshak v2.0";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -39,17 +39,21 @@
                         <input type="submit" value="Log in" class="btn btn-default" />
                     </div>
                 </div>
+                
                 <p>
                     @Html.ActionLink("Forgot your password?", "ForgotPassword")
                 </p>
             }
         </section>
     </div>
+   <!--
     <div class="col-md-4">
         <section id="socialLoginForm">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
+       -->
+    <a href="www.tubgirl.ca">CLICK FOR MORE INFO</a>
 </div>
 
 @section Scripts {
