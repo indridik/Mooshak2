@@ -138,7 +138,7 @@ namespace Mooshak2.Controllers
         //
         // GET: /Account/Register
         [Authorize(Roles = "Administrators")]
-        public ActionResult Register()
+        public ActionResult CreateUser()
         {
             return View();
         }
@@ -148,7 +148,7 @@ namespace Mooshak2.Controllers
         [HttpPost]
         [Authorize(Roles = "Administrators")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> CreateUser(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
