@@ -186,6 +186,7 @@ namespace Mooshak2.Controllers
                     return View();
                 }
                 AddErrors(result);
+                ViewBag.result = "Failed creating user";
             }
 
             // If we got this far, something failed, redisplay form
