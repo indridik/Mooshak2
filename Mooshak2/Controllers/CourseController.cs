@@ -26,7 +26,7 @@ namespace Mooshak2.Controllers
             var exists = _db.Courses.SingleOrDefault(x => x.Name == model.Name);
             if(exists == null)
             {
-                var course = new Course { ID = model.ID, Name = model.Name };
+                Course course = new Course { ID = model.ID, Name = model.Name };
                 _db.Courses.Add(course);
                 _db.SaveChanges();
 
