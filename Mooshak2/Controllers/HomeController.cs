@@ -11,6 +11,23 @@ namespace Mooshak2.Controllers
         [Authorize]
         public ActionResult Index()
         {
+            if(User.IsInRole("Administrators"))
+            {
+                return View("Admin");
+            }
+            else if(User.IsInRole("Teachers"))
+            {
+                return View("Teacher");
+            }
+            else
+            {
+               return RedirectToAction("Student");
+            }
+        }
+        
+        [Authorize]
+        public ActionResult Student()
+        {
             ApplicationDbContext _db = new ApplicationDbContext();
             var model = _db.Courses.ToList();
             return View(model);
