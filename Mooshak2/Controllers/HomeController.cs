@@ -34,5 +34,12 @@ namespace Mooshak2.Controllers
         {
             return View();
         }
+
+        public ActionResult AssignmentJson(int id)
+        {
+            ApplicationDbContext _db = new ApplicationDbContext();
+            var assignments = _db.Assignments.Where(x => x.CourseID == id).ToList();
+            return Json(assignments, JsonRequestBehavior.AllowGet);
+        }
     }
 }

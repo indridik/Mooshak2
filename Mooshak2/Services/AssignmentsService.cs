@@ -20,7 +20,7 @@ namespace Mooshak2.Services
         public List<AssignmentViewModel> GetAssignmentsInCourse(int courseID)
         {
             List<AssignmentViewModel> viewModel = new List<AssignmentViewModel>();
-            var assignments = _db.Assignments.Where(x => x.Course == courseID).ToList();
+            var assignments = _db.Assignments.Where(x => x.CourseID == courseID).ToList();
             if (assignments == null)
             {
                 //TODO: kasta villu
