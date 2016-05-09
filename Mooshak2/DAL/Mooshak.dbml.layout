@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.375, 12.125" name="Mooshak">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.375, 13.25" name="Mooshak">
   <DataContextMoniker Name="/MooshakDataContext" />
   <nestedChildShapes>
     <classShape Id="6d8ce253-7ecf-4933-8413-b6a645559351" absoluteBounds="9, 5.375, 2, 1.7708968098958327">
@@ -33,7 +33,7 @@
         <classShapeMoniker Id="6d8ce253-7ecf-4933-8413-b6a645559351" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(5.5 : 6.28929768880208); (6.25 : 6.28929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.5 : 6.28929768880208); (6.25 : 6.28929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MooshakDataContext/Assignment/Assignment_Milestone" />
       <nodes>
         <classShapeMoniker Id="b5fd7243-cb14-4dad-a3c0-f83fc0ddd7f3" />
@@ -58,50 +58,76 @@
         <elementListCompartment Id="ea6d005b-d620-461f-9cd2-7c91b038ff46" absoluteBounds="6.39, 3.71, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="beca8b66-dd7a-4f5f-8199-34c6d686fad8" absoluteBounds="3.625, 8.375, 2, 1.3862939453125003">
+    <classShape Id="beca8b66-dd7a-4f5f-8199-34c6d686fad8" absoluteBounds="3.375, 11.625, 2, 1.3862939453125003">
       <DataClassMoniker Name="/MooshakDataContext/TeachersInCourse" />
       <nestedChildShapes>
-        <elementListCompartment Id="f5e19269-b217-433b-861b-895df4342342" absoluteBounds="3.64, 8.835, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="f5e19269-b217-433b-861b-895df4342342" absoluteBounds="3.39, 12.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="d164d7f6-c3b7-4587-85ce-531068a45563" absoluteBounds="0.75, 10.5, 2, 1.3862939453124987">
+    <classShape Id="d164d7f6-c3b7-4587-85ce-531068a45563" absoluteBounds="0.75, 11.5, 2, 1.3862939453124987">
       <DataClassMoniker Name="/MooshakDataContext/Teacher" />
       <nestedChildShapes>
-        <elementListCompartment Id="3943e67f-602e-4df9-bedb-cd772018dd1f" absoluteBounds="0.765, 10.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="3943e67f-602e-4df9-bedb-cd772018dd1f" absoluteBounds="0.765, 11.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="ed9572e7-973a-493d-8950-9c325c8e2404" absoluteBounds="0.75, 5.875, 2, 1.1939925130208327">
+    <classShape Id="ed9572e7-973a-493d-8950-9c325c8e2404" absoluteBounds="3.5, 8.875, 2, 1.1939925130208327">
       <DataClassMoniker Name="/MooshakDataContext/Course" />
       <nestedChildShapes>
-        <elementListCompartment Id="35823865-e984-4f7e-aed7-2eb77690f944" absoluteBounds="0.765, 6.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="35823865-e984-4f7e-aed7-2eb77690f944" absoluteBounds="3.5150000000000006, 9.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(1.75 : 10.5); (1.75 : 9.06814697265625); (3.625 : 9.06814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 12.2556469726562); (3.375 : 12.2556469726562)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MooshakDataContext/Teacher/Teacher_TeachersInCourse" />
       <nodes>
         <classShapeMoniker Id="d164d7f6-c3b7-4587-85ce-531068a45563" />
         <classShapeMoniker Id="beca8b66-dd7a-4f5f-8199-34c6d686fad8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 6.47199625651042); (3.5 : 6.47199625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+    <associationConnector edgePoints="[(4.5 : 8.875); (4.5 : 7.14589680989583)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MooshakDataContext/Course/Course_Assignment" />
       <nodes>
         <classShapeMoniker Id="ed9572e7-973a-493d-8950-9c325c8e2404" />
         <classShapeMoniker Id="b5fd7243-cb14-4dad-a3c0-f83fc0ddd7f3" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(1.75 : 5.875); (1.75 : 1.81814697265625); (3.5 : 1.81814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(3.5 : 8.875); (3.125 : 8.5); (3.125 : 2.8862939453125); (3.5 : 2.5112939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MooshakDataContext/Course/Course_CourseStudent" />
       <nodes>
         <classShapeMoniker Id="ed9572e7-973a-493d-8950-9c325c8e2404" />
         <classShapeMoniker Id="f436d3ea-0176-4b7c-b1da-6a43dac23e95" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.25 : 7.06899251302083); (2.25 : 8.69032098632812); (3.625 : 8.69032098632812)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.4375 : 10.0689925130208); (4.4375 : 11.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/MooshakDataContext/Course/Course_TeachersInCourse" />
       <nodes>
         <classShapeMoniker Id="ed9572e7-973a-493d-8950-9c325c8e2404" />
         <classShapeMoniker Id="beca8b66-dd7a-4f5f-8199-34c6d686fad8" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="e89a25ed-2437-41d6-b090-0092280486f0" absoluteBounds="6.25, 11.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/MooshakDataContext/Student" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ddaf2543-0588-46e7-9ac8-a69f2c9cb8f0" absoluteBounds="6.2650000000000006, 12.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="33ba4788-d45e-4adc-accc-6864febe6c79" absoluteBounds="6.375, 9, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/MooshakDataContext/StudentsInCourse" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b399ece0-580a-42f1-bd7b-585e83b2c73a" absoluteBounds="6.39, 9.46, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.5 : 9.53449625651042); (6.375 : 9.53449625651042)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Course/Course_StudentsInCourse" />
+      <nodes>
+        <classShapeMoniker Id="ed9572e7-973a-493d-8950-9c325c8e2404" />
+        <classShapeMoniker Id="33ba4788-d45e-4adc-accc-6864febe6c79" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(7.3125 : 11.75); (7.3125 : 10.3862939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Student/Student_StudentsInCourse" />
+      <nodes>
+        <classShapeMoniker Id="e89a25ed-2437-41d6-b090-0092280486f0" />
+        <classShapeMoniker Id="33ba4788-d45e-4adc-accc-6864febe6c79" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

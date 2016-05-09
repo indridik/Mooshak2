@@ -10,7 +10,6 @@ namespace Mooshak2.Controllers
     public class HomeController : Controller
     {
         private MooshakDataContext context;
-
         [Authorize]
         public ActionResult Index()
         {
@@ -31,6 +30,7 @@ namespace Mooshak2.Controllers
         [Authorize]
         public ActionResult Student()
         {
+            
             var model = context.Students.ToList();
             return View(model);
         }
@@ -57,6 +57,7 @@ namespace Mooshak2.Controllers
 
         public ActionResult AssignmentJson(int id)
         {
+            
             var assignments = context.Assignments.Where(x => x.CourseID == id).ToList();
             return Json(assignments, JsonRequestBehavior.AllowGet);
         }

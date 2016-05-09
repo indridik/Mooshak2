@@ -36,6 +36,9 @@ namespace Mooshak2.DAL
     partial void InsertAssignment(Assignment instance);
     partial void UpdateAssignment(Assignment instance);
     partial void DeleteAssignment(Assignment instance);
+    partial void InsertCourseStudent(CourseStudent instance);
+    partial void UpdateCourseStudent(CourseStudent instance);
+    partial void DeleteCourseStudent(CourseStudent instance);
     partial void InsertMilestone(Milestone instance);
     partial void UpdateMilestone(Milestone instance);
     partial void DeleteMilestone(Milestone instance);
@@ -54,15 +57,15 @@ namespace Mooshak2.DAL
     partial void InsertTeacher(Teacher instance);
     partial void UpdateTeacher(Teacher instance);
     partial void DeleteTeacher(Teacher instance);
-    partial void InsertStudentsInCourse(StudentsInCourse instance);
-    partial void UpdateStudentsInCourse(StudentsInCourse instance);
-    partial void DeleteStudentsInCourse(StudentsInCourse instance);
-    partial void InsertStudent(Student instance);
-    partial void UpdateStudent(Student instance);
-    partial void DeleteStudent(Student instance);
     partial void InsertCourse(Course instance);
     partial void UpdateCourse(Course instance);
     partial void DeleteCourse(Course instance);
+    partial void InsertStudent(Student instance);
+    partial void UpdateStudent(Student instance);
+    partial void DeleteStudent(Student instance);
+    partial void InsertStudentsInCourse(StudentsInCourse instance);
+    partial void UpdateStudentsInCourse(StudentsInCourse instance);
+    partial void DeleteStudentsInCourse(StudentsInCourse instance);
     #endregion
 		
 		public MooshakDataContext() : 
@@ -108,6 +111,14 @@ namespace Mooshak2.DAL
 			get
 			{
 				return this.GetTable<Assignment>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CourseStudent> CourseStudents
+		{
+			get
+			{
+				return this.GetTable<CourseStudent>();
 			}
 		}
 		
@@ -159,11 +170,11 @@ namespace Mooshak2.DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<StudentsInCourse> StudentsInCourses
+		public System.Data.Linq.Table<Course> Courses
 		{
 			get
 			{
-				return this.GetTable<StudentsInCourse>();
+				return this.GetTable<Course>();
 			}
 		}
 		
@@ -175,11 +186,11 @@ namespace Mooshak2.DAL
 			}
 		}
 		
-		public System.Data.Linq.Table<Course> Courses
+		public System.Data.Linq.Table<StudentsInCourse> StudentsInCourses
 		{
 			get
 			{
-				return this.GetTable<Course>();
+				return this.GetTable<StudentsInCourse>();
 			}
 		}
 	}
@@ -607,6 +618,157 @@ namespace Mooshak2.DAL
 		{
 			this.SendPropertyChanging();
 			entity.Assignment = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CourseStudents")]
+	public partial class CourseStudent : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private string _UserName;
+		
+		private int _CourseID;
+		
+		private EntityRef<Course> _Course;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnCourseIDChanging(int value);
+    partial void OnCourseIDChanged();
+    #endregion
+		
+		public CourseStudent()
+		{
+			this._Course = default(EntityRef<Course>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="Int NOT NULL")]
+		public int CourseID
+		{
+			get
+			{
+				return this._CourseID;
+			}
+			set
+			{
+				if ((this._CourseID != value))
+				{
+					if (this._Course.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseID = value;
+					this.SendPropertyChanged("CourseID");
+					this.OnCourseIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_CourseStudent", Storage="_Course", ThisKey="CourseID", OtherKey="ID", IsForeignKey=true)]
+		public Course Course
+		{
+			get
+			{
+				return this._Course.Entity;
+			}
+			set
+			{
+				Course previousValue = this._Course.Entity;
+				if (((previousValue != value) 
+							|| (this._Course.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Course.Entity = null;
+						previousValue.CourseStudents.Remove(this);
+					}
+					this._Course.Entity = value;
+					if ((value != null))
+					{
+						value.CourseStudents.Add(this);
+						this._CourseID = value.ID;
+					}
+					else
+					{
+						this._CourseID = default(int);
+					}
+					this.SendPropertyChanged("Course");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 	
@@ -1737,174 +1899,132 @@ namespace Mooshak2.DAL
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.StudentsInCourses")]
-	public partial class StudentsInCourse : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Courses")]
+	public partial class Course : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _Id;
+		private int _ID;
 		
-		private int _CourseId;
+		private string _Name;
 		
-		private int _StudentId;
+		private EntitySet<Assignment> _Assignments;
 		
-		private EntityRef<Student> _Student;
+		private EntitySet<CourseStudent> _CourseStudents;
 		
-		private EntityRef<Course> _Course;
+		private EntitySet<TeachersInCourse> _TeachersInCourses;
+		
+		private EntitySet<StudentsInCourse> _StudentsInCourses;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnIdChanging(int value);
-    partial void OnIdChanged();
-    partial void OnCourseIdChanging(int value);
-    partial void OnCourseIdChanged();
-    partial void OnStudentIdChanging(int value);
-    partial void OnStudentIdChanged();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnNameChanging(string value);
+    partial void OnNameChanged();
     #endregion
 		
-		public StudentsInCourse()
+		public Course()
 		{
-			this._Student = default(EntityRef<Student>);
-			this._Course = default(EntityRef<Course>);
+			this._Assignments = new EntitySet<Assignment>(new Action<Assignment>(this.attach_Assignments), new Action<Assignment>(this.detach_Assignments));
+			this._CourseStudents = new EntitySet<CourseStudent>(new Action<CourseStudent>(this.attach_CourseStudents), new Action<CourseStudent>(this.detach_CourseStudents));
+			this._TeachersInCourses = new EntitySet<TeachersInCourse>(new Action<TeachersInCourse>(this.attach_TeachersInCourses), new Action<TeachersInCourse>(this.detach_TeachersInCourses));
+			this._StudentsInCourses = new EntitySet<StudentsInCourse>(new Action<StudentsInCourse>(this.attach_StudentsInCourses), new Action<StudentsInCourse>(this.detach_StudentsInCourses));
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int Id
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
 		{
 			get
 			{
-				return this._Id;
+				return this._ID;
 			}
 			set
 			{
-				if ((this._Id != value))
+				if ((this._ID != value))
 				{
-					this.OnIdChanging(value);
+					this.OnIDChanging(value);
 					this.SendPropertyChanging();
-					this._Id = value;
-					this.SendPropertyChanged("Id");
-					this.OnIdChanged();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseId", DbType="Int NOT NULL")]
-		public int CourseId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Name
 		{
 			get
 			{
-				return this._CourseId;
+				return this._Name;
 			}
 			set
 			{
-				if ((this._CourseId != value))
+				if ((this._Name != value))
 				{
-					if (this._Course.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCourseIdChanging(value);
+					this.OnNameChanging(value);
 					this.SendPropertyChanging();
-					this._CourseId = value;
-					this.SendPropertyChanged("CourseId");
-					this.OnCourseIdChanged();
+					this._Name = value;
+					this.SendPropertyChanged("Name");
+					this.OnNameChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StudentId", DbType="Int NOT NULL")]
-		public int StudentId
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_Assignment", Storage="_Assignments", ThisKey="ID", OtherKey="CourseID")]
+		public EntitySet<Assignment> Assignments
 		{
 			get
 			{
-				return this._StudentId;
+				return this._Assignments;
 			}
 			set
 			{
-				if ((this._StudentId != value))
-				{
-					if (this._Student.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnStudentIdChanging(value);
-					this.SendPropertyChanging();
-					this._StudentId = value;
-					this.SendPropertyChanged("StudentId");
-					this.OnStudentIdChanged();
-				}
+				this._Assignments.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_StudentsInCourse", Storage="_Student", ThisKey="StudentId", OtherKey="ID", IsForeignKey=true)]
-		public Student Student
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_CourseStudent", Storage="_CourseStudents", ThisKey="ID", OtherKey="CourseID")]
+		public EntitySet<CourseStudent> CourseStudents
 		{
 			get
 			{
-				return this._Student.Entity;
+				return this._CourseStudents;
 			}
 			set
 			{
-				Student previousValue = this._Student.Entity;
-				if (((previousValue != value) 
-							|| (this._Student.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Student.Entity = null;
-						previousValue.StudentsInCourses.Remove(this);
-					}
-					this._Student.Entity = value;
-					if ((value != null))
-					{
-						value.StudentsInCourses.Add(this);
-						this._StudentId = value.ID;
-					}
-					else
-					{
-						this._StudentId = default(int);
-					}
-					this.SendPropertyChanged("Student");
-				}
+				this._CourseStudents.Assign(value);
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_StudentsInCourse", Storage="_Course", ThisKey="CourseId", OtherKey="ID", IsForeignKey=true)]
-		public Course Course
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_TeachersInCourse", Storage="_TeachersInCourses", ThisKey="ID", OtherKey="CourseId")]
+		public EntitySet<TeachersInCourse> TeachersInCourses
 		{
 			get
 			{
-				return this._Course.Entity;
+				return this._TeachersInCourses;
 			}
 			set
 			{
-				Course previousValue = this._Course.Entity;
-				if (((previousValue != value) 
-							|| (this._Course.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Course.Entity = null;
-						previousValue.StudentsInCourses.Remove(this);
-					}
-					this._Course.Entity = value;
-					if ((value != null))
-					{
-						value.StudentsInCourses.Add(this);
-						this._CourseId = value.ID;
-					}
-					else
-					{
-						this._CourseId = default(int);
-					}
-					this.SendPropertyChanged("Course");
-				}
+				this._TeachersInCourses.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_StudentsInCourse", Storage="_StudentsInCourses", ThisKey="ID", OtherKey="CourseId")]
+		public EntitySet<StudentsInCourse> StudentsInCourses
+		{
+			get
+			{
+				return this._StudentsInCourses;
+			}
+			set
+			{
+				this._StudentsInCourses.Assign(value);
 			}
 		}
 		
@@ -1926,6 +2046,54 @@ namespace Mooshak2.DAL
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Assignments(Assignment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = this;
+		}
+		
+		private void detach_Assignments(Assignment entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = null;
+		}
+		
+		private void attach_CourseStudents(CourseStudent entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = this;
+		}
+		
+		private void detach_CourseStudents(CourseStudent entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = null;
+		}
+		
+		private void attach_TeachersInCourses(TeachersInCourse entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = this;
+		}
+		
+		private void detach_TeachersInCourses(TeachersInCourse entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = null;
+		}
+		
+		private void attach_StudentsInCourses(StudentsInCourse entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = this;
+		}
+		
+		private void detach_StudentsInCourses(StudentsInCourse entity)
+		{
+			this.SendPropertyChanging();
+			entity.Course = null;
 		}
 	}
 	
@@ -2043,116 +2211,174 @@ namespace Mooshak2.DAL
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Courses")]
-	public partial class Course : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.StudentsInCourses")]
+	public partial class StudentsInCourse : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _ID;
+		private int _Id;
 		
-		private string _Name;
+		private int _CourseId;
 		
-		private EntitySet<Assignment> _Assignments;
+		private int _StudentId;
 		
-		private EntitySet<TeachersInCourse> _TeachersInCourses;
+		private EntityRef<Course> _Course;
 		
-		private EntitySet<StudentsInCourse> _StudentsInCourses;
+		private EntityRef<Student> _Student;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnNameChanging(string value);
-    partial void OnNameChanged();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnCourseIdChanging(int value);
+    partial void OnCourseIdChanged();
+    partial void OnStudentIdChanging(int value);
+    partial void OnStudentIdChanged();
     #endregion
 		
-		public Course()
+		public StudentsInCourse()
 		{
-			this._Assignments = new EntitySet<Assignment>(new Action<Assignment>(this.attach_Assignments), new Action<Assignment>(this.detach_Assignments));
-			this._TeachersInCourses = new EntitySet<TeachersInCourse>(new Action<TeachersInCourse>(this.attach_TeachersInCourses), new Action<TeachersInCourse>(this.detach_TeachersInCourses));
-			this._StudentsInCourses = new EntitySet<StudentsInCourse>(new Action<StudentsInCourse>(this.attach_StudentsInCourses), new Action<StudentsInCourse>(this.detach_StudentsInCourses));
+			this._Course = default(EntityRef<Course>);
+			this._Student = default(EntityRef<Student>);
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
 		{
 			get
 			{
-				return this._ID;
+				return this._Id;
 			}
 			set
 			{
-				if ((this._ID != value))
+				if ((this._Id != value))
 				{
-					this.OnIDChanging(value);
+					this.OnIdChanging(value);
 					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Name", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string Name
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseId", DbType="Int NOT NULL")]
+		public int CourseId
 		{
 			get
 			{
-				return this._Name;
+				return this._CourseId;
 			}
 			set
 			{
-				if ((this._Name != value))
+				if ((this._CourseId != value))
 				{
-					this.OnNameChanging(value);
+					if (this._Course.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCourseIdChanging(value);
 					this.SendPropertyChanging();
-					this._Name = value;
-					this.SendPropertyChanged("Name");
-					this.OnNameChanged();
+					this._CourseId = value;
+					this.SendPropertyChanged("CourseId");
+					this.OnCourseIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_Assignment", Storage="_Assignments", ThisKey="ID", OtherKey="CourseID")]
-		public EntitySet<Assignment> Assignments
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StudentId", DbType="Int NOT NULL")]
+		public int StudentId
 		{
 			get
 			{
-				return this._Assignments;
+				return this._StudentId;
 			}
 			set
 			{
-				this._Assignments.Assign(value);
+				if ((this._StudentId != value))
+				{
+					if (this._Student.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStudentIdChanging(value);
+					this.SendPropertyChanging();
+					this._StudentId = value;
+					this.SendPropertyChanged("StudentId");
+					this.OnStudentIdChanged();
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_TeachersInCourse", Storage="_TeachersInCourses", ThisKey="ID", OtherKey="CourseId")]
-		public EntitySet<TeachersInCourse> TeachersInCourses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_StudentsInCourse", Storage="_Course", ThisKey="CourseId", OtherKey="ID", IsForeignKey=true)]
+		public Course Course
 		{
 			get
 			{
-				return this._TeachersInCourses;
+				return this._Course.Entity;
 			}
 			set
 			{
-				this._TeachersInCourses.Assign(value);
+				Course previousValue = this._Course.Entity;
+				if (((previousValue != value) 
+							|| (this._Course.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Course.Entity = null;
+						previousValue.StudentsInCourses.Remove(this);
+					}
+					this._Course.Entity = value;
+					if ((value != null))
+					{
+						value.StudentsInCourses.Add(this);
+						this._CourseId = value.ID;
+					}
+					else
+					{
+						this._CourseId = default(int);
+					}
+					this.SendPropertyChanged("Course");
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Course_StudentsInCourse", Storage="_StudentsInCourses", ThisKey="ID", OtherKey="CourseId")]
-		public EntitySet<StudentsInCourse> StudentsInCourses
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Student_StudentsInCourse", Storage="_Student", ThisKey="StudentId", OtherKey="ID", IsForeignKey=true)]
+		public Student Student
 		{
 			get
 			{
-				return this._StudentsInCourses;
+				return this._Student.Entity;
 			}
 			set
 			{
-				this._StudentsInCourses.Assign(value);
+				Student previousValue = this._Student.Entity;
+				if (((previousValue != value) 
+							|| (this._Student.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Student.Entity = null;
+						previousValue.StudentsInCourses.Remove(this);
+					}
+					this._Student.Entity = value;
+					if ((value != null))
+					{
+						value.StudentsInCourses.Add(this);
+						this._StudentId = value.ID;
+					}
+					else
+					{
+						this._StudentId = default(int);
+					}
+					this.SendPropertyChanged("Student");
+				}
 			}
 		}
 		
@@ -2174,42 +2400,6 @@ namespace Mooshak2.DAL
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Assignments(Assignment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Course = this;
-		}
-		
-		private void detach_Assignments(Assignment entity)
-		{
-			this.SendPropertyChanging();
-			entity.Course = null;
-		}
-		
-		private void attach_TeachersInCourses(TeachersInCourse entity)
-		{
-			this.SendPropertyChanging();
-			entity.Course = this;
-		}
-		
-		private void detach_TeachersInCourses(TeachersInCourse entity)
-		{
-			this.SendPropertyChanging();
-			entity.Course = null;
-		}
-		
-		private void attach_StudentsInCourses(StudentsInCourse entity)
-		{
-			this.SendPropertyChanging();
-			entity.Course = this;
-		}
-		
-		private void detach_StudentsInCourses(StudentsInCourse entity)
-		{
-			this.SendPropertyChanging();
-			entity.Course = null;
 		}
 	}
 }
