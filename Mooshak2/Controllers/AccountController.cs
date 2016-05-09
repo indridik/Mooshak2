@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Mooshak2.Models;
+using Mooshak2.Services;
 
 namespace Mooshak2.Controllers
 {
@@ -163,8 +164,12 @@ namespace Mooshak2.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    
+
                     // setja skilaboð til admins eftir að hann er búinn að búa til aðgang
+
+                    AccountService service = new AccountService();
+                    service.CreateUser("Ble", "Lalli");
+
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

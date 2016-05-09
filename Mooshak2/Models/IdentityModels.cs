@@ -22,16 +22,16 @@ namespace Mooshak2.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Assignment>          Assignments    { get; set; }
-        public DbSet<AssignmentMilestone> Milestones     { get; set; }
-        public DbSet<Course>              Courses        { get; set; }
-        public DbSet<CourseStudent>       CourseStudents { get; set; }
-        public DbSet<CourseTeacher>       CourseTeachers { get; set; }
-        public DbSet<Submission>          Submissions    { get; set; }
+        //public DbSet<Assignment>          Assignments    { get; set; }
+        //public DbSet<AssignmentMilestone> Milestones     { get; set; }
+        //public DbSet<Course>              Courses        { get; set; }
+        //public DbSet<CourseStudent>       CourseStudents { get; set; }
+        //public DbSet<CourseTeacher>       CourseTeachers { get; set; }
+        //public DbSet<Submission>          Submissions    { get; set; }
 
         
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
         }
 

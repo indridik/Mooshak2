@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.375, 8.5" name="Mooshak">
+  <DataContextMoniker Name="/MooshakDataContext" />
+  <nestedChildShapes>
+    <classShape Id="6d8ce253-7ecf-4933-8413-b6a645559351" absoluteBounds="9, 5.375, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/MooshakDataContext/Submission" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f2d33a4e-475a-4068-a92c-3f89e0cb8e5b" absoluteBounds="9.015, 5.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b5fd7243-cb14-4dad-a3c0-f83fc0ddd7f3" absoluteBounds="3.5, 5.375, 2, 1.7708968098958327">
+      <DataClassMoniker Name="/MooshakDataContext/Assignment" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b196f5c2-6607-482f-aeab-282acb5186af" absoluteBounds="3.515, 5.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="01148237-e4c0-4fae-9614-9f390d49abb5" absoluteBounds="0.75, 3.5, 2, 1.193992513020834">
+      <DataClassMoniker Name="/MooshakDataContext/Course" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d76df443-516f-4265-8cc2-1016896668a5" absoluteBounds="0.765, 3.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f436d3ea-0176-4b7c-b1da-6a43dac23e95" absoluteBounds="3.5, 1.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/MooshakDataContext/CourseStudent" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6c7dcf91-1a50-4b7c-8bea-2c6854e0b591" absoluteBounds="3.515, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="0922b615-13e8-4426-8244-58077681dcf9" absoluteBounds="3.5, 3.25, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/MooshakDataContext/CourseTeacher" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b7d9bfa7-2c79-4d3d-84f0-2d4997e631ae" absoluteBounds="3.515, 3.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="b02ae894-2439-4f55-a3dd-bbecf42f6a7b" absoluteBounds="6.25, 5.5, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/MooshakDataContext/Milestone" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8c8755c6-d9a2-4a71-b765-9fe184a3c308" absoluteBounds="6.265, 5.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.75 : 4.69399251302083); (1.75 : 6.26044840494792); (3.5 : 6.26044840494792)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Course/Course_Assignment" />
+      <nodes>
+        <classShapeMoniker Id="01148237-e4c0-4fae-9614-9f390d49abb5" />
+        <classShapeMoniker Id="b5fd7243-cb14-4dad-a3c0-f83fc0ddd7f3" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 3.5); (1.75 : 1.81814697265625); (3.5 : 1.81814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Course/Course_CourseStudent" />
+      <nodes>
+        <classShapeMoniker Id="01148237-e4c0-4fae-9614-9f390d49abb5" />
+        <classShapeMoniker Id="f436d3ea-0176-4b7c-b1da-6a43dac23e95" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 4.06814697265625); (3.5 : 4.06814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Course/Course_CourseTeacher" />
+      <nodes>
+        <classShapeMoniker Id="01148237-e4c0-4fae-9614-9f390d49abb5" />
+        <classShapeMoniker Id="0922b615-13e8-4426-8244-58077681dcf9" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(8.25 : 6.28929768880208); (9 : 6.28929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Milestone/Milestone_Submission" />
+      <nodes>
+        <classShapeMoniker Id="b02ae894-2439-4f55-a3dd-bbecf42f6a7b" />
+        <classShapeMoniker Id="6d8ce253-7ecf-4933-8413-b6a645559351" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 6.28929768880208); (6.25 : 6.28929768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Assignment/Assignment_Milestone" />
+      <nodes>
+        <classShapeMoniker Id="b5fd7243-cb14-4dad-a3c0-f83fc0ddd7f3" />
+        <classShapeMoniker Id="b02ae894-2439-4f55-a3dd-bbecf42f6a7b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="87285cb5-9e14-4f46-b7a9-a6b4318bcce4" absoluteBounds="7.25, 2.375, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/MooshakDataContext/ErrorLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1bc51f26-e109-4357-b97e-f89d4fd915eb" absoluteBounds="7.265, 2.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7332b778-94ed-4859-a436-bd12ae390da9" absoluteBounds="6.75, 0.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/MooshakDataContext/MooshakUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="81b366b0-f0f7-4a23-a225-cd4d21d78d1b" absoluteBounds="6.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="848fa677-b820-4601-a713-4fdacf6a0846" absoluteBounds="10.125, 1.125, 2, 3.1170068359375">
+      <DataClassMoniker Name="/MooshakDataContext/AspNetUser" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e837270f-ab09-4288-9412-9be49cb01bb0" absoluteBounds="10.14, 1.585, 1.9700000000000002, 2.5570068359375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
