@@ -11,7 +11,12 @@
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
+        {   <select class="form-control">
+                @foreach (var mstone in Model.Milestones)
+                {
+                    <option>@mstone.Title</option>
+                }
+            </select>
             <input type="file" name="file" required="required" />
             <input type="Submit" class="btn btn-primary" value="Compile Test Code" />
         }

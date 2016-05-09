@@ -49,7 +49,7 @@ namespace Mooshak2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Submit(HttpPostedFileBase file)
+        public ActionResult Submit(HttpPostedFileBase file, int id)
         {
             var path = "";
             if (file != null && file.ContentLength > 0)
@@ -153,7 +153,8 @@ namespace Mooshak2.Controllers
 
             // TODO: We might want to clean up after the process, there
             // may be files we should delete etc.
-            return View();
+            var model = _service.GetAssignmentByID(id);
+            return View(model);
         }
     }
 }
