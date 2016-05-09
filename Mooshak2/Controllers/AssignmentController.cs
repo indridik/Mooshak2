@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.IO.Compression;
 using System.IO;
 using System.Diagnostics;
+using Mooshak2.Models;
 
 namespace Mooshak2.Controllers
 {
@@ -20,17 +21,13 @@ namespace Mooshak2.Controllers
             return View();
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Submit(int id)
         {
-            var viewModel = _service.GetAssignmentByID(id);
-
-            return View(viewModel);
+            ApplicationDbContext _db = new ApplicationDbContext();
+            var model = _db.Assignments.Where(x => x.ID == id).SingleOrDefault();
+            return View(model);
         }
        
-        public ActionResult Submit()
-        {
-            return View();
-        }
 
         [HttpPost]
         public ActionResult Submit(HttpPostedFileBase file)

@@ -1,7 +1,10 @@
-﻿@{
+﻿@model Mooshak2.Models.Entities.Assignment
+@{
     ViewBag.Title = "C++ Compile test page";
 }
-
+<div class="page-header">
+    <h1>@Model.Title</h1>
+</div>
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
