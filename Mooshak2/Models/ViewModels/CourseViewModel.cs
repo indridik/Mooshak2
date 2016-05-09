@@ -8,15 +8,9 @@ namespace Mooshak2.Models.ViewModels
 {
     public class CourseViewModel
     {
-        /// <summary>
-        /// ID kúrs
-        /// </summary>
-        public int ID { get; set; }
-        /// <summary>
-        /// Nafn kúrs
-        /// </summary>
-        public string Name { get; set; }
-
+        public string name { get; set; }
+        public List<int> teachers { get; set; }
+        public List<int> students { get; set; }
         public CourseViewModel()
         {
 
@@ -24,8 +18,7 @@ namespace Mooshak2.Models.ViewModels
 
         public CourseViewModel(Course course)
         {
-            this.ID = course.ID;
-            this.Name = course.Name;
+            this.name = course.Name;
         }
     }
 }

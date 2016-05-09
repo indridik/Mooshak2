@@ -1,0 +1,32 @@
+﻿@model Mooshak2.Models.CreateCourseModel
+@{
+    ViewBag.Title = "CreateCourse";
+}
+
+<h2>CreateCourse</h2>
+
+<div id="students">
+    Students
+    <br />
+    @foreach (var student in Model.students)
+    {
+        <div>
+            <input class="students" type="checkbox" value="@student.ID" id="@student.ID" /> @student.UserName
+        </div>
+    }
+</div>
+
+<div id="teachers">
+    Teachers
+    <br />
+        @foreach (var teacher in Model.teachers)
+        {
+            <div>
+                <input class="teachers" type="checkbox" value="@teacher.Id" id="@teacher.Id" /> @teacher.Name 
+            </div>
+        }
+</div>
+
+
+<input type="text" id="courseName" placeholder="Course Name" class="input "/>
+<input type="button" name="buttonName" value="Vista" onclick="CreateCourse()"/>

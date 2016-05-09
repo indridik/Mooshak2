@@ -10,7 +10,7 @@ namespace Mooshak2.Services
 {
     //public class UserServices
     //{
-    //    private ApplicationDbContext _db;
+        //private ApplicationDbContext _db;
 
     //    public UserServices()
     //    {

@@ -21,29 +21,12 @@
       <Association Name="Course_Assignment" Member="Course" ThisKey="CourseID" OtherKey="ID" Type="Course" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Courses" Member="Courses">
-    <Type Name="Course">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Association Name="Course_Assignment" Member="Assignments" ThisKey="ID" OtherKey="CourseID" Type="Assignment" />
-      <Association Name="Course_CourseStudent" Member="CourseStudents" ThisKey="ID" OtherKey="CourseID" Type="CourseStudent" />
-      <Association Name="Course_CourseTeacher" Member="CourseTeachers" ThisKey="ID" OtherKey="CourseID" Type="CourseTeacher" />
-    </Type>
-  </Table>
   <Table Name="dbo.CourseStudents" Member="CourseStudents">
     <Type Name="CourseStudent">
       <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UserName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Course_CourseStudent" Member="Course" ThisKey="CourseID" OtherKey="ID" Type="Course" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.CourseTeachers" Member="CourseTeachers">
-    <Type Name="CourseTeacher">
-      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="UserName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="CourseID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Course_CourseTeacher" Member="Course" ThisKey="CourseID" OtherKey="ID" Type="Course" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Milestones" Member="Milestones">
@@ -54,15 +37,6 @@
       <Column Name="Weight" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Milestone_Submission" Member="Submissions" ThisKey="ID" OtherKey="MilestoneID" Type="Submission" />
       <Association Name="Assignment_Milestone" Member="Assignment" ThisKey="AssignmentID" OtherKey="ID" Type="Assignment" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.ErrorLog" Member="ErrorLogs">
-    <Type Name="ErrorLog">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Message" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="StackTrace" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="Method" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="TimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
   <Table Name="dbo.MooshakUser" Member="MooshakUsers">
@@ -86,6 +60,41 @@
       <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ErrorLog" Member="ErrorLogs">
+    <Type Name="ErrorLog">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="StackTrace" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Method" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TeachersInCourses" Member="TeachersInCourses">
+    <Type Name="TeachersInCourse">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TeacherId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Teacher_TeachersInCourse" Member="Teacher" ThisKey="TeacherId" OtherKey="Id" Type="Teacher" IsForeignKey="true" />
+      <Association Name="Course_TeachersInCourse" Member="Course" ThisKey="CourseId" OtherKey="ID" Type="Course" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Teacher" Member="Teachers">
+    <Type Name="Teacher">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="Teacher_TeachersInCourse" Member="TeachersInCourses" ThisKey="Id" OtherKey="TeacherId" Type="TeachersInCourse" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Courses" Member="Courses">
+    <Type Name="Course">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Course_Assignment" Member="Assignments" ThisKey="ID" OtherKey="CourseID" Type="Assignment" />
+      <Association Name="Course_CourseStudent" Member="CourseStudents" ThisKey="ID" OtherKey="CourseID" Type="CourseStudent" />
+      <Association Name="Course_TeachersInCourse" Member="TeachersInCourses" ThisKey="ID" OtherKey="CourseId" Type="TeachersInCourse" />
     </Type>
   </Table>
 </Database>

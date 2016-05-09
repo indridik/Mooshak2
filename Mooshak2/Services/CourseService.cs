@@ -12,6 +12,12 @@ namespace Mooshak2.Services
 {
     public class CourseService
     {
+        public CreateCourseModel InitCreate()
+        {
+            List<Teacher> teachers = context.Teachers.ToList();
+            List<Student> students = context.Students.OrderBy(a => a.UserName).ToList();
+            return new CreateCourseModel(teachers, students);
+        }
         //private ApplicationDbContext _db;
         private readonly MooshakDataContext context;
 
@@ -54,6 +60,46 @@ namespace Mooshak2.Services
                 return new RequestResponse(ex.Message, Status.Error);
             }
         }
+
+        internal RequestResponse AddTeacherToCourse(int courseId, int teacherId)
+        {
+            try
+            {
+                TeachersInCourse newteacher = new TeachersInCourse()
+                {
+                    CourseId = courseId,
+                    TeacherId = teacherId
+                };
+                context.TeachersInCourses.InsertOnSubmit(newteacher);
+                context.SubmitChanges();
+                return new RequestResponse();
+            }
+            catch (Exception ex)
+            {
+                LogService.LogError("AddTeacherToCourse", ex);
+                return new RequestResponse(ex.Message, Status.Error);
+            }
+        }
+
+        internal RequestResponse RemoveTeacherFromCourse(int courseId, int teacherId)
+        {
+            try
+            {
+                TeachersInCourse teacher = context.TeachersInCourses.FirstOrDefault(a => a.CourseId == courseId && a.TeacherId == teacherId);
+                if (teacher == null)
+                    return new RequestResponse("Teacher not found", Status.Error);
+
+                context.TeachersInCourses.DeleteOnSubmit(teacher);
+                context.SubmitChanges();
+                return new RequestResponse();
+            }
+            catch (Exception ex)
+            {
+                LogService.LogError("RemoveTeacherFromCourse", ex);
+                return new RequestResponse(ex.Message, Status.Error);
+            }
+        }
+
         public void UpdateCourse(string name, int id)
         {
             Course courseToEdit = context.Courses.FirstOrDefault(a => a.ID == id);
