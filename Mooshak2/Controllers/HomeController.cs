@@ -1,5 +1,8 @@
 ﻿using Mooshak2.Models;
+using Mooshak2.Models.Entities;
 using System.Web.Mvc;
+using Mooshak2.Models.ViewModels;
+using System.Linq;
 
 namespace Mooshak2.Controllers
 {
@@ -8,7 +11,26 @@ namespace Mooshak2.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View();
+            if(User.IsInRole("Administrators"))
+            {
+                return View("Admin");
+            }
+            else if(User.IsInRole("Teachers"))
+            {
+                return View("Teacher");
+            }
+            else
+            {
+               return RedirectToAction("Student");
+            }
+        }
+        
+        [Authorize]
+        public ActionResult Student()
+        {
+            ApplicationDbContext _db = new ApplicationDbContext();
+            var model = _db.Courses.ToList();
+            return View(model);
         }
 
         public ActionResult About()
@@ -24,10 +46,18 @@ namespace Mooshak2.Controllers
 
             return View();
         }
+
         [Authorize(Roles = "Administrators")]
         public ActionResult Admin()
         {
             return View();
+        }
+
+        public ActionResult AssignmentJson(int id)
+        {
+            ApplicationDbContext _db = new ApplicationDbContext();
+            var assignments = _db.Assignments.Where(x => x.CourseID == id).ToList();
+            return Json(assignments, JsonRequestBehavior.AllowGet);
         }
     }
 }

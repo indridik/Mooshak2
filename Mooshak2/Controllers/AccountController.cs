@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Mooshak2.Models;
+using Mooshak2.Models.Entities;
 
 namespace Mooshak2.Controllers
 {
@@ -172,6 +173,13 @@ namespace Mooshak2.Controllers
                         {
                             manager.AddUserToRole(user.Id, "Administrators");
                         }
+                    }
+                    else if(role == "Student")
+                    {
+                        ApplicationDbContext _db = new ApplicationDbContext();
+                        Student student = new Student { UserName = model.Email };
+                        _db.Students.Add(student);
+                        _db.SaveChanges();
                     }
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 

@@ -42,13 +42,6 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#courses').change(function () {
-                $('#assignments').css("visibility", "visible");
-            });
-        });
-    </script>
+    <script src="~/Scripts/mooshak2Script.js"></script>
 </body>
 </html>
