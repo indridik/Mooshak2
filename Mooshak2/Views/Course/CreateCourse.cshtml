@@ -41,14 +41,6 @@
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
                                     Assign Teachers
-                                    @foreach(var ass in User)
-                                    {
-                                        @if (ass.IsinRole("Teacher"))
-                                        {
-                                            <input type="checkbox" value=ass.ID />
-                                            @Html.LabelFor(model => model.ID)
-                                        }
-                                    }
                                 </a>
                             </h4>
                         </div>
