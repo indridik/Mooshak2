@@ -4,12 +4,14 @@ using System.Web.Mvc;
 using Mooshak2.Models.ViewModels;
 using System.Linq;
 using Mooshak2.DAL;
+using Mooshak2.Services;
 
 namespace Mooshak2.Controllers
 {
     public class HomeController : Controller
     {
-        private MooshakDataContext context;
+        private MooshakDataContext context = new MooshakDataContext();
+        private AssignmentsService service = new AssignmentsService();
         [Authorize]
         public ActionResult Index()
         {
@@ -55,10 +57,10 @@ namespace Mooshak2.Controllers
             return View();
         }
 
-        public ActionResult AssignmentJson(int id)
+        public ActionResult AssignmentJson(int courseID)
         {
-            
-            var assignments = context.Assignments.Where(x => x.CourseID == id).ToList();
+
+            var assignments = service.GetAssignmentsInCourse(courseID);
             return Json(assignments, JsonRequestBehavior.AllowGet);
         }
     }
