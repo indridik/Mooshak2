@@ -42,9 +42,10 @@ namespace Mooshak2.Controllers
             return Json(response);
         }
 
-        public ActionResult Submit()
+        public ActionResult Submit(int id)
         {
-            return View();
+            var model = _service.GetAssignmentByID(id);
+            return View(model);
         }
 
         [HttpPost]

@@ -9,6 +9,7 @@ namespace Mooshak2.Models.ViewModels
     public class AssignmentViewModel
     {
         public string Title { get; set; }
+        public int ID { get; set; }
 
         public List<AssignmentMilestoneViewModel> Milestones { get; set; }
 
@@ -19,6 +20,7 @@ namespace Mooshak2.Models.ViewModels
 
         public AssignmentViewModel(Assignment assignment)
         {
+            this.ID = assignment.ID;
             this.Title = assignment.Title;
             this.Milestones = assignment.Milestones.Select(a => new AssignmentMilestoneViewModel(a)).ToList();
         }
