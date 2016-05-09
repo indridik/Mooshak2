@@ -139,24 +139,40 @@ namespace Mooshak2.Controllers
         //
         // GET: /Account/Register
         [Authorize(Roles = "Administrators")]
-        public ActionResult Register()
+        public ActionResult CreateUser()
         {
             return View();
         }
 
-        //
         // POST: /Account/Register
         [HttpPost]
         [Authorize(Roles = "Administrators")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> CreateUser(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                
                 if (result.Succeeded)
                 {
+                    IdentityManager manager = new IdentityManager();
+                    var role = Request.Form["roleSelect"];
+                    if (role == "Teacher")
+                    {
+                        if (!manager.UserIsInRole(user.Id, "Teachers"))
+                        {
+                            manager.AddUserToRole(user.Id, "Teachers");
+                        }
+                    }
+                    else if(role == "Admin")
+                    {
+                        if (!manager.UserIsInRole(user.Id, "Administrators"))
+                        {
+                            manager.AddUserToRole(user.Id, "Administrators");
+                        }
+                    }
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -166,13 +182,11 @@ namespace Mooshak2.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     // setja skilaboð til admins eftir að hann er búinn að búa til aðgang
-
-                    AccountService service = new AccountService();
-                    service.CreateUser("Ble", "Lalli");
-
-                    return RedirectToAction("Index", "Home");
+                    ViewBag.result = "User successfully created";
+                    return View();
                 }
                 AddErrors(result);
+                ViewBag.result = "Failed creating user";
             }
 
             // If we got this far, something failed, redisplay form

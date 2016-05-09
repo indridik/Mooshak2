@@ -59,7 +59,6 @@ namespace Mooshak2.Controllers
 
         public ActionResult AssignmentJson(int courseID)
         {
-
             var assignments = service.GetAssignmentsInCourse(courseID);
             return Json(assignments, JsonRequestBehavior.AllowGet);
         }
