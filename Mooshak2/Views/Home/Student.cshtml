@@ -1,0 +1,36 @@
+﻿@model List<Mooshak2.Models.Entities.Course>
+@{
+    ViewBag.Title = "Welcome to Mooshak 2.0";
+}
+@{ 
+    string a = User.Identity.Name.ToString();
+    int symbol = a.IndexOf('@');
+    string b = a;
+    if(symbol != -1)
+    {
+        b = a.Substring(0, symbol);
+    }
+}
+
+<div class="page-header">
+    <h1>Welcome, @b !</h1>
+</div>
+<form method="POST" id="courseForm">
+<select class="form-control" id="courses" name="courses">
+    <option>Choose a course</option>
+    @foreach(var course in Model)
+    {
+        <option name="@course.ID" id="@course.ID">@course.Name</option>
+    }
+</select>
+</form>
+<style>
+    #assignments {
+        margin-top: 20%;
+        font-size: 30px;
+    }
+</style>
+
+
+<div class="assignmentDiv"></div>
+

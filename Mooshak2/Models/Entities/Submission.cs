@@ -11,5 +11,6 @@ namespace Mooshak2.Models.Entities
         public int    MilestoneID { get; set; }
         public string Title { get; set; }
         public string Result { get; set; }
+        public DateTime SubmitTime { get; set; }
     }
 }

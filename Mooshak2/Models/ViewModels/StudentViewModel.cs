@@ -14,6 +14,5 @@ namespace Mooshak2.Models.ViewModels
         /// <summary>
         /// fullt nafn nemanda
         /// </summary>
-        public string FullName { get; set; }
     }
 }
