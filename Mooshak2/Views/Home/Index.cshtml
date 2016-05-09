@@ -15,14 +15,15 @@
 <div class="page-header">
     <h1>Welcome, @b !</h1>
 </div>
-<select class="form-control" id="courses">
+<form method="POST" id="courseForm">
+<select class="form-control" id="courses" name="courses">
     <option>Choose a course</option>
     @foreach(var course in Model)
     {
         <option name="@course.ID" id="@course.ID">@course.Name</option>
     }
 </select>
-
+</form>
 <style>
     .assignments {
         margin-top: 20%;
