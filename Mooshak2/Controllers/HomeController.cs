@@ -46,6 +46,7 @@ namespace Mooshak2.Controllers
 
             return View();
         }
+
         [Authorize(Roles = "Administrators")]
         public ActionResult Admin()
         {
