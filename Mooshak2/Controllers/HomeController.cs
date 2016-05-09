@@ -33,7 +33,7 @@ namespace Mooshak2.Controllers
         public ActionResult Student()
         {
             
-            var model = context.Students.ToList();
+            var model = context.Courses.ToList();
             return View(model);
         }
 
