@@ -5,13 +5,15 @@ using Mooshak2.Models.ViewModels;
 using System.Linq;
 using Mooshak2.DAL;
 using Mooshak2.Services;
+using System.Collections.Generic;
 
 namespace Mooshak2.Controllers
 {
     public class HomeController : Controller
     {
         private MooshakDataContext context = new MooshakDataContext();
-        private AssignmentsService service = new AssignmentsService();
+        private CourseService cService = new CourseService();
+        private AssignmentsService aService = new AssignmentsService();
         [Authorize]
         public ActionResult Index()
         {
@@ -32,8 +34,14 @@ namespace Mooshak2.Controllers
         [Authorize]
         public ActionResult Student()
         {
-            
-            var model = context.Courses.ToList();
+
+            var courses = cService.GetAllCourses();
+            List<CourseViewModel> model = new List<CourseViewModel>();
+            foreach(var course in courses)
+            {
+                var temp = new CourseViewModel(course);
+                model.Add(temp);
+            }
             return View(model);
         }
 
@@ -57,9 +65,9 @@ namespace Mooshak2.Controllers
             return View();
         }
 
-        public ActionResult AssignmentJson(int courseID)
+        public ActionResult AssignmentJson(int id)
         {
-            var assignments = service.GetAssignmentsInCourse(courseID);
+            var assignments = aService.GetAssignmentsInCourse(id);
             return Json(assignments, JsonRequestBehavior.AllowGet);
         }
     }
