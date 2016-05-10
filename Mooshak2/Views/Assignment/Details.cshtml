@@ -28,6 +28,11 @@
         }
     </div>
     <br />
+    <style>
+        .wrong {
+            color:red;
+        }
+    </style>
     <div class="col-md-4">
     </div>
         <table class="table table-striped">
@@ -46,10 +51,17 @@
                 {
                     <tr>
                         <td>@submission.Milestone</td>
-                        <td>@submission.Result</td>
+                        @if (submission.Result == "Wrong answer" || submission.Result == "Compile error")
+                        {
+                            <td style="color:red;">@submission.Result</td>
+                        }
+                        else 
+                        {
+                        <td style="color:green;">@submission.Result</td>        
+                        }
                         <td>@submission.Time</td>
                         <td>@submission.Course</td>
-                        <td><button class="btn btn-xs">view</button></td>
+                        <td><button class="btn btn-xs" onclick="submissionResults(@submission.ID)">view</button></td>
                     </tr>
                 }
             }

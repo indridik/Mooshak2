@@ -8,10 +8,10 @@ $(function () {
             method: 'POST',
             data: form.serialize(),
             success: function(data) {
-                /* var html = "<select multiple='multiple' class='form-control' id='assignments'>";
+                 /*var html = "<select multiple='multiple' class='form-control' id='assignments'>";
                 for (var i = 0; i < data.length; i++) {
                     var tempID = data[i].ID.toString();
-                    html += "<option class='ass' id='" + tempID + "'>" + data[i].Title + "</option>";
+                    html += "<option onclick='assignments(" + tempID +");' class='assignmentSelect' id='" + tempID + "'>" + data[i].Title + "</option>";
                 }
                 html += "</select>";*/
                 console.log(data);
@@ -27,9 +27,12 @@ $(function () {
 });
 
 function assignments(id) {
-    window.location = "/Assignment/Submit/" + id;
+    window.location = "/Assignment/Details/" + id;
 }
 
+function submissionResults(id) {
+    window.location = "/Assignment/Results/" + id;
+}
 
 function CreateCourse() {
     var title = $("#courseName").val();

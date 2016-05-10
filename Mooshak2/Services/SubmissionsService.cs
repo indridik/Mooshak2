@@ -4,9 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Mooshak2.DAL;
 
 namespace Mooshak2.Services
 {
+    public class SubmissionsService
+    {
+        private MooshakDataContext context = new MooshakDataContext();
+
+        public SubmissionViewModel GetSubmissionByID(int submissionID)
+        {
+            var submission = context.Submissions.SingleOrDefault(x => x.ID == submissionID);
+            return new SubmissionViewModel(submission);
+        }
+    }
     //public class SubmissionsService
     //{
     //    private ApplicationDbContext _db;

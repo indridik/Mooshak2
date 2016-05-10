@@ -43,7 +43,7 @@ namespace Mooshak2.Controllers
             return Json(response);
         }
 
-        public ActionResult Submit(int id)
+        public ActionResult Details(int id)
         {
             var model = _service.GetAssignmentByID(id);
             return View(model);
@@ -52,6 +52,9 @@ namespace Mooshak2.Controllers
         [HttpPost]
         public ActionResult Submit(HttpPostedFileBase file, FormCollection collection)
         {
+            ///<summary>
+            ///Get info of chosen assignment to navigate a path to save the file
+            ///</summary>
             string mTitle = collection["milestoneSelect"];
             var milestone = context.Milestones.SingleOrDefault(x => x.Title == mTitle);
             var assignment = _service.GetAssignmentByID(milestone.AssignmentID);
@@ -59,39 +62,58 @@ namespace Mooshak2.Controllers
             submission.SubmitTime = DateTime.Now;
             submission.MilestoneID = milestone.ID;
             submission.Title = User.Identity.Name;
-            submission.Result = "Accepted";
-            context.Submissions.InsertOnSubmit(submission);
-            context.SubmitChanges();
-
+            var id = milestone.Submissions.Count + 1;
             var path = "";
             if (file != null && file.ContentLength > 0)
             {
                 var fileName = Path.GetFileName(file.FileName);
-                Directory.CreateDirectory(@"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name +  "\\" + submission.ID + "\\");
-                path = Path.Combine(@"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name + "\\" + submission.ID + "\\", fileName);
+                ///<summary>
+                ///Create a folder from Assignment/Milestone/User/noOfSubmissions
+                ///and save the file there
+                ///</summary>
+                Directory.CreateDirectory(@"C:\Temp\Mooshak2Code\" 
+                                         + assignment.Title + "\\" 
+                                         + milestone.Title + "\\" 
+                                         + User.Identity.Name +  "\\" 
+                                         + id + "\\");
+
+                path = Path.Combine(@"C:\Temp\Mooshak2Code\" 
+                                    + assignment.Title + "\\" 
+                                    + milestone.Title + "\\" 
+                                    + User.Identity.Name + "\\" 
+                                    + id + "\\", fileName);
                 file.SaveAs(path);
             }
 
-            string extractPath = @"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name + "\\" + submission.ID + "\\";
-            if (!System.IO.File.Exists(extractPath + "main.cpp"))
+
+            ///<summary>
+            ///If this is a zip file then we unzip it into the same folder. A user
+            ///will always upload a main.cpp file so if it exists then this is not
+            ///a zip file.
+            ///</summary>
+            string extractPath = @"C:\Temp\Mooshak2Code\" 
+                                 + assignment.Title + "\\" 
+                                 + milestone.Title + "\\" 
+                                 + User.Identity.Name + "\\" 
+                                 + id + "\\";
+            if (Path.GetExtension(extractPath) == ".zip")
             {
                 ZipFile.ExtractToDirectory(path, extractPath);
             }
 
-            //var code = System.IO.File.ReadAllText(extractPath + "\\main.cpp");
-            // To simplify matters, we declare the code here.
-            // The code would of course come from the student!
-            // Set up our working folder, and the file names/paths.
-            // In this example, this is all hardcoded, but in a
-            // real life scenario, there should probably be individual
-            // folders for each user/assignment/milestone.
-            var workingFolder = @"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name + "\\" + submission.ID + "\\";
+
+            ///<summary>
+            ///The base of this code comes from Dabs but I have modified it to
+            ///suit our needs
+            ///</summary>
+            var workingFolder = @"C:\Temp\Mooshak2Code\" 
+                                + assignment.Title + "\\"
+                                + milestone.Title + "\\"
+                                + User.Identity.Name + "\\" 
+                                + id + "\\";
             var cppFileName = "main.cpp";
             var exeFilePath = workingFolder + "main.exe";
 
-            // Write the code to a file, such that the compiler
-            // can find it:
-            //System.IO.File.WriteAllText(workingFolder + cppFileName, code);
 
             // In this case, we use the C++ compiler (cl.exe) which ships
             // with Visual Studio. It is located in this folder:
@@ -142,33 +164,82 @@ namespace Mooshak2.Controllers
                 {
                     processExe.StartInfo = processInfoExe;
                     processExe.Start();
-                    // In this example, we don't try to pass any input
-                    // to the program, but that is of course also
-                    // necessary. We would do that here, using
-                    // processExe.StandardInput.WriteLine(), similar
-                    // to above.
-                    // We then read the output of the program:
+                   
+                    ///<summary>
+                    ///Here we get the input for this miletone which is saved
+                    ///in a folder like /Assignment/Milestone
+                    ///</summary>
+                    var inputPath = @"C:\Temp\Mooshak2Code\" 
+                                    + assignment.Title + "\\" 
+                                    + milestone.Title 
+                                    + "\\input.txt";
+                    var input = System.IO.File.ReadAllText(inputPath);
+
+                    ///<summary>
+                    ///We write the input to the command line
+                    /// </summary>
+                    processExe.StandardInput.WriteLine(input);
                     string lines = "";
+
+                    ///<summary>
+                    ///Here we get the output from the program.
+                    /// </summary>
                     while (!processExe.StandardOutput.EndOfStream)
                     {
                         lines += processExe.StandardOutput.ReadLine();
                     }
-                    var outputPath = @"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title +  "\\output.txt";
-                    var input = System.IO.File.ReadAllText(outputPath);
-                    if(lines == input)
+                    System.IO.File.WriteAllText(workingFolder + "userInput.txt", lines);
+
+                    ///<summary>
+                    ///We get the expected output for this milestone and compare it 
+                    ///to the output from the user program.
+                    ///We add the result to the submission class
+                    /// </summary>
+                    /// 
+
+                    //Server.MapPath("~/code")
+
+                    var outputPath = @"C:\Temp\Mooshak2Code\" 
+                                     + assignment.Title + "\\" 
+                                     + milestone.Title 
+                                     + "\\output.txt";
+
+                    var expectedOutput = System.IO.File.ReadAllText(outputPath);
+                    if(lines == expectedOutput)
                     {
-                        ViewBag.OutPut = "Correct!";
+                        submission.Result = "Accepted";
                     }
                     else
                     {
-                        ViewBag.OutPut = "Wrong answer idiot";
+                        submission.Result = "Wrong answer";
                     }
                 }
             }
-            // TODO: We might want to clean up after the process, there
-            // may be files we should delete etc.
+
+            ///<summary>
+            ///If we get here, there is no .exe file so the compiler has failed
+            ///</summary>
+            else
+            {
+                submission.Result = "Compile error";
+            }
+
+            ///<summary>
+            ///Save the new submission to the database
+            ///</summary>
+            context.Submissions.InsertOnSubmit(submission);
+            context.SubmitChanges();
+
+            ///<summary>
+            ///
+            ///</summary>
             var model = _service.GetAssignmentByID(assignment.ID);
-                return View(model);
+                return View("Details",model);
+        }
+
+        public ActionResult Results(int id)
+        {
+            return View();
         }
     }
 }

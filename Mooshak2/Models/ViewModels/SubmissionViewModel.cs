@@ -1,4 +1,5 @@
-﻿using Mooshak2.DAL;
+﻿using Microsoft.AspNet.Identity;
+using Mooshak2.DAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,11 @@ namespace Mooshak2.Models.ViewModels
             Assignment assignment = context.Assignments.SingleOrDefault(x => x.ID == milestone.AssignmentID);
             Course course = context.Courses.SingleOrDefault(x => x.ID == assignment.ID);
             this.Course = course.Name;
-
+            this.ID = submission.ID;
         }
+
+        public string Output { get; set; }
+        public int ID { get; set; }
         /// <summary>
         /// Hluti verkefnis sem var skilað
         /// </summary>
