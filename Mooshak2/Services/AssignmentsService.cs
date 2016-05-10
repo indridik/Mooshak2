@@ -66,6 +66,20 @@ namespace Mooshak2.Services
             return new AssignmentViewModel(assignment);
 
         }
+       /* public IQueryable<Course> GetAllCoursesForTeacher(int teacherId)
+        {
+            try {
+                var teach = (from teacher in context.Teachers.Where(x => x.Id == teacherId) select teacher).FirstOrDefault();
+                var test = (from course in context.Courses where course.TeachersInCourses.Where(x => x.TeacherId == teach.Id).Count() > 0 select course);
+                var lel = teach.Select(a => a.TeachersInCourses).SelectMany(a => a.Courses).ToList();
+                return test;
+            }
+            catch(Exception ex)
+            {
+                LogService.LogError("GetAllCoursesForTeacher", ex);
+                return new List<CourseViewModel>();
+            }
+        }*/
         public void UpdateAssignment(string title, int id)
         {
             Assignment assToEdit = context.Assignments.FirstOrDefault(a => a.ID == id);
