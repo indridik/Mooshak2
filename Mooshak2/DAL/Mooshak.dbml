@@ -71,15 +71,6 @@
       <Column Name="TimeStamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
-  <Table Name="dbo.TeachersInCourses" Member="TeachersInCourses">
-    <Type Name="TeachersInCourse">
-      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="TeacherId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="Teacher_TeachersInCourse" Member="Teacher" ThisKey="TeacherId" OtherKey="Id" Type="Teacher" IsForeignKey="true" />
-      <Association Name="Course_TeachersInCourse" Member="Course" ThisKey="CourseId" OtherKey="ID" Type="Course" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.Teacher" Member="Teachers">
     <Type Name="Teacher">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -94,8 +85,8 @@
       <Column Name="Name" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
       <Association Name="Course_Assignment" Member="Assignments" ThisKey="ID" OtherKey="CourseID" Type="Assignment" />
       <Association Name="Course_CourseStudent" Member="CourseStudents" ThisKey="ID" OtherKey="CourseID" Type="CourseStudent" />
-      <Association Name="Course_TeachersInCourse" Member="TeachersInCourses" ThisKey="ID" OtherKey="CourseId" Type="TeachersInCourse" />
       <Association Name="Course_StudentsInCourse" Member="StudentsInCourses" ThisKey="ID" OtherKey="CourseId" Type="StudentsInCourse" />
+      <Association Name="Course_TeachersInCourse" Member="TeachersInCourses" ThisKey="ID" OtherKey="CourseId" Type="TeachersInCourse" />
     </Type>
   </Table>
   <Table Name="dbo.Students" Member="Students">
@@ -112,6 +103,15 @@
       <Column Name="StudentId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="Course_StudentsInCourse" Member="Course" ThisKey="CourseId" OtherKey="ID" Type="Course" IsForeignKey="true" />
       <Association Name="Student_StudentsInCourse" Member="Student" ThisKey="StudentId" OtherKey="ID" Type="Student" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TeachersInCourses" Member="TeachersInCourses">
+    <Type Name="TeachersInCourse">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TeacherId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Course_TeachersInCourse" Member="Course" ThisKey="CourseId" OtherKey="ID" Type="Course" IsForeignKey="true" />
+      <Association Name="Teacher_TeachersInCourse" Member="Teacher" ThisKey="TeacherId" OtherKey="Id" Type="Teacher" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

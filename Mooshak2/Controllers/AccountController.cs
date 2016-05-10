@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Mooshak2.Models;
 using Mooshak2.Services;
+using Mooshak2.DAL;
 
 namespace Mooshak2.Controllers
 {
@@ -173,6 +174,7 @@ namespace Mooshak2.Controllers
                             manager.AddUserToRole(user.Id, "Administrators");
                         }
                     }
+
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
