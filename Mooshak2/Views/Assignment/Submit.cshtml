@@ -27,8 +27,24 @@
             <p>@ViewBag.Output</p>
         }
     </div>
+    <br />
     <div class="col-md-4">
     </div>
-    <div class="col-md-4">
-    </div>
+        <table class="table table-striped">
+            <thead>
+                <th>Name</th>
+                <th>Problem</th>
+                <th>Result</th>
+                <th>Time</th>
+                <th>Course</th>
+            </thead>
+            <tbody>
+                <td>Verkefni 1</td>
+                <td>Part A</td>
+                <td>Accepted</td>
+                <td>@DateTime.Now</td>
+                <td>@Model.Title</td>
+            </tbody>
+
+        </table>
 </div>
