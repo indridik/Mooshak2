@@ -16,6 +16,7 @@ namespace Mooshak2.Controllers
 {
     public class AssignmentController : Controller
     {
+        private MooshakDataContext context = new MooshakDataContext();
         private AssignmentsService _service = new AssignmentsService();
 
         // GET: Assignments
@@ -49,19 +50,27 @@ namespace Mooshak2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Submit(HttpPostedFileBase file, int id)
+        public ActionResult Submit(HttpPostedFileBase file, FormCollection collection)
         {
+            string mTitle = collection["milestoneSelect"];
+            var milestone = context.Milestones.SingleOrDefault(x => x.Title == mTitle);
+            var assignment = _service.GetAssignmentByID(milestone.AssignmentID);
+            var submission = new DAL.Submission();
+            submission.SubmitTime = DateTime.Now;
+            submission.MilestoneID = milestone.ID;
+            submission.Title = User.Identity.Name;
+
             var path = "";
             if (file != null && file.ContentLength > 0)
             {
-                var fileName = Path.GetFileName("file1.zip");
-                Directory.CreateDirectory(@"C:\Temp\Mooshak2Code\" + User.Identity.Name + "\\");
-                path = Path.Combine(@"C:\Temp\Mooshak2Code\" + User.Identity.Name + "\\", fileName);
+                var fileName = Path.GetFileName(file.FileName);
+                Directory.CreateDirectory(@"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name +  "\\" + submission.ID + "\\");
+                path = Path.Combine(@"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name + "\\" + submission.ID + "\\", fileName);
                 file.SaveAs(path);
             }
 
-            string extractPath = "C:\\Temp\\Mooshak2Code\\" + User.Identity.Name;
-            if (!System.IO.File.Exists(extractPath + "\\main.cpp"))
+            string extractPath = @"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name + "\\" + submission.ID + "\\";
+            if (!System.IO.File.Exists(extractPath + "main.cpp"))
             {
                 ZipFile.ExtractToDirectory(path, extractPath);
             }
@@ -73,7 +82,7 @@ namespace Mooshak2.Controllers
             // In this example, this is all hardcoded, but in a
             // real life scenario, there should probably be individual
             // folders for each user/assignment/milestone.
-            var workingFolder = "C:\\Temp\\Mooshak2Code\\" + User.Identity.Name + "\\";
+            var workingFolder = @"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title + "\\" + User.Identity.Name + "\\" + submission.ID + "\\";
             var cppFileName = "main.cpp";
             var exeFilePath = workingFolder + "main.exe";
 
@@ -136,25 +145,27 @@ namespace Mooshak2.Controllers
                     // processExe.StandardInput.WriteLine(), similar
                     // to above.
                     // We then read the output of the program:
-                    var lines = new List<string>();
+                    string lines = "";
                     while (!processExe.StandardOutput.EndOfStream)
                     {
-                        lines.Add(processExe.StandardOutput.ReadLine());
+                        lines += processExe.StandardOutput.ReadLine();
                     }
-
-                    ViewBag.Output = lines;
+                    var outputPath = @"C:\Temp\Mooshak2Code\" + assignment.Title + "\\" + milestone.Title +  "\\output.txt";
+                    var input = System.IO.File.ReadAllText(outputPath);
+                    if(lines == input)
+                    {
+                        ViewBag.OutPut = "Correct!";
+                    }
+                    else
+                    {
+                        ViewBag.OutPut = "Wrong answer idiot";
+                    }
                 }
             }
-            else
-            {
-                var lines = output;
-                ViewBag.Output = lines;
-            }
-
             // TODO: We might want to clean up after the process, there
             // may be files we should delete etc.
-            var model = _service.GetAssignmentByID(id);
-            return View(model);
+            var model = _service.GetAssignmentByID(assignment.ID);
+                return View(model);
         }
     }
 }

@@ -5,16 +5,17 @@
 
 <div class="page-header">
     <h1>@Model.Title</h1>
+    <h2>@DateTime.Now</h2>
 </div>
 
 
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {   <select class="form-control">
+        {   <select class="form-control" id="milestoneSelect" name="milestoneSelect">
                 @foreach (var mstone in Model.Milestones)
                 {
-                    <option>@mstone.Title</option>
+                    <option value="@mstone.Title">@mstone.Title</option>
                 }
             </select>
             <input type="file" name="file" required="required" />
@@ -23,12 +24,8 @@
 
         @if (ViewBag.Output != null)
         {
-            <ul>
-                @foreach (var line in ViewBag.Output)
-                {
-                    <li>@line</li>
-                }
-            </ul>}
+            <p>@ViewBag.Output</p>
+        }
     </div>
     <div class="col-md-4">
     </div>
