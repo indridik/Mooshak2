@@ -1,29 +1,59 @@
-﻿@model Mooshak2.Models.Entities.Assignment
+﻿@model Mooshak2.Models.ViewModels.AssignmentViewModel
 @{
     ViewBag.Title = "C++ Compile test page";
 }
+
 <div class="page-header">
     <h1>@Model.Title</h1>
+    <h2>@DateTime.Now</h2>
 </div>
+
+
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
+        {   <select class="form-control" id="milestoneSelect" name="milestoneSelect">
+                @foreach (var mstone in Model.Milestones)
+                {
+                    <option value="@mstone.Title">@mstone.Title</option>
+                }
+            </select>
             <input type="file" name="file" required="required" />
             <input type="Submit" class="btn btn-primary" value="Compile Test Code" />
         }
 
         @if (ViewBag.Output != null)
         {
-            <ul>
-                @foreach (var line in ViewBag.Output)
+            <p>@ViewBag.Output</p>
+        }
+    </div>
+    <br />
+    <div class="col-md-4">
+    </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Problem</th>
+                    <th>Result</th>
+                    <th>Time</th>
+                    <th>Course</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach(var milestone in Model.Milestones)
+            {
+                foreach(var submission in milestone.Submissions)
                 {
-                    <li>@line</li>
+                    <tr>
+                        <td>@submission.Milestone</td>
+                        <td>@submission.Result</td>
+                        <td>@submission.Time</td>
+                        <td>@submission.Course</td>
+                        <td><button class="btn btn-xs">view</button></td>
+                    </tr>
                 }
-            </ul>}
-    </div>
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-    </div>
+            }
+            </tbody>
+
+        </table>
 </div>

@@ -97,8 +97,8 @@ namespace Mooshak2.Controllers
                 StudentsInCourses = students,
                 TeachersInCourses = teachers
             };
-
             RequestResponse response = service.CreateCourse(model);
+            ViewBag.result = "Course successfully created!";
             return Json(response);
         }
     }
