@@ -60,6 +60,7 @@ namespace Mooshak2.Controllers
             var assignment = _service.GetAssignmentByID(milestone.AssignmentID);
             var submission = new DAL.Submission();
             submission.SubmitTime = DateTime.Now;
+            string time = DateTime.Now.ToString("yyyyMMddTHHmmss");
             submission.MilestoneID = milestone.ID;
             submission.Title = User.Identity.Name;
             var id = milestone.Submissions.Count + 1;
@@ -71,17 +72,17 @@ namespace Mooshak2.Controllers
                 ///Create a folder from Assignment/Milestone/User/noOfSubmissions
                 ///and save the file there
                 ///</summary>
-                Directory.CreateDirectory(@"C:\Temp\Mooshak2Code\" 
-                                         + assignment.Title + "\\" 
-                                         + milestone.Title + "\\" 
-                                         + User.Identity.Name +  "\\" 
-                                         + id + "\\");
+                Directory.CreateDirectory(@"C:\Temp\Mooshak2Code\"
+                                         + assignment.Title + "\\"
+                                         + milestone.Title + "\\"
+                                         + User.Identity.Name + "\\"
+                                         + time + "\\");
 
                 path = Path.Combine(@"C:\Temp\Mooshak2Code\" 
                                     + assignment.Title + "\\" 
                                     + milestone.Title + "\\" 
                                     + User.Identity.Name + "\\" 
-                                    + id + "\\", fileName);
+                                    + time + "\\", fileName);
                 file.SaveAs(path);
             }
 
@@ -95,7 +96,7 @@ namespace Mooshak2.Controllers
                                  + assignment.Title + "\\" 
                                  + milestone.Title + "\\" 
                                  + User.Identity.Name + "\\" 
-                                 + id + "\\";
+                                 + time + "\\";
             if (Path.GetExtension(extractPath) == ".zip")
             {
                 ZipFile.ExtractToDirectory(path, extractPath);
@@ -110,7 +111,7 @@ namespace Mooshak2.Controllers
                                 + assignment.Title + "\\"
                                 + milestone.Title + "\\"
                                 + User.Identity.Name + "\\" 
-                                + id + "\\";
+                                + time + "\\";
             var cppFileName = "main.cpp";
             var exeFilePath = workingFolder + "main.exe";
 
@@ -174,7 +175,6 @@ namespace Mooshak2.Controllers
                                     + milestone.Title 
                                     + "\\input.txt";
                     var input = System.IO.File.ReadAllText(inputPath);
-
                     ///<summary>
                     ///We write the input to the command line
                     /// </summary>
@@ -239,7 +239,32 @@ namespace Mooshak2.Controllers
 
         public ActionResult Results(int id)
         {
-            return View();
+            SubmissionsService service = new SubmissionsService();
+            var submission = service.GetSubmissionByID(id);
+
+            var outputPath = @"C:\Temp\Mooshak2Code\"
+                                     + submission.Assignment + "\\"
+                                     + submission.Milestone
+                                     + "\\output.txt";
+            var inputPath = @"C:\Temp\Mooshak2Code\"
+                                     + submission.Assignment + "\\"
+                                     + submission.Milestone
+                                     + "\\input.txt";
+
+            var expectedPath = @"C:\Temp\Mooshak2Code\"
+                                     + submission.Assignment + "\\"
+                                     + submission.Milestone + "\\"
+                                     + User.Identity.Name + "\\"
+                                     + submission.Time.Value.ToString("yyyyMMddTHHmmss")
+                                     + "\\userInput.txt";
+
+            submission.Output = System.IO.File.ReadAllText(outputPath);
+
+            submission.Input = System.IO.File.ReadAllText(inputPath);
+
+            submission.UserOutput = System.IO.File.ReadAllText(expectedPath);
+
+            return View(submission);
         }
     }
 }

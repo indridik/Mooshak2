@@ -17,12 +17,16 @@ namespace Mooshak2.Models.ViewModels
             Milestone milestone = context.Milestones.SingleOrDefault(x => x.ID == submission.MilestoneID);
             this.Milestone = milestone.Title;
             Assignment assignment = context.Assignments.SingleOrDefault(x => x.ID == milestone.AssignmentID);
+            this.Assignment = assignment.Title;
             Course course = context.Courses.SingleOrDefault(x => x.ID == assignment.ID);
             this.Course = course.Name;
             this.ID = submission.ID;
         }
 
+        public string Input { get; set; }
         public string Output { get; set; }
+        public string UserOutput { get; set; }
+        public string Assignment { get; set; }
         public int ID { get; set; }
         /// <summary>
         /// Hluti verkefnis sem var skilað
