@@ -32,18 +32,27 @@
     </div>
         <table class="table table-striped">
             <thead>
-                <th>Name</th>
-                <th>Problem</th>
-                <th>Result</th>
-                <th>Time</th>
-                <th>Course</th>
+                <tr>
+                    <th>Problem</th>
+                    <th>Result</th>
+                    <th>Time</th>
+                    <th>Course</th>
+                </tr>
             </thead>
             <tbody>
-                <td>Verkefni 1</td>
-                <td>Part A</td>
-                <td>Accepted</td>
-                <td>@DateTime.Now</td>
-                <td>@Model.Title</td>
+            @foreach(var milestone in Model.Milestones)
+            {
+                foreach(var submission in milestone.Submissions)
+                {
+                    <tr>
+                        <td>@submission.Milestone</td>
+                        <td>@submission.Result</td>
+                        <td>@submission.Time</td>
+                        <td>@submission.Course</td>
+                        <td><button class="btn btn-xs">view</button></td>
+                    </tr>
+                }
+            }
             </tbody>
 
         </table>

@@ -59,6 +59,9 @@ namespace Mooshak2.Controllers
             submission.SubmitTime = DateTime.Now;
             submission.MilestoneID = milestone.ID;
             submission.Title = User.Identity.Name;
+            submission.Result = "Accepted";
+            context.Submissions.InsertOnSubmit(submission);
+            context.SubmitChanges();
 
             var path = "";
             if (file != null && file.ContentLength > 0)
