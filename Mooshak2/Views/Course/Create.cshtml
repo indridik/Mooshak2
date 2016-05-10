@@ -4,29 +4,58 @@
 }
 
 <h2>CreateCourse</h2>
+@*@if (ViewBag.result == "Course successfully created!")
+{
+    <div class="alert alert-success" role="alert">
+        <p>
+            @ViewBag.result;
+        </p>
+    </div>
+}*@
 
-<div id="students">
-    Students
-    <br />
-    @foreach (var student in Model.students)
-    {
-        <div>
-            <input class="students" type="checkbox" value="@student.ID" id="@student.ID" /> @student.UserName
+<input type="text" id="courseName" placeholder="Course Name" class="input form-control"/>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Students
+                </a>
+            </h4>
         </div>
-    }
-</div>
-
-<div id="teachers">
-    Teachers
-    <br />
-        @foreach (var teacher in Model.teachers)
-        {
-            <div>
-                <input class="teachers" type="checkbox" value="@teacher.Id" id="@teacher.Id" /> @teacher.Name 
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <div id="students">
+                    @foreach (var student in Model.students)
+                    {
+                        <div>
+                            <input class="students" type="checkbox" value="@student.ID" id="@student.ID" /> @student.UserName
+                        </div>
+                    }
+                </div>
             </div>
-        }
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Teachers
+                </a>
+            </h4>
+        </div>
+        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body">
+                <div id="teachers">
+                    @foreach (var teacher in Model.teachers)
+                    {
+                        <div>
+                            <input class="teachers" type="checkbox" value="@teacher.Id" id="@teacher.Id" /> @teacher.Name
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-<input type="text" id="courseName" placeholder="Course Name" class="input "/>
-<input type="button" name="buttonName" value="Vista" onclick="CreateCourse()"/>
+<input type="button" name="buttonName" value="Vista" onclick="CreateCourse()" class"btn btn-default"/>
