@@ -303,10 +303,10 @@
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Account\CreateUser.cshtml" />
+    <Content Include="Views\Assignment\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Assignment\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

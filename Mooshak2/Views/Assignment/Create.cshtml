@@ -1,0 +1,20 @@
+﻿@model Mooshak2.Models.ViewModels.CreateAssignment
+
+@{
+    ViewBag.Title = "CreateAssignment";
+}
+
+<h2>CreateAssignment</h2>
+<div>
+    <label for="assignmentName" />Assignment Name
+    <input type="text" id="assignmentName" class="input" /><br />
+    <select>
+    </select><br/>
+    
+    <label for="open"/> Start of assignment
+    <input type="datetime" id="open"/><br/>
+    <label for="close"/>End of assignment
+    <input type="datetime" id="close"/><br />
+    <input type="submit" id="submit" value="Create Assigment" onclick="CreateAssignment()"/>
+</div>
+

@@ -8,6 +8,7 @@ using Mooshak2.Models.Entities;
 using Mooshak2.Models.ViewModels;
 using Mooshak2.DAL;
 using Mooshak2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Mooshak2.Controllers
 {
@@ -24,21 +25,22 @@ namespace Mooshak2.Controllers
         public ActionResult Details(int id)
         {
             var viewModel = _service.GetAssignmentByID(id);
-
             return View(viewModel);
         }
 
         public ActionResult Create()
         {
             CourseService courseService = new CourseService();
+            AssignmentsService assignmentService = new AssignmentsService();
             Assignment assignment = new Assignment();
             List<Course> courses = courseService.GetAllCourses();
             CreateAssignment model = new CreateAssignment(courses);
+            List<CourseViewModel> coursesForTeacher = assignmentService.GetAllCoursesForTeacher(User.Identity.Name);
 
             return View(model);   
         }
 
-        public JsonResult Create(Assignment model)
+        public JsonResult CreateJson(Assignment model)
         {
             AssignmentsService service = new AssignmentsService();
             RequestResponse response = service.CreateAssignment(model);

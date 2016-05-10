@@ -10,12 +10,14 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Mooshak2.Models;
 using Mooshak2.Services;
+using Mooshak2.DAL;
 
 namespace Mooshak2.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private MooshakDataContext context;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -164,6 +166,7 @@ namespace Mooshak2.Controllers
                         if (!manager.UserIsInRole(user.Id, "Teachers"))
                         {
                             manager.AddUserToRole(user.Id, "Teachers");
+                            
                         }
                     }
                     else if(role == "Admin")
@@ -172,6 +175,12 @@ namespace Mooshak2.Controllers
                         {
                             manager.AddUserToRole(user.Id, "Administrators");
                         }
+                    }
+                    else if(role == "Student")
+                    {
+                        var student = new Student { UserName = model.Email };
+                        context.Students.InsertOnSubmit(student);
+                        context.SubmitChanges();
                     }
                     //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
