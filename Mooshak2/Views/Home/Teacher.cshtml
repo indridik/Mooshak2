@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewBag.Title = "Welcome to Mooshak 2.0";
+}
+@{
+    string a = User.Identity.Name.ToString();
+    int symbol = a.IndexOf('@');
+    string b = a;
+    if (symbol != -1)
+    {
+        b = a.Substring(0, symbol);
+    }
+}
+
+<div class="page-header">
+    <h1>Welcome, @b !</h1>
+</div>
+

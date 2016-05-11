@@ -151,6 +151,7 @@ namespace Mooshak2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CreateUser(RegisterViewModel model)
         {
+            MooshakDataContext context = new MooshakDataContext();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -165,6 +166,8 @@ namespace Mooshak2.Controllers
                         if (!manager.UserIsInRole(user.Id, "Teachers"))
                         {
                             manager.AddUserToRole(user.Id, "Teachers");
+                            context.Teachers.InsertOnSubmit(new Teacher() { Name = user.UserName, Email = user.Email });
+                            context.SubmitChanges();
                         }
                     }
                     else if(role == "Admin")
@@ -174,17 +177,21 @@ namespace Mooshak2.Controllers
                             manager.AddUserToRole(user.Id, "Administrators");
                         }
                     }
+                    else if (role == "Student")
+                    {
+                            context.Students.InsertOnSubmit(new Student() { UserName = user.UserName });
+                            context.SubmitChanges();
+                    }
+                        //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
-                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
+                        // Send an email with this link
+                        // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-                    // setja skilaboð til admins eftir að hann er búinn að búa til aðgang
-                    ViewBag.result = "User successfully created";
+                        // setja skilaboð til admins eftir að hann er búinn að búa til aðgang
+                        ViewBag.result = "User successfully created";
                     return View();
                 }
                 AddErrors(result);

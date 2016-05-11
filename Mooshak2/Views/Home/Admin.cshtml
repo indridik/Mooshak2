@@ -1,9 +1,28 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@{
+    ViewBag.Title = "Welcome to Mooshak 2.0";
+}
+@{
+    string a = User.Identity.Name.ToString();
+    int symbol = a.IndexOf('@');
+    string b = a;
+    if (symbol != -1)
+    {
+        b = a.Substring(0, symbol);
+    }
+}
 
-<br />
-<a class="btn btn-info" href="~/Course/Create">Create a new course</a>
-<br />
-<br />
-<a class="btn btn-info" href="~/Account/CreateUser">Create a new user</a>
+<div class="page-header">
+    <h1>Welcome, @b !</h1>
+</div>
+
+<div class="resize">
+    <div class="list-group">
+        <a href="~/Course/Create" class="list-group-item">Create Course</a>
+        <a href="~/Account/CreateUser" class="list-group-item">Create User</a>
+        <a href="~/Home/Teacher" class="list-group-item">Teacher View</a>
+        <a href="~/Home/Student" class="list-group-item">Student View</a>
+    </div>
+</div>

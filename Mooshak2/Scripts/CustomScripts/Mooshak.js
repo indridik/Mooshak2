@@ -1,5 +1,9 @@
 ﻿//Ready function
-$(function () {
+$(document).ready(function () {
+
+    setTimeout(function () {
+        $("#success").hide(); }, 3000);
+
     $("#courses").change(function () {
         var id = $(this).children(":selected").attr('id');
         var form = $("#courseForm");
@@ -8,12 +12,12 @@ $(function () {
             method: 'POST',
             data: form.serialize(),
             success: function(data) {
-                /* var html = "<select multiple='multiple' class='form-control' id='assignments'>";
-                for (var i = 0; i < data.length; i++) {
-                    var tempID = data[i].ID.toString();
-                    html += "<option class='ass' id='" + tempID + "'>" + data[i].Title + "</option>";
-                }
-                html += "</select>";*/
+                /*var html = "<select multiple='multiple' class='form-control' id='assignments'>";
+               for (var i = 0; i < data.length; i++) {
+                   var tempID = data[i].ID.toString();
+                   html += "<option onclick='assignments(" + tempID +");' class='assignmentSelect' id='" + tempID + "'>" + data[i].Title + "</option>";
+               }
+               html += "</select>";*/
                 console.log(data);
                 var html = "";
                 for (var i = 0; i < data.length; i++) {
@@ -22,14 +26,17 @@ $(function () {
                 }
                 $(".assignmentDiv").html(html);
             }
-        })
+        });
     });
 });
 
 function assignments(id) {
-    window.location = "/Assignment/Submit/" + id;
+    window.location = "/Assignment/Details/" + id;
 }
 
+function submissionResults(id) {
+    window.location = "/Assignment/Results/" + id;
+}
 
 function CreateCourse() {
     var title = $("#courseName").val();
@@ -78,3 +85,4 @@ function TestTeachers() {
 
     console.log(teachers);
 }
+

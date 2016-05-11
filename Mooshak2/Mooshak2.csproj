@@ -235,6 +235,7 @@
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\SubmissionsService.cs" />
+    <Compile Include="Services\TeacherService.cs" />
     <Compile Include="Services\UserServices.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -304,7 +305,10 @@
     <Content Include="Views\Course\Create.cshtml" />
     <Content Include="Views\Home\Student.cshtml" />
     <Content Include="Views\Account\CreateUser.cshtml" />
-    <Content Include="Views\Assignment\Submit.cshtml" />
+    <Content Include="Views\Assignment\Details.cshtml" />
+    <Content Include="Views\Assignment\Results.cshtml" />
+    <Content Include="Views\Home\Teacher.cshtml" />
+    <Content Include="Views\Assignment\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
