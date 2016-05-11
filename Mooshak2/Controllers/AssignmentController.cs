@@ -244,6 +244,7 @@ namespace Mooshak2.Controllers
             else
             {
                 submission.Result = "Compile error";
+                System.IO.File.WriteAllText(workingFolder + "userInput.txt", output);
             }
 
             ///<summary>
