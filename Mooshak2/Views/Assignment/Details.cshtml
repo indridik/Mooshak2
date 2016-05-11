@@ -8,7 +8,7 @@
     <h2>@DateTime.Now</h2>
 </div>
 
-
+<a href="~/Code/@Model.Course/@Model.Title/@(Model.Title).pdf" download>Download pdf</a>
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
