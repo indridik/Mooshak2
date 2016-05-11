@@ -53,6 +53,36 @@ namespace Mooshak2.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult Create(HttpPostedFileBase file, FormCollection collection)
+        {
+            string assignmentName = collection["assignmentName"];
+            string courseName = collection["courseSelect"];
+            string filename = file.FileName;
+
+            System.IO.Directory.CreateDirectory(Server.MapPath("~/Code/") 
+                                        + courseName + "//"
+                                        + assignmentName);
+
+            string path = (Server.MapPath("~/Code/") 
+                                        + courseName
+                                        + "//" + assignmentName + "//"
+                                        + filename);
+            file.SaveAs(path);
+            //TODO only allow authenticated teachers to create assignment
+            string teachersName = AuthenticationManager.User.Identity.Name;  //commenta út til að leyfa fleiri en teacher
+
+            TeacherService service = new TeacherService();
+
+            //int id = 1; //hardcoded dabs
+            int id = service.GetTeacherIdByName(teachersName); //commenta út ef nota á hardcoded dabs
+
+            Teacher t = service.GetTeacherById(id);
+
+            TeachersAssignment model = new TeachersAssignment(t);
+
+            return View(model);
+        }
         public JsonResult Create(Assignment model)
         {
             AssignmentsService service = new AssignmentsService();

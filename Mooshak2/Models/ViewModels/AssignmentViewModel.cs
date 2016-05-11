@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+
 namespace Mooshak2.Models.ViewModels
 {
+    
     public class AssignmentViewModel
     {
+        private MooshakDataContext context = new MooshakDataContext();
+
         public string Title { get; set; }
         public int ID { get; set; }
+        public string Course { get; set; }
 
         public List<AssignmentMilestoneViewModel> Milestones { get; set; }
 
@@ -23,6 +28,8 @@ namespace Mooshak2.Models.ViewModels
             this.ID = assignment.ID;
             this.Title = assignment.Title;
             this.Milestones = assignment.Milestones.Select(a => new AssignmentMilestoneViewModel(a)).ToList();
+            Course course = context.Courses.SingleOrDefault(x => x.ID == assignment.CourseID);
+            this.Course = course.Name;
         }
     }
 
