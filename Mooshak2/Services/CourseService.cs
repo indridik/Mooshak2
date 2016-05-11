@@ -107,5 +107,20 @@ namespace Mooshak2.Services
 
             context.SubmitChanges();
         }
+
+        public List<Course> GetAllCoursesForStudent(int studentId)
+        {
+            try
+            {
+
+                Student student = context.Students.FirstOrDefault(a => a.ID == studentId);
+                return student.StudentsInCourses.Select(a => a.Course).ToList();
+            }
+            catch (Exception ex)
+            {
+                LogService.LogError("GetAllCoursesForStudent", ex);
+                return new List<Course>();
+            }
+        }
     }
 }
