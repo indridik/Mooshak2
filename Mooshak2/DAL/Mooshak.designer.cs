@@ -30,9 +30,6 @@ namespace Mooshak2.DAL
 		
     #region Extensibility Method Definitions
     partial void OnCreated();
-    partial void InsertSubmission(Submission instance);
-    partial void UpdateSubmission(Submission instance);
-    partial void DeleteSubmission(Submission instance);
     partial void InsertAssignment(Assignment instance);
     partial void UpdateAssignment(Assignment instance);
     partial void DeleteAssignment(Assignment instance);
@@ -66,6 +63,9 @@ namespace Mooshak2.DAL
     partial void InsertTeachersInCourse(TeachersInCourse instance);
     partial void UpdateTeachersInCourse(TeachersInCourse instance);
     partial void DeleteTeachersInCourse(TeachersInCourse instance);
+    partial void InsertSubmission(Submission instance);
+    partial void UpdateSubmission(Submission instance);
+    partial void DeleteSubmission(Submission instance);
     #endregion
 		
 		public MooshakDataContext() : 
@@ -96,14 +96,6 @@ namespace Mooshak2.DAL
 				base(connection, mappingSource)
 		{
 			OnCreated();
-		}
-		
-		public System.Data.Linq.Table<Submission> Submissions
-		{
-			get
-			{
-				return this.GetTable<Submission>();
-			}
 		}
 		
 		public System.Data.Linq.Table<Assignment> Assignments
@@ -193,203 +185,12 @@ namespace Mooshak2.DAL
 				return this.GetTable<TeachersInCourse>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Submissions")]
-	public partial class Submission : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ID;
-		
-		private System.Nullable<int> _MilestoneID;
-		
-		private string _Title;
-		
-		private string _Result;
-		
-		private System.Nullable<System.DateTime> _SubmitTime;
-		
-		private EntityRef<Milestone> _Milestone;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnIDChanging(int value);
-    partial void OnIDChanged();
-    partial void OnMilestoneIDChanging(System.Nullable<int> value);
-    partial void OnMilestoneIDChanged();
-    partial void OnTitleChanging(string value);
-    partial void OnTitleChanged();
-    partial void OnResultChanging(string value);
-    partial void OnResultChanged();
-    partial void OnSubmitTimeChanging(System.Nullable<System.DateTime> value);
-    partial void OnSubmitTimeChanged();
-    #endregion
-		
-		public Submission()
-		{
-			this._Milestone = default(EntityRef<Milestone>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ID
+		public System.Data.Linq.Table<Submission> Submissions
 		{
 			get
 			{
-				return this._ID;
-			}
-			set
-			{
-				if ((this._ID != value))
-				{
-					this.OnIDChanging(value);
-					this.SendPropertyChanging();
-					this._ID = value;
-					this.SendPropertyChanged("ID");
-					this.OnIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MilestoneID", DbType="Int")]
-		public System.Nullable<int> MilestoneID
-		{
-			get
-			{
-				return this._MilestoneID;
-			}
-			set
-			{
-				if ((this._MilestoneID != value))
-				{
-					if (this._Milestone.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnMilestoneIDChanging(value);
-					this.SendPropertyChanging();
-					this._MilestoneID = value;
-					this.SendPropertyChanged("MilestoneID");
-					this.OnMilestoneIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX)")]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this.OnTitleChanging(value);
-					this.SendPropertyChanging();
-					this._Title = value;
-					this.SendPropertyChanged("Title");
-					this.OnTitleChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Result", DbType="NVarChar(MAX)")]
-		public string Result
-		{
-			get
-			{
-				return this._Result;
-			}
-			set
-			{
-				if ((this._Result != value))
-				{
-					this.OnResultChanging(value);
-					this.SendPropertyChanging();
-					this._Result = value;
-					this.SendPropertyChanged("Result");
-					this.OnResultChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubmitTime", DbType="DateTime")]
-		public System.Nullable<System.DateTime> SubmitTime
-		{
-			get
-			{
-				return this._SubmitTime;
-			}
-			set
-			{
-				if ((this._SubmitTime != value))
-				{
-					this.OnSubmitTimeChanging(value);
-					this.SendPropertyChanging();
-					this._SubmitTime = value;
-					this.SendPropertyChanged("SubmitTime");
-					this.OnSubmitTimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Milestone_Submission", Storage="_Milestone", ThisKey="MilestoneID", OtherKey="ID", IsForeignKey=true)]
-		public Milestone Milestone
-		{
-			get
-			{
-				return this._Milestone.Entity;
-			}
-			set
-			{
-				Milestone previousValue = this._Milestone.Entity;
-				if (((previousValue != value) 
-							|| (this._Milestone.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Milestone.Entity = null;
-						previousValue.Submissions.Remove(this);
-					}
-					this._Milestone.Entity = value;
-					if ((value != null))
-					{
-						value.Submissions.Add(this);
-						this._MilestoneID = value.ID;
-					}
-					else
-					{
-						this._MilestoneID = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Milestone");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+				return this.GetTable<Submission>();
 			}
 		}
 	}
@@ -2378,6 +2179,229 @@ namespace Mooshak2.DAL
 						this._TeacherId = default(int);
 					}
 					this.SendPropertyChanged("Teacher");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Submissions")]
+	public partial class Submission : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ID;
+		
+		private System.Nullable<int> _MilestoneID;
+		
+		private string _Title;
+		
+		private string _Result;
+		
+		private System.Nullable<System.DateTime> _SubmitTime;
+		
+		private string _UserName_;
+		
+		private EntityRef<Milestone> _Milestone;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnMilestoneIDChanging(System.Nullable<int> value);
+    partial void OnMilestoneIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnResultChanging(string value);
+    partial void OnResultChanged();
+    partial void OnSubmitTimeChanging(System.Nullable<System.DateTime> value);
+    partial void OnSubmitTimeChanged();
+    partial void OnUserName_Changing(string value);
+    partial void OnUserName_Changed();
+    #endregion
+		
+		public Submission()
+		{
+			this._Milestone = default(EntityRef<Milestone>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MilestoneID", DbType="Int")]
+		public System.Nullable<int> MilestoneID
+		{
+			get
+			{
+				return this._MilestoneID;
+			}
+			set
+			{
+				if ((this._MilestoneID != value))
+				{
+					if (this._Milestone.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnMilestoneIDChanging(value);
+					this.SendPropertyChanging();
+					this._MilestoneID = value;
+					this.SendPropertyChanged("MilestoneID");
+					this.OnMilestoneIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX)")]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Result", DbType="NVarChar(MAX)")]
+		public string Result
+		{
+			get
+			{
+				return this._Result;
+			}
+			set
+			{
+				if ((this._Result != value))
+				{
+					this.OnResultChanging(value);
+					this.SendPropertyChanging();
+					this._Result = value;
+					this.SendPropertyChanged("Result");
+					this.OnResultChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SubmitTime", DbType="DateTime")]
+		public System.Nullable<System.DateTime> SubmitTime
+		{
+			get
+			{
+				return this._SubmitTime;
+			}
+			set
+			{
+				if ((this._SubmitTime != value))
+				{
+					this.OnSubmitTimeChanging(value);
+					this.SendPropertyChanging();
+					this._SubmitTime = value;
+					this.SendPropertyChanged("SubmitTime");
+					this.OnSubmitTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[UserName ]", Storage="_UserName_", DbType="NVarChar(MAX)")]
+		public string UserName_
+		{
+			get
+			{
+				return this._UserName_;
+			}
+			set
+			{
+				if ((this._UserName_ != value))
+				{
+					this.OnUserName_Changing(value);
+					this.SendPropertyChanging();
+					this._UserName_ = value;
+					this.SendPropertyChanged("UserName_");
+					this.OnUserName_Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Milestone_Submission", Storage="_Milestone", ThisKey="MilestoneID", OtherKey="ID", IsForeignKey=true)]
+		public Milestone Milestone
+		{
+			get
+			{
+				return this._Milestone.Entity;
+			}
+			set
+			{
+				Milestone previousValue = this._Milestone.Entity;
+				if (((previousValue != value) 
+							|| (this._Milestone.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Milestone.Entity = null;
+						previousValue.Submissions.Remove(this);
+					}
+					this._Milestone.Entity = value;
+					if ((value != null))
+					{
+						value.Submissions.Add(this);
+						this._MilestoneID = value.ID;
+					}
+					else
+					{
+						this._MilestoneID = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Milestone");
 				}
 			}
 		}

@@ -111,6 +111,7 @@ namespace Mooshak2.Controllers
             string time = DateTime.Now.ToString("yyyyMMddTHHmmss");
             submission.MilestoneID = milestone.ID;
             submission.Title = User.Identity.Name;
+            var username = submission.UserName_;
             var path = "";
             if (file != null && file.ContentLength > 0)
             {
@@ -123,14 +124,14 @@ namespace Mooshak2.Controllers
                                          + course.Name + "\\"
                                          + assignment.Title + "\\"
                                          + milestone.Title + "\\"
-                                         + User.Identity.Name + "\\"
+                                         + username+ "\\"
                                          + time + "\\");
 
                 path = Path.Combine(Server.MapPath("~/Code/")
                                          + course.Name + "\\"
                                          + assignment.Title + "\\"
                                          + milestone.Title + "\\"
-                                         + User.Identity.Name + "\\"
+                                         + username + "\\"
                                          + time + "\\", fileName);
                 file.SaveAs(path);
             }
@@ -145,7 +146,7 @@ namespace Mooshak2.Controllers
                                          + course.Name + "\\"
                                          + assignment.Title + "\\"
                                          + milestone.Title + "\\"
-                                         + User.Identity.Name + "\\"
+                                         + username + "\\"
                                          + time + "\\";
             if (Path.GetExtension(extractPath) == ".zip")
             {
@@ -161,7 +162,7 @@ namespace Mooshak2.Controllers
                                          + course.Name + "\\"
                                          + assignment.Title + "\\"
                                          + milestone.Title + "\\"
-                                         + User.Identity.Name + "\\"
+                                         + username + "\\"
                                          + time + "\\";
             var cppFileName = "main.cpp";
             var exeFilePath = workingFolder + "main.exe";
@@ -311,7 +312,7 @@ namespace Mooshak2.Controllers
                                      + submission.Course + "\\"
                                      + submission.Assignment + "\\"
                                      + submission.Milestone + "\\"
-                                     + User.Identity.Name + "\\"
+                                     + submission.User + "\\"
                                      + submission.Time.Value.ToString("yyyyMMddTHHmmss")
                                      + "\\userInput.txt";
 

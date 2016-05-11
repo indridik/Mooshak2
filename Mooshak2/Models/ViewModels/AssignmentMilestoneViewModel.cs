@@ -21,7 +21,7 @@ namespace Mooshak2.Models.ViewModels
         public AssignmentMilestoneViewModel(Milestone milestone)
         {
             this.Title = milestone.Title;
-            this.Submissions = milestone.Submissions.Select(x => new SubmissionViewModel(x)).ToList();
+            this.Submissions = milestone.Submissions.Select(x => new SubmissionViewModel(x)).OrderByDescending(x => x.ID).ToList();
         }
     }
 }

@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     setTimeout(function () {
         $("#success").hide(); }, 3000);
-
+    
     $("#courses").change(function () {
         var id = $(this).children(":selected").attr('id');
         var form = $("#courseForm");
@@ -86,3 +86,31 @@ function TestTeachers() {
     console.log(teachers);
 }
 
+function addMilestones() {
+    var number = $('#noOfMilestones').val();
+    var html = "";
+    var no = 1;
+    for (var i = 0; i < number; i++) {
+        html += '<div class="panel panel-default">';
+        html += '<div class="panel-heading">';
+        html += '<h4 class="panel-title">';
+        html += '<a data-toggle="collapse" data-parent="#accordion" href="#collapse' + no + '">'
+        html +=  'Milestone' + no + '</a>';
+        html += '</h4></div>';
+        html += '<div id="collapse' + no+ '" class="panel-collapse collapse">';
+        html += '<div class="panel-body">';
+        html += '<label for="mName">Name</label>';
+        html += '<input type="text" class="form-control" id="mName"/>';
+        html += '<label for="mWeight">Weight(%)</label>';
+        html += '<input type="number" min="0" max="100" class="form-control" id="mWeight"/>';
+        html += '<label>Input';
+        html += '<input type="file" class="form-control" name="file" id="file" accept=".txt"/></label>';
+        html += '<label>Output';
+        html += '<input type="file" class="form-control" name="file" id="file" accept=".txt"/></label>';
+        html += '</div>';
+        html += '</div></div></div>';
+        no += 1;
+ 
+    }
+    $(".milestones").html(html);
+}
