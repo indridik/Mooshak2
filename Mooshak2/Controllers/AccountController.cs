@@ -179,12 +179,8 @@ namespace Mooshak2.Controllers
                     }
                     else if (role == "Student")
                     {
-                        if (!manager.UserIsInRole(user.Id, "Student"))
-                        {
-                            manager.AddUserToRole(user.Id, "Student");
                             context.Students.InsertOnSubmit(new Student() { UserName = user.UserName });
                             context.SubmitChanges();
-                        }
                     }
                         //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
