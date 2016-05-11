@@ -4,25 +4,25 @@
 }
 
 <h2>CreateNewAssignment</h2>
-<select>
-    @foreach (var c in Model.courses)
+
+    @using (Html.BeginForm("Create", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-
-    <option value="@c.Id">@c.name</option>
-
-    }
-</select>
-
-<div>
-    <label for="assignmentName" />Assignment Name
-    <input type="text" id="assignmentName" class="input" /><br />
+    <select id="courseSelect" name="courseSelect">
+        @foreach (var c in Model.courses)
+        {
+            <option value="@c.name">@c.name</option>
+        }
+    </select>
+    <label for="assignmentName">Assignment Name </label>
+    <input type="text" id="assignmentName" name="assignmentName" class="input" /><br />
     <select>
     </select><br/>
-    
-    <label for="open"/> Start of assignment
+    <label for="open"> Start of assignment</label>
     <input type="datetime" id="open"/><br/>
-    <label for="close"/>End of assignment
-    <input type="datetime" id="close"/><br />
-    <input type="submit" id="submit" value="Create Assigment" onclick="CreateAssignment()"/>
-</div>
+    <label for="close">End of assignment</label>
+    <input type="datetime" id="datepicker"/><br />
+    <label for="pdf">PDF</label>
+    <input type="file" name="file" id="pdf" />
+    <input type="submit" id="submit" value="Create Assigment"/>
+    }
 
