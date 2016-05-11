@@ -11,6 +11,7 @@ using Mooshak2.Models;
 using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
+using Microsoft.Owin.Security;
 
 namespace Mooshak2.Controllers
 {
@@ -25,15 +26,30 @@ namespace Mooshak2.Controllers
             return View();
         }
 
+        public ActionResult CreateNewAssignment(int teacherId)
+        {
+            TeacherService service = new TeacherService();
+            Teacher t = service.GetTeacherById(teacherId);
 
+            TeachersAssignment model = new TeachersAssignment(t);
+            return View(model);
+        }
+
+        [HttpGet]
         public ActionResult Create()
         {
-            CourseService courseService = new CourseService();
-            Assignment assignment = new Assignment();
-            List<Course> courses = courseService.GetAllCourses();
-            CreateAssignment model = new CreateAssignment(courses);
+            
+            //TODO only allow authenticated teachers to create assignment
+            string teachersName = AuthenticationManager.User.Identity.Name;
 
-            return View(model);   
+            TeacherService service = new TeacherService();
+
+            int id = service.GetTeacherIdByName(teachersName);
+            
+            Teacher t = service.GetTeacherById(id);
+
+            TeachersAssignment model = new TeachersAssignment(t);
+            return View(model);
         }
 
         public JsonResult Create(Assignment model)
@@ -275,5 +291,15 @@ namespace Mooshak2.Controllers
 
             return View(submission);
         }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
     }
+
+
 }

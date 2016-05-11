@@ -25,4 +25,31 @@ namespace Mooshak2.Models.ViewModels
             this.Milestones = assignment.Milestones.Select(a => new AssignmentMilestoneViewModel(a)).ToList();
         }
     }
+
+    public class TeachersAssignment
+    {
+        public List<BasicCourseVM> courses { get; set; }
+        public TeacherVM teacherInfo { get; set; }
+        public TeachersAssignment()
+        {
+
+        }
+        public TeachersAssignment(Teacher t)
+        {
+            courses = t.TeachersInCourses.Select(a => a.Course).Select(a => new BasicCourseVM(a)).ToList();
+            teacherInfo = new TeacherVM(t);
+        }
+    }
+
+    public class TeacherVM
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public TeacherVM(Teacher t)
+        {
+            this.id = t.Id;
+            this.name = t.Name;
+        }
+
+    }
 }

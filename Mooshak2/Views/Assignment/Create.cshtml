@@ -1,10 +1,18 @@
-﻿@model Mooshak2.Models.ViewModels.CreateAssignment
-
+﻿@model Mooshak2.Models.ViewModels.TeachersAssignment
 @{
-    ViewBag.Title = "CreateAssignment";
+    ViewBag.Title = "CreateNewAssignment";
 }
 
-<h2>CreateAssignment</h2>
+<h2>CreateNewAssignment</h2>
+<select>
+    @foreach (var c in Model.courses)
+    {
+
+    <option value="@c.Id">@c.name</option>
+
+    }
+</select>
+
 <div>
     <label for="assignmentName" />Assignment Name
     <input type="text" id="assignmentName" class="input" /><br />
