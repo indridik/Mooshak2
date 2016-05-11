@@ -2,12 +2,6 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 12.375, 13.25" name="Mooshak">
   <DataContextMoniker Name="/MooshakDataContext" />
   <nestedChildShapes>
-    <classShape Id="6d8ce253-7ecf-4933-8413-b6a645559351" absoluteBounds="9, 5.375, 2, 1.7708968098958327">
-      <DataClassMoniker Name="/MooshakDataContext/Submission" />
-      <nestedChildShapes>
-        <elementListCompartment Id="f2d33a4e-475a-4068-a92c-3f89e0cb8e5b" absoluteBounds="9.015, 5.835, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="b5fd7243-cb14-4dad-a3c0-f83fc0ddd7f3" absoluteBounds="3.5, 5.375, 2, 1.7708968098958327">
       <DataClassMoniker Name="/MooshakDataContext/Assignment" />
       <nestedChildShapes>
@@ -26,13 +20,6 @@
         <elementListCompartment Id="8c8755c6-d9a2-4a71-b765-9fe184a3c308" absoluteBounds="6.265, 5.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(8.25 : 6.28929768880208); (9 : 6.28929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
-      <AssociationMoniker Name="/MooshakDataContext/Milestone/Milestone_Submission" />
-      <nodes>
-        <classShapeMoniker Id="b02ae894-2439-4f55-a3dd-bbecf42f6a7b" />
-        <classShapeMoniker Id="6d8ce253-7ecf-4933-8413-b6a645559351" />
-      </nodes>
-    </associationConnector>
     <associationConnector edgePoints="[(5.5 : 6.28929768880208); (6.25 : 6.28929768880208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MooshakDataContext/Assignment/Assignment_Milestone" />
       <nodes>
@@ -103,7 +90,7 @@
         <classShapeMoniker Id="33ba4788-d45e-4adc-accc-6864febe6c79" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.3125 : 11.75); (7.3125 : 10.3862939453125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.3125 : 11.75); (7.3125 : 10.3862939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MooshakDataContext/Student/Student_StudentsInCourse" />
       <nodes>
         <classShapeMoniker Id="e89a25ed-2437-41d6-b090-0092280486f0" />
@@ -116,18 +103,31 @@
         <elementListCompartment Id="5f9aa8d9-ab9b-49ec-89d5-8ba420b19c28" absoluteBounds="3.6399999999999997, 12.085, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(4.5625 : 10.0689925130208); (4.5625 : 11.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(4.5625 : 10.0689925130208); (4.5625 : 11.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MooshakDataContext/Course/Course_TeachersInCourse" />
       <nodes>
         <classShapeMoniker Id="ed9572e7-973a-493d-8950-9c325c8e2404" />
         <classShapeMoniker Id="9fe8ab99-acaa-4343-bd59-072fed60ae5b" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.75 : 12.2556469726562); (3.625 : 12.2556469726562)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 12.2556469726562); (3.625 : 12.2556469726562)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/MooshakDataContext/Teacher/Teacher_TeachersInCourse" />
       <nodes>
         <classShapeMoniker Id="d164d7f6-c3b7-4587-85ce-531068a45563" />
         <classShapeMoniker Id="9fe8ab99-acaa-4343-bd59-072fed60ae5b" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="c630d528-5ae6-4ce0-836e-04e943ac2e59" absoluteBounds="9.375, 5.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/MooshakDataContext/Submission" />
+      <nestedChildShapes>
+        <elementListCompartment Id="21e18ec1-fa81-4d12-a171-4b24575c9e77" absoluteBounds="9.39, 6.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(8.25 : 6.41429768880208); (9.375 : 6.41429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/MooshakDataContext/Milestone/Milestone_Submission" />
+      <nodes>
+        <classShapeMoniker Id="b02ae894-2439-4f55-a3dd-bbecf42f6a7b" />
+        <classShapeMoniker Id="c630d528-5ae6-4ce0-836e-04e943ac2e59" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

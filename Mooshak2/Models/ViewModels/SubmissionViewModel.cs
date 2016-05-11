@@ -21,8 +21,10 @@ namespace Mooshak2.Models.ViewModels
             Course course = context.Courses.SingleOrDefault(x => x.ID == assignment.ID);
             this.Course = course.Name;
             this.ID = submission.ID;
+            this.User = submission.UserName_;
         }
 
+        public string User { get; set; }
         public string Input { get; set; }
         public string Output { get; set; }
         public string UserOutput { get; set; }

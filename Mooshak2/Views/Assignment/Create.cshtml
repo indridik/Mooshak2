@@ -7,22 +7,37 @@
 
     @using (Html.BeginForm("Create", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-    <select id="courseSelect" name="courseSelect">
+        <label for="courseSelect">Your courses</label>
+    <select id="courseSelect" name="courseSelect" class="form-control">
         @foreach (var c in Model.courses)
         {
             <option value="@c.name">@c.name</option>
         }
     </select>
     <label for="assignmentName">Assignment Name </label>
-    <input type="text" id="assignmentName" name="assignmentName" class="input" /><br />
-    <select>
-    </select><br/>
+    <input type="text" required class="form-control" id="assignmentName" name="assignmentName" class="input" /><br />
     <label for="open"> Start of assignment</label>
-    <input type="datetime" id="open"/><br/>
+    <input type="datetime" required class="form-control" id="open"/><br/>
     <label for="close">End of assignment</label>
-    <input type="datetime" id="datepicker"/><br />
-    <label for="pdf">PDF</label>
-    <input type="file" name="file" id="pdf" />
-    <input type="submit" id="submit" value="Create Assigment"/>
+    <input type="datetime"  required class="form-control" id="datepicker"/><br />
+    <label for="pdf">Description(.pdf)</label>
+    <input type="file" required name="file" class="form-control"id="pdf" /><br />
+    <label for="noOfMilestones">Number of Milestones</label>
+    <input type="number" class="form-control" id="noOfMilestones"value="1" min="1">
+    <input type="button"class="form-control" onclick="addMilestones()" value="Add milestones">
+        <style>
+            .milestones {
+                position:absolute;
+                margin-left:40%;
+                margin-top:-43%;
+                width:50%;
+            }
+        </style>
+    <div class="panel-group milestones" id="accordion">
+       
+    </div>
+
+
+    <input type="submit" id="submit" class="form-control"value="Create Assigment"/>
     }
 

@@ -41,6 +41,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>Username</th>
                     <th>Problem</th>
                     <th>Result</th>
                     <th>Time</th>
@@ -52,7 +53,7 @@
             {
                 foreach(var submission in milestone.Submissions)
                 {
-                    <tr>
+                    <tr><td>@User.Identity.Name</td>
                         <td>@submission.Milestone</td>
                         @if (submission.Result == "Wrong answer" || submission.Result == "Compile error")
                         {
