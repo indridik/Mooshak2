@@ -5,14 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
+using Mooshak2.DAL;
 
 namespace Mooshak2.Services
 {
-    //public class UserServices
+    //
+    //
     //{
-        //private ApplicationDbContext _db;
+    //private ApplicationDbContext _db;
 
-    //    public UserServices()
+    //    
     //    {
     //        _db = new ApplicationDbContext();
     //    }

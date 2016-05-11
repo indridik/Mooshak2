@@ -23,4 +23,15 @@ namespace Mooshak2.Models.ViewModels
             this.ID = course.ID;
         }
     }
+
+    public class BasicCourseVM
+    {
+        public string name { get; set; }
+        public int Id { get; set; }
+        public BasicCourseVM(Course course)
+        {
+            this.name = course.Name;
+            this.Id = course.ID;
+        }
+    }
 }
