@@ -8,7 +8,9 @@
     <h2>@DateTime.Now</h2>
 </div>
 
-<a href="~/Code/@Model.Course/@Model.Title/@(Model.Title).pdf" download>Download pdf</a>
+<a href="~/Code/@Model.Course/@Model.Title/@(Model.Title).pdf" class="btn btn-primary" download>Download pdf</a>
+<br />
+<br />
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -18,11 +20,15 @@
                     <option value="@mstone.Title">@mstone.Title</option>
                 }
             </select>
+            <br />
             <input type="file" id="file" name="file" accept=".cpp,.zip"
                    required="required" />
+            <br />
             <label for="file">.zip, .cpp</label>
-            <br/>
-            <input type="Submit" class="btn btn-primary" value="Compile Test Code" />
+            <br />
+            <input type="Submit" class="btn btn-primary" value="Submit" />
+            <br />
+            <br />
         }
 
         @if (ViewBag.Output != null)
@@ -38,14 +44,15 @@
     </style>
     <div class="col-md-4">
     </div>
-        <table class="table table-striped">
+        <table class="table table-striped" id="DetailsTable">
             <thead>
                 <tr>
-                    <th>Username</th>
-                    <th>Problem</th>
-                    <th>Result</th>
-                    <th>Time</th>
-                    <th>Course</th>
+                    <th class="tablehead">Username</th>
+                    <th class="tablehead">Problem</th>
+                    <th class="tablehead">Result</th>
+                    <th class="tablehead">Time</th>
+                    <th class="tablehead">Course</th>
+                    <th class="tablehead"></th>
                 </tr>
             </thead>
             <tbody>
