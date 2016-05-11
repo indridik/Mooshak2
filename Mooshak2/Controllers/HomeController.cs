@@ -70,5 +70,11 @@ namespace Mooshak2.Controllers
             var assignments = aService.GetAssignmentsInCourse(id);
             return Json(assignments, JsonRequestBehavior.AllowGet);
         }
+
+        [Authorize(Roles = "Administrators, Teachers")]
+        public ActionResult Teacher()
+        {
+            return View();
+        }
     }
 }
