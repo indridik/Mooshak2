@@ -111,6 +111,7 @@ namespace Mooshak2.Controllers
             string time = DateTime.Now.ToString("yyyyMMddTHHmmss");
             submission.MilestoneID = milestone.ID;
             submission.Title = User.Identity.Name;
+            submission.UserName_ = User.Identity.Name;
             var username = submission.UserName_;
             var path = "";
             if (file != null && file.ContentLength > 0)
@@ -312,7 +313,7 @@ namespace Mooshak2.Controllers
                                      + submission.Course + "\\"
                                      + submission.Assignment + "\\"
                                      + submission.Milestone + "\\"
-                                     + submission.User + "\\"
+                                     + submission.Title + "\\"
                                      + submission.Time.Value.ToString("yyyyMMddTHHmmss")
                                      + "\\userInput.txt";
 
