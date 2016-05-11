@@ -28,7 +28,9 @@
     display: inline;
     float: right;
 }
-
+.resize{
+    width: 200px;
+}
 .center-login {
     margin: auto;
     width: 450px;
