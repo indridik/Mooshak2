@@ -40,7 +40,7 @@ namespace Mooshak2.Controllers
         {
             
             //TODO only allow authenticated teachers to create assignment
-            string teachersName = AuthenticationManager.User.Identity.Name;  //commenta út til að nota hardcoded
+            string teachersName = AuthenticationManager.User.Identity.Name;  //commenta út til að leyfa fleiri en teacher
 
             TeacherService service = new TeacherService();
 
