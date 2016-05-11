@@ -6,6 +6,8 @@ using System.Linq;
 using Mooshak2.DAL;
 using Mooshak2.Services;
 using System.Collections.Generic;
+using Microsoft.Owin.Security;
+using System.Web;
 
 namespace Mooshak2.Controllers
 {
@@ -14,6 +16,7 @@ namespace Mooshak2.Controllers
         private MooshakDataContext context = new MooshakDataContext();
         private CourseService cService = new CourseService();
         private AssignmentsService aService = new AssignmentsService();
+        private StudentService sService = new StudentService();
         [Authorize]
         public ActionResult Index()
         {
@@ -34,8 +37,11 @@ namespace Mooshak2.Controllers
         [Authorize]
         public ActionResult Student()
         {
+            string studentName = AuthenticationManager.User.Identity.Name;
 
-            var courses = cService.GetAllCourses();
+            int Id = sService.GetStudentIdByName(studentName);
+
+            var courses = cService.GetAllCoursesForStudent(Id);
             List<CourseViewModel> model = new List<CourseViewModel>();
             foreach(var course in courses)
             {
@@ -75,6 +81,14 @@ namespace Mooshak2.Controllers
         public ActionResult Teacher()
         {
             return View();
+        }
+
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
         }
     }
 }

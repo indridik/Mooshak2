@@ -234,6 +234,7 @@
     <Compile Include="Services\AssignmentsService.cs" />
     <Compile Include="Services\CourseService.cs" />
     <Compile Include="Services\LogService.cs" />
+    <Compile Include="Services\StudentService.cs" />
     <Compile Include="Services\SubmissionsService.cs" />
     <Compile Include="Services\TeacherService.cs" />
     <Compile Include="Services\UserServices.cs" />
