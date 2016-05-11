@@ -99,10 +99,10 @@ function addMilestones() {
         html += '</h4></div>';
         html += '<div id="collapse' + no+ '" class="panel-collapse collapse">';
         html += '<div class="panel-body">';
-        html += '<label for="mName">Name</label>';
-        html += '<input type="text" class="form-control" id="mName"/>';
+        html += '<label for="mName' + no + '">Name</label>';
+        html += '<input type="text" class="form-control" id="mName' + no + '" name="mName' + no + '"/>';
         html += '<label for="mWeight">Weight(%)</label>';
-        html += '<input type="number" min="0" max="100" class="form-control" id="mWeight"/>';
+        html += '<input type="number" min="0" max="100" class="form-control" name="mWeight' + no +'" id="mWeight' + no + '"/>';
         html += '<label>Input';
         html += '<input type="file" class="form-control" name="file" id="file" accept=".txt"/></label>';
         html += '<label>Output';
