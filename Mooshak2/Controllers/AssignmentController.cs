@@ -57,13 +57,13 @@ namespace Mooshak2.Controllers
             ///</summary>
             string mTitle = collection["milestoneSelect"];
             var milestone = context.Milestones.SingleOrDefault(x => x.Title == mTitle);
-            var assignment = _service.GetAssignmentByID(milestone.AssignmentID);
+            var assignment = context.Assignments.SingleOrDefault(x => x.ID == milestone.AssignmentID);
+            var course = context.Courses.SingleOrDefault(x => x.ID == assignment.CourseID);
             var submission = new DAL.Submission();
             submission.SubmitTime = DateTime.Now;
             string time = DateTime.Now.ToString("yyyyMMddTHHmmss");
             submission.MilestoneID = milestone.ID;
             submission.Title = User.Identity.Name;
-            var id = milestone.Submissions.Count + 1;
             var path = "";
             if (file != null && file.ContentLength > 0)
             {
@@ -72,17 +72,19 @@ namespace Mooshak2.Controllers
                 ///Create a folder from Assignment/Milestone/User/noOfSubmissions
                 ///and save the file there
                 ///</summary>
-                Directory.CreateDirectory(@"C:\Temp\Mooshak2Code\"
+                Directory.CreateDirectory(Server.MapPath("~/Code/")
+                                         + course.Name + "\\"
                                          + assignment.Title + "\\"
                                          + milestone.Title + "\\"
                                          + User.Identity.Name + "\\"
                                          + time + "\\");
 
-                path = Path.Combine(@"C:\Temp\Mooshak2Code\" 
-                                    + assignment.Title + "\\" 
-                                    + milestone.Title + "\\" 
-                                    + User.Identity.Name + "\\" 
-                                    + time + "\\", fileName);
+                path = Path.Combine(Server.MapPath("~/Code/")
+                                         + course.Name + "\\"
+                                         + assignment.Title + "\\"
+                                         + milestone.Title + "\\"
+                                         + User.Identity.Name + "\\"
+                                         + time + "\\", fileName);
                 file.SaveAs(path);
             }
 
@@ -92,11 +94,12 @@ namespace Mooshak2.Controllers
             ///will always upload a main.cpp file so if it exists then this is not
             ///a zip file.
             ///</summary>
-            string extractPath = @"C:\Temp\Mooshak2Code\" 
-                                 + assignment.Title + "\\" 
-                                 + milestone.Title + "\\" 
-                                 + User.Identity.Name + "\\" 
-                                 + time + "\\";
+            string extractPath = Server.MapPath("~/Code/")
+                                         + course.Name + "\\"
+                                         + assignment.Title + "\\"
+                                         + milestone.Title + "\\"
+                                         + User.Identity.Name + "\\"
+                                         + time + "\\";
             if (Path.GetExtension(extractPath) == ".zip")
             {
                 ZipFile.ExtractToDirectory(path, extractPath);
@@ -107,11 +110,12 @@ namespace Mooshak2.Controllers
             ///The base of this code comes from Dabs but I have modified it to
             ///suit our needs
             ///</summary>
-            var workingFolder = @"C:\Temp\Mooshak2Code\" 
-                                + assignment.Title + "\\"
-                                + milestone.Title + "\\"
-                                + User.Identity.Name + "\\" 
-                                + time + "\\";
+            var workingFolder = Server.MapPath("~/Code/")
+                                         + course.Name + "\\"
+                                         + assignment.Title + "\\"
+                                         + milestone.Title + "\\"
+                                         + User.Identity.Name + "\\"
+                                         + time + "\\";
             var cppFileName = "main.cpp";
             var exeFilePath = workingFolder + "main.exe";
 
@@ -170,7 +174,8 @@ namespace Mooshak2.Controllers
                     ///Here we get the input for this miletone which is saved
                     ///in a folder like /Assignment/Milestone
                     ///</summary>
-                    var inputPath = @"C:\Temp\Mooshak2Code\" 
+                    var inputPath = Server.MapPath("~/Code/") 
+                                    + course.Name + "\\"
                                     + assignment.Title + "\\" 
                                     + milestone.Title 
                                     + "\\input.txt";
@@ -196,10 +201,10 @@ namespace Mooshak2.Controllers
                     ///We add the result to the submission class
                     /// </summary>
                     /// 
+                    
 
-                    //Server.MapPath("~/code")
-
-                    var outputPath = @"C:\Temp\Mooshak2Code\" 
+                    var outputPath = Server.MapPath("~/Code/")
+                                     + course.Name + "\\"
                                      + assignment.Title + "\\" 
                                      + milestone.Title 
                                      + "\\output.txt";
@@ -242,16 +247,20 @@ namespace Mooshak2.Controllers
             SubmissionsService service = new SubmissionsService();
             var submission = service.GetSubmissionByID(id);
 
-            var outputPath = @"C:\Temp\Mooshak2Code\"
-                                     + submission.Assignment + "\\"
-                                     + submission.Milestone
-                                     + "\\output.txt";
-            var inputPath = @"C:\Temp\Mooshak2Code\"
+            var outputPath = Server.MapPath("~/Code/")
+                             + submission.Course + "\\"
+                             + submission.Assignment + "\\"
+                             + submission.Milestone
+                             + "\\output.txt";
+
+            var inputPath = Server.MapPath("~/Code/")
+                                     + submission.Course + "\\"
                                      + submission.Assignment + "\\"
                                      + submission.Milestone
                                      + "\\input.txt";
 
-            var expectedPath = @"C:\Temp\Mooshak2Code\"
+            var expectedPath = Server.MapPath("~/Code/")
+                                     + submission.Course + "\\"
                                      + submission.Assignment + "\\"
                                      + submission.Milestone + "\\"
                                      + User.Identity.Name + "\\"
