@@ -18,7 +18,10 @@
                     <option value="@mstone.Title">@mstone.Title</option>
                 }
             </select>
-            <input type="file" name="file" required="required" />
+            <input type="file" id="file" name="file" accept=".cpp,.zip"
+                   required="required" />
+            <label for="file">.zip, .cpp</label>
+            <br/>
             <input type="Submit" class="btn btn-primary" value="Compile Test Code" />
         }
 
