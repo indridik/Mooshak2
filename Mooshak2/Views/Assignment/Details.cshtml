@@ -8,7 +8,9 @@
     <h2>@DateTime.Now</h2>
 </div>
 
-<a href="~/Code/@Model.Course/@Model.Title/@(Model.Title).pdf" download>Download pdf</a>
+<a href="~/Code/@Model.Course/@Model.Title/@(Model.Title).pdf" class="btn btn-primary" download>Assignment Description pdf</a>
+<br />
+<br />
 <div class="row">
     <div class="col-md-4">
         @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -18,11 +20,16 @@
                     <option value="@mstone.Title">@mstone.Title</option>
                 }
             </select>
+            <br />
             <input type="file" id="file" name="file" accept=".cpp,.zip"
                    required="required" />
+            <br />
             <label for="file">.zip, .cpp</label>
             <br/>
-            <input type="Submit" class="btn btn-primary" value="Compile Test Code" />
+            <br />
+            <input type="Submit" class="btn btn-primary" value="Submit" />
+            <br />
+            <br />
         }
 
         @if (ViewBag.Output != null)
@@ -38,13 +45,14 @@
     </style>
     <div class="col-md-4">
     </div>
-        <table class="table table-striped">
+        <table class="table table-striped" id="DetailsTable">
             <thead>
                 <tr>
-                    <th>Problem</th>
-                    <th>Result</th>
-                    <th>Time</th>
-                    <th>Course</th>
+                    <th class="tablehead">Problem</th>
+                    <th class="tablehead">Result</th>
+                    <th class="tablehead">Time</th>
+                    <th class="tablehead">Course</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -56,11 +64,11 @@
                         <td>@submission.Milestone</td>
                         @if (submission.Result == "Wrong answer" || submission.Result == "Compile error")
                         {
-                            <td style="color:red;">@submission.Result</td>
+                            <td style="color:red;"><strong>@submission.Result</strong></td>
                         }
                         else 
                         {
-                        <td style="color:green;">@submission.Result</td>        
+                        <td style="color:green;"><strong>@submission.Result</strong></td>        
                         }
                         <td>@submission.Time</td>
                         <td>@submission.Course</td>

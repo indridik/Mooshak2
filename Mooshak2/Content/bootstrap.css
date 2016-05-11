@@ -350,8 +350,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #333333;
-  background-color: #ffffcc;
+  color: #90C5A9;
+  background-color: #3F2860;
 }
 
 
@@ -1518,7 +1518,29 @@ th {
 
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #f9f9f9;
+  background-color: #90C5A9;
+  color: black;
+}
+
+.tablehead{
+    color: #fff;
+}
+
+#DetailsTable{
+    background: #000;
+
+     border-radius: 15px;
+
+    -moz-border-radius: 15px;
+
+    -webkit-border-radius: 15px;
+    color: #446bb3;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+  background-color: #fff;
+  color: black;
 }
 
 .table-hover > tbody > tr:hover > td,
@@ -4538,7 +4560,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
+  background-color: #2D0E45;
   border-color: #080808;
 }
 
