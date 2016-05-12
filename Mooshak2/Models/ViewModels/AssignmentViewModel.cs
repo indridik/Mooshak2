@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Mooshak2.Models.ViewModels
 {
-    
+
     public class AssignmentViewModel
     {
         private MooshakDataContext context = new MooshakDataContext();
@@ -15,6 +15,7 @@ namespace Mooshak2.Models.ViewModels
         public string Title { get; set; }
         public int ID { get; set; }
         public string Course { get; set; }
+        public DateTime? DueDate { get; set; }
 
         public List<AssignmentMilestoneViewModel> Milestones { get; set; }
 
@@ -30,6 +31,7 @@ namespace Mooshak2.Models.ViewModels
             this.Milestones = assignment.Milestones.Select(a => new AssignmentMilestoneViewModel(a)).ToList();
             Course course = context.Courses.SingleOrDefault(x => x.ID == assignment.CourseID);
             this.Course = course.Name;
+            this.DueDate = assignment.DueDate;
         }
     }
 

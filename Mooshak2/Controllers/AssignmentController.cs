@@ -60,7 +60,8 @@ namespace Mooshak2.Controllers
         {
             var newAssignment = new Assignment();
             newAssignment.Title = collection["assignmentName"];
-            //newAssignment.DueDate = DateTime.ParseExact(collection["close"], "yyyyMMddTHHmmss", CultureInfo.InvariantCulture);
+            string datetime = collection["date"].ToString() + collection["time"].ToString();
+            newAssignment.DueDate = DateTime.ParseExact(datetime, "yyyy-MM--dd HH.mm.ss", CultureInfo.InvariantCulture);
             newAssignment.PublishDate = DateTime.Now;
             var pdf = file.ElementAt(0);
             string pdfName = pdf.FileName;
