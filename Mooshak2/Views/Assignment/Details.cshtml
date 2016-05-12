@@ -63,13 +63,13 @@
                     <tr>
                         <td>@submission.Title</td>
                         <td>@submission.Milestone</td>
-                        @if (submission.Result == "Wrong answer" || submission.Result == "Compile error")
+                        @if (submission.Result == "Accepted")
                         {
-                            <td style="color:red;"><strong>@submission.Result</strong></td>
+                            <td style="color:green;"><strong>@submission.Result</strong></td>
                         }
                         else 
                         {
-                        <td style="color:green;"><strong>@submission.Result</strong></td>        
+                        <td style="color:red;"><strong>@submission.Result</strong></td>        
                         }
                         <td>@submission.Time</td>
                         <td>@submission.Course</td>

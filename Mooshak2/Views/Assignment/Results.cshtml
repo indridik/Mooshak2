@@ -1,22 +1,35 @@
 ﻿@model Mooshak2.Models.ViewModels.SubmissionViewModel
 
-<div class="page-header">
-    <h1>@Model.Assignment : @Model.Milestone</h1>
-
-    <h2>Expected output: @Model.Output</h2>
-</div>
-<div class="page-header">
-    @if (Model.Result == "Accepted")
+@if (Model.UserOutput.Count == 0)
+{   if (Model.Result == "Compile time error ")
     {
-        <h2>User output:</h2>
-        <p style="background:green;">@Model.UserOutput</p>
+        <h1>Compile time error</h1>
+        <h2>Your program did not compile correctly</h2>
     }
     else
     {
-        <h2>Useroutput:</h2>
-        <p style="background:red">User output: @Model.UserOutput</p>
+        <h1>Runtime error</h1>
+        <h2>Your program did not execute within the time limit</h2>
     }
-</div>
-<a href="~/Code/@Model.Course/@Model.Assignment/@Model.Milestone/@Model.Title/@Model.Time.Value.ToString("yyyyMMddTHHmmss")/@Model.Title\.zip" class="btn btn-primary" download>Download your code</a>
+}
 
+else
+{
+    for (int i = 0; i < Model.Input.Count; i++)
+    {
+    <h1>Test @(i+1)</h1>
+    <h2>Input:</h2>
+    <pre>@Model.Input.ElementAt(i)</pre>
+    <h2>Expected output:</h2>
+    <pre class="output">@Model.Output.ElementAt(i)</pre>
+    <h2>User output:</h2>
+    <pre class="userOutput">@Model.UserOutput.ElementAt(i)</pre>
+
+    <br />
+    <br />
+    <br />
+
+    }
+<a href="~/Code/@Model.Course/@Model.Assignment/@Model.Milestone/@Model.Title/@Model.Time.Value.ToString("yyyyMMddTHHmmss")/@Model.Title\.zip" class="btn btn-primary" download>Download your code</a>
+}
 

@@ -1,9 +1,0 @@
-Microsoft Windows [Version 10.0.10586]
-(c) 2015 Microsoft Corporation. All rights reserved.
-
-C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Verkefni1\Part A\20160511T181008>"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat"
-C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Verkefni1\Part A\20160511T181008>cl.exe /nologo /EHsc main.cpp
-main.cpp
-main.cpp(12): error C2143: syntax error: missing ';' before 'constant'
-
-C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Verkefni1\Part A\20160511T181008>exit
