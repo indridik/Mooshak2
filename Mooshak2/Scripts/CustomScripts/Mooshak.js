@@ -1,7 +1,10 @@
 ﻿//Ready function
 $(document).ready(function () {
     setTimeout(function () {
-        $("#success").hide(); }, 3000);
+        $("#success").hide();
+    }, 3000);
+
+
     $("#courses").change(function () {
         var id = $(this).children(":selected").attr('id');
         var form = $("#courseForm");
@@ -17,15 +20,15 @@ $(document).ready(function () {
                }
                html += "</select>";*/
                 console.log(data);
-                var html = "";
+                var html = '<h2>Assignments</h2>';
                 for (var i = 0; i < data.length; i++) {
                     var tempID = data[i].ID.toString();
                     html += '<a href="/Assignment/Details/' + tempID + '" class="list-group-item">' + data[i].Title + '</a>';
                 }
-                if (html == "") {
-                    html = "<p>No Assignments in this course right now!</p>";
+                if (html == "<h2>Assignments</h2>") {
+                    html += "<p>No Assignments in this course right now!</p>";
                 }
-                $(".list-group").html(html);
+                $("#assignments").html(html);
             }
         });
     });
