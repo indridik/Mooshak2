@@ -233,6 +233,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\AssignmentsService.cs" />
     <Compile Include="Services\CourseService.cs" />
+    <Compile Include="Services\DoNotAuthorizeAttribute.cs" />
     <Compile Include="Services\LogService.cs" />
     <Compile Include="Services\StudentService.cs" />
     <Compile Include="Services\SubmissionsService.cs" />
