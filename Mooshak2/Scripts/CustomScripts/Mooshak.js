@@ -22,16 +22,19 @@ $(document).ready(function () {
                 var html = "";
                 for (var i = 0; i < data.length; i++) {
                     var tempID = data[i].ID.toString();
-                    html += "<button class='btn btn-primary ass' onclick='assignments(" + tempID +");'>" + data[i].Title + "</button>";
+                    html += '<a href="/Assignment/Details/' + tempID + '" class="list-group-item">' + data[i].Title + '</a>';
                 }
-                $(".assignmentDiv").html(html);
+                if (html == "") {
+                    html = "<p>No Assignments in this course right now!</p>";
+                }
+                $(".list-group").html(html);
             }
         });
     });
 });
 
 function assignments(id) {
-    window.location = "/Assignment/Details/" + id;
+    window.location = "~/Assignment/Details/" + id;
 }
 
 function submissionResults(id) {

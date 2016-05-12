@@ -88,7 +88,7 @@ namespace Mooshak2.Controllers
                                             + courseName
                                             + "//" + newAssignment.Title + "//"
                                             + milestone.Title + "//"
-                                            + filename);
+                                            + "input.txt");
                 input.SaveAs(inputPath);
                 count++;
                 var output = file.ElementAt(count);
@@ -102,7 +102,7 @@ namespace Mooshak2.Controllers
                                             + courseName
                                             + "//" + newAssignment.Title + "//"
                                             + milestone.Title + "//"
-                                            + filename);
+                                            + "output.txt");
                 output.SaveAs(outputPath);
                 count++;
 
@@ -118,7 +118,8 @@ namespace Mooshak2.Controllers
             string path = (Server.MapPath("~/Code/") 
                                         + courseName
                                         + "//" + newAssignment.Title + "//"
-                                        + pdfName);
+                                        + newAssignment.Title
+                                        +".pdf");
             pdf.SaveAs(path);
 
 
