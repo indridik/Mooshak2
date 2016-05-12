@@ -60,22 +60,28 @@ function CreateCourse() {
             obj.students.push($(this).val());
         }
     });
-    
+    if (obj.Name == "" || obj.students.length == 0 || obj.teachers.length == 0) {
+        var html = '<div class="alert alert-danger" id="success " role="alert">';
+        html += '<p>You must fill out all the fields</p></div>';
+        $('#failed').html(html);
+    }
 
-    $.ajax({
-        type: "POST",
-        contentType: "application/json; charset=utf-8",
-        url: '/Course/CreateCourseJson',
-        data: JSON.stringify(obj) ,
-        cache: false,
-        dataType: "json",
-        success: function (result) {
-            console.log(result);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            
-        }
-    });
+    else {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '/Course/CreateCourseJson',
+            data: JSON.stringify(obj),
+            cache: false,
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                window.location = "?message=success";
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }
 }
 
 function TestTeachers() {
