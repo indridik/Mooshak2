@@ -1,11 +1,10 @@
 ﻿@model Mooshak2.Models.ViewModels.AssignmentViewModel
 @{
-    ViewBag.Title = "C++ Compile test page";
+    ViewBag.Title = "Submit your code";
 }
 
 <div class="page-header">
     <h1>@Model.Title</h1>
-    <h2>@DateTime.Now</h2>
 </div>
 
 <a href="~/Code/@Model.Course/@Model.Title/@(Model.Title).pdf" class="btn btn-primary" download>Download pdf</a>
@@ -60,15 +59,16 @@
             {
                 foreach(var submission in milestone.Submissions)
                 {
-                    <tr><td>@User.Identity.Name</td>
+                    <tr>
+                        <td>@submission.Title</td>
                         <td>@submission.Milestone</td>
                         @if (submission.Result == "Wrong answer" || submission.Result == "Compile error")
                         {
-                            <td style="color:red;">@submission.Result</td>
+                            <td style="color:red;"><strong>@submission.Result</strong></td>
                         }
                         else 
                         {
-                        <td style="color:green;">@submission.Result</td>        
+                        <td style="color:green;"><strong>@submission.Result</strong></td>        
                         }
                         <td>@submission.Time</td>
                         <td>@submission.Course</td>

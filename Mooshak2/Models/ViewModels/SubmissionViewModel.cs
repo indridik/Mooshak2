@@ -18,7 +18,7 @@ namespace Mooshak2.Models.ViewModels
             this.Milestone = milestone.Title;
             Assignment assignment = context.Assignments.SingleOrDefault(x => x.ID == milestone.AssignmentID);
             this.Assignment = assignment.Title;
-            Course course = context.Courses.SingleOrDefault(x => x.ID == assignment.ID);
+            Course course = context.Courses.SingleOrDefault(x => x.ID == assignment.CourseID);
             this.Course = course.Name;
             this.ID = submission.ID;
             this.Title = submission.Title;

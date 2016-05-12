@@ -12,6 +12,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
 using Microsoft.Owin.Security;
+using System.Globalization;
 
 namespace Mooshak2.Controllers
 {
@@ -38,7 +39,8 @@ namespace Mooshak2.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            
+
+
             //TODO only allow authenticated teachers to create assignment
             string teachersName = AuthenticationManager.User.Identity.Name;  //commenta út til að leyfa fleiri en teacher
 
@@ -54,21 +56,74 @@ namespace Mooshak2.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(HttpPostedFileBase file, FormCollection collection)
+        public ActionResult Create(List<HttpPostedFileBase> file, FormCollection collection)
         {
-            string assignmentName = collection["assignmentName"];
-            string courseName = collection["courseSelect"];
-            string filename = file.FileName;
+            var newAssignment = new Assignment();
+            newAssignment.Title = collection["assignmentName"];
+            //newAssignment.DueDate = DateTime.ParseExact(collection["close"], "yyyyMMddTHHmmss", CultureInfo.InvariantCulture);
+            newAssignment.PublishDate = DateTime.Now;
+            var pdf = file.ElementAt(0);
+            string pdfName = pdf.FileName;
+            var ID = Convert.ToInt32(collection["courseSelect"]);
+            newAssignment.CourseID = ID;
+            CourseService cService = new CourseService();
+            var course  = cService.GetCourseByID(ID);
+            string courseName = course.name;
+            int mNumber = Convert.ToInt32(collection["noOfMilestones"]);
+            int count = 1;
+            for (int i=1; i <= mNumber; i++)
+            {
+                Milestone milestone = new Milestone();
+                milestone.Title = collection["mName" + i];
+                milestone.Weight = Convert.ToInt32(collection["mWeight" + i]);
+                newAssignment.Milestones.Add(milestone);
+                var input = file.ElementAt(count);
+                string filename = input.FileName;
+                System.IO.Directory.CreateDirectory(Server.MapPath("~/Code/")
+                                        + courseName + "//"
+                                        + newAssignment.Title + "//"
+                                        + milestone.Title);
 
+                string inputPath = (Server.MapPath("~/Code/")
+                                            + courseName
+                                            + "//" + newAssignment.Title + "//"
+                                            + milestone.Title + "//"
+                                            + filename);
+                input.SaveAs(inputPath);
+                count++;
+                var output = file.ElementAt(count);
+                filename = output.FileName;
+                System.IO.Directory.CreateDirectory(Server.MapPath("~/Code/")
+                                        + courseName + "//"
+                                        + newAssignment.Title + "//"
+                                        + milestone.Title);
+
+                string outputPath = (Server.MapPath("~/Code/")
+                                            + courseName
+                                            + "//" + newAssignment.Title + "//"
+                                            + milestone.Title + "//"
+                                            + filename);
+                output.SaveAs(outputPath);
+                count++;
+
+            }
+
+            ///<summary>
+            ///Save the description pdf file
+            /// </summary>
             System.IO.Directory.CreateDirectory(Server.MapPath("~/Code/") 
                                         + courseName + "//"
-                                        + assignmentName);
+                                        + newAssignment.Title);
 
             string path = (Server.MapPath("~/Code/") 
                                         + courseName
-                                        + "//" + assignmentName + "//"
-                                        + filename);
-            file.SaveAs(path);
+                                        + "//" + newAssignment.Title + "//"
+                                        + pdfName);
+            pdf.SaveAs(path);
+
+
+            context.Assignments.InsertOnSubmit(newAssignment);
+            context.SubmitChanges();
             //TODO only allow authenticated teachers to create assignment
             string teachersName = AuthenticationManager.User.Identity.Name;  //commenta út til að leyfa fleiri en teacher
 
@@ -103,7 +158,7 @@ namespace Mooshak2.Controllers
             ///Get info of chosen assignment to navigate a path to save the file
             ///</summary>
             string mTitle = collection["milestoneSelect"];
-            var milestone = context.Milestones.SingleOrDefault(x => x.Title == mTitle);
+            var milestone = context.Milestones.FirstOrDefault(x => x.Title == mTitle);
             var assignment = context.Assignments.SingleOrDefault(x => x.ID == milestone.AssignmentID);
             var course = context.Courses.SingleOrDefault(x => x.ID == assignment.CourseID);
             var submission = new DAL.Submission();
