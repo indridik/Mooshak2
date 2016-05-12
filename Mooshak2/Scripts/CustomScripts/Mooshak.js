@@ -1,10 +1,22 @@
 ﻿//Ready function
 $(document).ready(function () {
+    //function that hides success messages when you create course/assignment
     setTimeout(function () {
         $("#success").hide();
     }, 3000);
 
 
+    //function that adds a color to output from user
+    //depending on if it was accepted or not
+    if ($('.output').text() == $('.userOutput').text()) {
+        $('.userOutput').css("background", "#3EC150");
+    }
+    else {
+        $('.userOutput').css("background", "#E84A23");
+    }
+
+    //function for the dropdown list to get all assignments
+    //for a chosen course in teacher and student home views
     $("#courses").change(function () {
         var id = $(this).children(":selected").attr('id');
         var form = $("#courseForm");
@@ -34,14 +46,19 @@ $(document).ready(function () {
     });
 });
 
+
+//function to navigate to assignments details page
 function assignments(id) {
     window.location = "~/Assignment/Details/" + id;
 }
 
+//function to navigate to assignments result page
 function submissionResults(id) {
     window.location = "/Assignment/Results/" + id;
 }
 
+
+//function to create a course
 function CreateCourse() {
     var title = $("#courseName").val();
     console.log(title)
@@ -96,6 +113,9 @@ function TestTeachers() {
     console.log(teachers);
 }
 
+
+//function to add milestones when a teacher is creating
+//an assignment
 function addMilestones() {
     var number = $('#noOfMilestones').val();
     var html = "";
