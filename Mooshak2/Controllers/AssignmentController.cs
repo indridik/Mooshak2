@@ -59,8 +59,10 @@ namespace Mooshak2.Controllers
         {
             var newAssignment = new Assignment();
             newAssignment.Title = collection["assignmentName"];
-            string datetime = collection["date"].ToString() + collection["time"].ToString();
-            newAssignment.DueDate = DateTime.ParseExact(datetime, "yyyy-MM--dd HH.mm.ss", CultureInfo.InvariantCulture);
+            string datetimeStr = collection["date"].ToString() + " " + collection["time"].ToString();
+            DateTime datetime = new DateTime();
+            datetime = DateTime.ParseExact(datetimeStr, "yyyy-MM-dd HH:mm", null);
+            newAssignment.DueDate = datetime;
             newAssignment.PublishDate = DateTime.Now;
             var pdf = file.ElementAt(0);
             string pdfName = pdf.FileName;
@@ -107,7 +109,7 @@ namespace Mooshak2.Controllers
                 count++;
 
             }
-            ViewBag.Result = "Successfully created a course!";
+            ViewBag.Result = "Successfully created new assignment!";
 
             ///<summary>
             ///Save the description pdf file
