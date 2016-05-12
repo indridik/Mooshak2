@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace Mooshak2.Services
 {
-    /// http://stackoverflow.com/questions/13870833/can-an-action-authorize-everyone-except-a-given-user-role
+    /* Code copied from http://stackoverflow.com/questions/13870833/can-an-action-authorize-everyone-except-a-given-user-role */
     /// <summary>
     /// Authorizes any authenticated user *except* those who match the provided Users or Roles.
     /// </summary>

@@ -15,24 +15,35 @@
 <div class="page-header">
     <h1>Welcome, @b !</h1>
 </div>
-<form method="POST" id="courseForm">
-<select class="form-control" id="courses" name="courses">
-    <option>Choose a course</option>
-    @if(Model.Count == 0)
-    {
-        <p>You are not registered in any courses. Contact your teacher!</p>
-    }
-    @foreach(var course in Model)
-    {
-        <option name="@course.ID" id="@course.ID">@course.name</option>
-    }
-</select>
-</form>
-<br />
-<br/>
-<div class="resize">
-    <div class="list-group" id="assignments">
 
-    </div>
- </div>
+    <form method="POST" id="courseForm">
+    <fieldset class="scheduler-border">
+
+        <legend class="scheduler-border"> Choose a course</legend>
+        <select class="form-control" id="courses" name="courses">
+            <option>Choose a course</option>
+            @if (Model.Count == 0)
+            {
+                <p>You are not registered in any courses. Contact your teacher!</p>
+            }
+            @foreach (var course in Model)
+            {
+                <option name="@course.ID" id="@course.ID">@course.name</option>
+            }
+        </select>
+
+
+        <br />
+        <br />
+        <div class="resize">
+            <div class="list-group" id="assignments">
+
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+
+
+
 

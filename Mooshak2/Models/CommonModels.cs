@@ -16,4 +16,16 @@ namespace Mooshak2.Models
             this.students = s;
         }
     }
+    public class EditCourseModel
+    {
+        public Teacher teachers { get; set; }
+        public Student students { get; set; }
+        public TeachersInCourse teachersInCourses { get; set; }
+        public StudentsInCourse studentsInCourses { get; set; }
+        public List<Course> courses { get; set; }
+        public EditCourseModel(List<Course> c)
+        {
+            this.courses = c;
+        }
+    }
 }

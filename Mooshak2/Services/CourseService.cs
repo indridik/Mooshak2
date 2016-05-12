@@ -18,6 +18,7 @@ namespace Mooshak2.Services
             List<Student> students = context.Students.OrderBy(a => a.UserName).ToList();
             return new CreateCourseModel(teachers, students);
         }
+        
         //private ApplicationDbContext _db;
         private readonly MooshakDataContext context;
 
@@ -89,6 +90,7 @@ namespace Mooshak2.Services
                     CourseId = courseId,
                     StudentId = studentId
                 };
+
                 context.StudentsInCourses.InsertOnSubmit(newStudent);
                 context.SubmitChanges();
                 return new RequestResponse();

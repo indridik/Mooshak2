@@ -144,3 +144,6 @@ function addMilestones() {
     }
     $(".milestones").html(html);
 }
+function AddTeacher() {
+
+}
