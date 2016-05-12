@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace Mooshak2.Models
 {
+    /*Code copied from myschool, annað efni in T-213-VEFF, Vefforritun*/
     public class IdentityManager
     {
         public bool RoleExists(string name)
