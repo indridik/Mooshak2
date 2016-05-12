@@ -35,7 +35,13 @@ namespace Mooshak2.Controllers
             CreateCourseModel model = service.InitCreate();
             return View(model);
         }
-
+        public ActionResult Edit()
+        {
+            CourseService service = new CourseService();
+            List<Course> courses = service.GetAllCourses();
+            EditCourseModel model = new EditCourseModel(courses);
+            return View(model);
+        }
         public ActionResult CreateCourse(CourseViewModel viewModel)
         {
             CourseService courseService = new CourseService();

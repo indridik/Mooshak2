@@ -1,0 +1,36 @@
+﻿@model Mooshak2.Models.EditCourseModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit/Delete Courses</h2>
+<div>
+    <select class="form-control">
+        <option>Select Course</option>
+        @foreach (var course in Model.courses)
+        {
+            <option name="@course.ID" id="@course.ID">@course.Name</option>
+        }
+    </select>
+</div>
+<div>
+    <br />
+    <p><strong>Teacher to add/remove</strong></p>
+    <input type="text" class="form-control" />
+    <br />
+    <input type="submit" value="Add" class="btn btn-default"/>
+    <input type="submit" value="Delete" class="btn btn-default" />
+    <br />
+    <br />
+    <p><strong> Student to add/remove </strong></p>
+    <input type="text"  class="form-control"/>
+    <br />
+    <input type="submit" value="Add" class="btn btn-default"/>
+    <input type="submit" value="Delete" class="btn btn-default"/>    
+</div>
+<div>
+    <br />
+    <input type="submit" value="Delete course" class="btn btn-default"/>
+</div>
+
