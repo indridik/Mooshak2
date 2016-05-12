@@ -80,7 +80,43 @@ namespace Mooshak2.Services
                 return new RequestResponse(ex.Message, Status.Error);
             }
         }
+        internal RequestResponse AddStudentToCourse(int courseId, int studentId)
+        {
+            try {
+                StudentsInCourse newStudent = new StudentsInCourse()
+                {
 
+                    CourseId = courseId,
+                    StudentId = studentId
+                };
+                context.StudentsInCourses.InsertOnSubmit(newStudent);
+                context.SubmitChanges();
+                return new RequestResponse();
+            }
+            catch(Exception ex)
+            {
+                LogService.LogError("AddStudentToCourse", ex);
+                return new RequestResponse(ex.Message, Status.Error);
+            }
+        }
+        internal RequestResponse RemoveStudentFromtCourse(int courseId, int studentId)
+        {
+            try
+            {
+                StudentsInCourse student = context.StudentsInCourses.FirstOrDefault(a => a.CourseId == courseId && a.StudentId == studentId);
+                if (student == null)
+                    return new RequestResponse("Student not found", Status.Error);
+
+                context.StudentsInCourses.DeleteOnSubmit(student);
+                return new RequestResponse();
+            }
+            catch(Exception ex)
+            {
+                LogService.LogError("RemoveStudentFromCourse", ex);
+                return new RequestResponse(ex.Message, Status.Error);
+            }
+
+        }
         internal RequestResponse RemoveTeacherFromCourse(int courseId, int teacherId)
         {
             try
