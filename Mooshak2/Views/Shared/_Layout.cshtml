@@ -24,7 +24,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (User.IsInRole("Administrators"))
                     {
-                        <li>@Html.ActionLink("Admin", "Admin", "Home")</li>
+                        <li>@Html.ActionLink("Admin", "Error403", "Home")</li>
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")
