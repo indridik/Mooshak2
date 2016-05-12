@@ -18,6 +18,7 @@ namespace Mooshak2.Controllers
         private CourseService cService = new CourseService();
         private AssignmentsService aService = new AssignmentsService();
         private StudentService sService = new StudentService();
+        private TeacherService tService = new TeacherService();
         
 [Authorize]
         public ActionResult Index()
@@ -28,7 +29,8 @@ namespace Mooshak2.Controllers
             }
             else if(User.IsInRole("Teachers"))
             {
-                return View("Teacher");
+
+                return RedirectToAction("Teacher");
             }
             else
             {
@@ -89,7 +91,25 @@ namespace Mooshak2.Controllers
         [Authorize(Roles = "Administrators, Teachers")]
         public ActionResult Teacher()
         {
-            return View();
+            IdentityManager manager = new IdentityManager();
+            string UserId = User.Identity.GetUserId();
+            var courses = cService.GetAllCourses();
+            if (!(manager.UserIsInRole(UserId, "Administrators")))
+            {
+                string teacherName = AuthenticationManager.User.Identity.Name;
+
+                int Id = tService.GetTeacherIdByName(teacherName);
+
+                courses = aService.GetAllCoursesForTeacher(Id);
+            }
+
+            List<CourseViewModel> model = new List<CourseViewModel>();
+            foreach (var course in courses)
+            {
+                var temp = new CourseViewModel(course);
+                model.Add(temp);
+            }
+            return View(model);
         }
 
         private IAuthenticationManager AuthenticationManager

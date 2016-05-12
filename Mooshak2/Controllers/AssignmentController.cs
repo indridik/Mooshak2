@@ -50,7 +50,6 @@ namespace Mooshak2.Controllers
             int id = service.GetTeacherIdByName(teachersName); //commenta út ef nota á hardcoded dabs
             
             Teacher t = service.GetTeacherById(id);
-
             TeachersAssignment model = new TeachersAssignment(t);
             return View(model);
         }

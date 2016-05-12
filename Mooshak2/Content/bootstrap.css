@@ -37,7 +37,7 @@
     padding: 15px;
     border: 0px solid #AAAAAA; 
     border-radius: 25px;
-    background-color: #2D0E45;
+    background-color: #D6222B;
 }
 
 #tab{
@@ -350,8 +350,8 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #90C5A9;
-  background-color: #3F2860;
+  color: #000000;
+  background-color: #FFFFFF;
 }
 
 
@@ -4560,12 +4560,12 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #2D0E45;
-  border-color: #080808;
+  background-color: #D6222B;
+  border-color: #D6222B;
 }
 
 .navbar-inverse .navbar-brand {
-  color: #999999;
+  color: #FFFFFF;
 }
 
 .navbar-inverse .navbar-brand:hover,
@@ -4575,11 +4575,11 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-text {
-  color: #999999;
+  color: #ffffff;
 }
 
 .navbar-inverse .navbar-nav > li > a {
-  color: #999999;
+  color: #ffffff;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover,
