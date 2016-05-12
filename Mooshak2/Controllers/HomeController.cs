@@ -8,6 +8,7 @@ using Mooshak2.Services;
 using System.Collections.Generic;
 using Microsoft.Owin.Security;
 using System.Web;
+using Microsoft.AspNet.Identity;
 
 namespace Mooshak2.Controllers
 {
@@ -37,11 +38,18 @@ namespace Mooshak2.Controllers
         [Authorize]
         public ActionResult Student()
         {
-            string studentName = AuthenticationManager.User.Identity.Name;
+            IdentityManager manager = new IdentityManager();
+            string id = User.Identity.GetUserId();
+            var courses = cService.GetAllCourses();
+            if (!(manager.UserIsInRole(id, "Administrators")))
+            {
+                string studentName = AuthenticationManager.User.Identity.Name;
 
-            int Id = sService.GetStudentIdByName(studentName);
+                int Id = sService.GetStudentIdByName(studentName);
 
-            var courses = cService.GetAllCoursesForStudent(Id);
+                courses = cService.GetAllCoursesForStudent(Id);
+            }
+
             List<CourseViewModel> model = new List<CourseViewModel>();
             foreach(var course in courses)
             {
