@@ -107,6 +107,7 @@ namespace Mooshak2.Controllers
                 count++;
 
             }
+            ViewBag.Result = "Successfully created a course!";
 
             ///<summary>
             ///Save the description pdf file
@@ -164,7 +165,7 @@ namespace Mooshak2.Controllers
             var course = context.Courses.SingleOrDefault(x => x.ID == assignment.CourseID);
             var submission = new DAL.Submission();
             submission.SubmitTime = DateTime.Now;
-            string time = DateTime.Now.ToString("yyyyMMddTHHmmss");
+            string time = DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss");
             submission.MilestoneID = milestone.ID;
             submission.Title = User.Identity.Name;
             submission.UserName_ = User.Identity.Name;
@@ -334,13 +335,10 @@ namespace Mooshak2.Controllers
                 submission.Result = "Compile error";
                 System.IO.File.WriteAllText(workingFolder + "userInput.txt", output);
             }
-
-            ///<summary>
             ///Save the new submission to the database
             ///</summary>
             context.Submissions.InsertOnSubmit(submission);
             context.SubmitChanges();
-
             ///<summary>
             ///
             ///</summary>
@@ -370,7 +368,7 @@ namespace Mooshak2.Controllers
                                      + submission.Assignment + "\\"
                                      + submission.Milestone + "\\"
                                      + submission.Title + "\\"
-                                     + submission.Time.Value.ToString("yyyyMMddTHHmmss")
+                                     + submission.Time.Value.ToString("yyyy-MM-dd HH.mm.ss")
                                      + "\\userInput.txt";
 
             submission.Output = System.IO.File.ReadAllText(outputPath);

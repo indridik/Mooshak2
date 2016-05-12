@@ -18,7 +18,8 @@ namespace Mooshak2.Controllers
         private CourseService cService = new CourseService();
         private AssignmentsService aService = new AssignmentsService();
         private StudentService sService = new StudentService();
-        [Authorize]
+        
+[Authorize]
         public ActionResult Index()
         {
             if(User.IsInRole("Administrators"))
