@@ -60,6 +60,22 @@ namespace Mooshak2.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            IdentityManager manager = new IdentityManager();
+            if (!manager.UserExists("admin@ru.is"))
+            {
+                ApplicationUser newAdmin = new ApplicationUser();
+                newAdmin.UserName = "admin@ru.is";
+                manager.CreateUser(newAdmin, "123456");
+                if (!manager.RoleExists("Administrators"))
+                {
+                    manager.CreateRole("Administrators");
+                }
+                if (!manager.RoleExists("Teachers"))
+                {
+                    manager.CreateRole("Teachers");
+                }
+                manager.AddUserToRole(newAdmin.Id, "Administrators");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }

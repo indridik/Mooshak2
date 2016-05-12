@@ -23,7 +23,8 @@ namespace Mooshak2.Controllers
 [Authorize]
         public ActionResult Index()
         {
-            if(User.IsInRole("Administrators"))
+
+            if (User.IsInRole("Administrators"))
             {
                 return View("Admin");
             }
@@ -92,15 +93,21 @@ namespace Mooshak2.Controllers
         public ActionResult Teacher()
         {
             IdentityManager manager = new IdentityManager();
-            string UserId = User.Identity.GetUserId();
             var courses = cService.GetAllCourses();
-            if (!(manager.UserIsInRole(UserId, "Administrators")))
+            if (!User.IsInRole("Administrators"))
             {
-                string teacherName = AuthenticationManager.User.Identity.Name;
 
-                int Id = tService.GetTeacherIdByName(teacherName);
 
-                courses = aService.GetAllCoursesForTeacher(Id);
+                string UserId = User.Identity.GetUserId();
+
+                if (!(manager.UserIsInRole(UserId, "Administrators")))
+                {
+                    string teacherName = AuthenticationManager.User.Identity.Name;
+
+                    int Id = tService.GetTeacherIdByName(teacherName);
+
+                    courses = aService.GetAllCoursesForTeacher(Id);
+                }
             }
 
             List<CourseViewModel> model = new List<CourseViewModel>();
