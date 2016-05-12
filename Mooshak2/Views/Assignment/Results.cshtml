@@ -2,16 +2,19 @@
 
 <div class="page-header">
     <h1>@Model.Assignment : @Model.Milestone</h1>
-    <p>@Model.Output</p>
+
+    <h2>Expected output: @Model.Output</h2>
 </div>
 <div class="page-header">
     @if (Model.Result == "Accepted")
     {
+        <h2>User output:</h2>
         <p style="background:green;">@Model.UserOutput</p>
     }
     else
     {
-        <p>@Model.UserOutput</p>
+        <h2>Useroutput:</h2>
+        <p style="background:red">User output: @Model.UserOutput</p>
     }
 </div>
 <a href="~/Code/@Model.Course/@Model.Assignment/@Model.Milestone/@Model.Title/@Model.Time.Value.ToString("yyyyMMddTHHmmss")/@Model.Title\.zip" class="btn btn-primary" download>Download your code</a>
