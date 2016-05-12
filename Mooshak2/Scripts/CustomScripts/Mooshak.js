@@ -1,9 +1,7 @@
 ﻿//Ready function
 $(document).ready(function () {
-
     setTimeout(function () {
         $("#success").hide(); }, 3000);
-    
     $("#courses").change(function () {
         var id = $(this).children(":selected").attr('id');
         var form = $("#courseForm");

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<Mooshak2.Models.ViewModels.CourseViewModel>
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @{
@@ -24,3 +25,17 @@
         
     </div>
 </div>
+
+<form method="POST" id="courseForm">
+    <select class="form-control" id="courses" name="courses">
+        <option>Choose a course</option>
+        @if (Model.Count == 0)
+        {
+            <p>You are not registered in any courses. Contact your teacher!</p>
+        }
+        @foreach (var course in Model)
+        {
+            <option name="@course.ID" id="@course.ID">@course.name</option>
+        }
+    </select>
+</form>
