@@ -10,6 +10,12 @@ namespace Mooshak2.Models.ViewModels
     public class SubmissionViewModel
     {
         private MooshakDataContext context = new MooshakDataContext();
+        public SubmissionViewModel()
+        {
+            Input = new List<string>();
+            Output = new List<string>();
+            UserOutput = new List<string>();
+        }
         public SubmissionViewModel(Submission submission)
         {
             this.Result = submission.Result;
@@ -25,9 +31,9 @@ namespace Mooshak2.Models.ViewModels
         }
 
         public string Title { get; set; }
-        public string Input { get; set; }
-        public string Output { get; set; }
-        public string UserOutput { get; set; }
+        public List<string> Input { get; set; }
+        public List<string> Output { get; set; }
+        public List<string> UserOutput { get; set; }
         public string Assignment { get; set; }
         public int ID { get; set; }
         /// <summary>

@@ -267,67 +267,71 @@ namespace Mooshak2.Controllers
             // we try to execute the code:
             if (System.IO.File.Exists(exeFilePath))
             {
-                var processInfoExe = new ProcessStartInfo(exeFilePath, "");
-                processInfoExe.UseShellExecute = false;
-                processInfoExe.RedirectStandardInput = true;
-                processInfoExe.RedirectStandardOutput = true;
-                processInfoExe.RedirectStandardError = true;
-                processInfoExe.CreateNoWindow = true;
-                using (var processExe = new Process())
-                {
-                    processExe.StartInfo = processInfoExe;
-                    processExe.Start();
-                   
-                    ///<summary>
-                    ///Here we get the input for this miletone which is saved
-                    ///in a folder like /Assignment/Milestone
-                    ///</summary>
-                    var inputPath = Server.MapPath("~/Code/") 
+                var inputPath = Server.MapPath("~/Code/")
                                     + course.Name + "\\"
-                                    + assignment.Title + "\\" 
-                                    + milestone.Title 
+                                    + assignment.Title + "\\"
+                                    + milestone.Title
                                     + "\\input.txt";
-                    var input = System.IO.File.ReadAllText(inputPath);
-                    ///<summary>
-                    ///We write the input to the command line
-                    /// </summary>
-                    processExe.StandardInput.WriteLine(input);
-                    string lines = "";
+                List<string> input = System.IO.File.ReadAllLines(inputPath).ToList();
+                List<string> lines = new List<string>();
 
-                    ///<summary>
-                    ///Here we get the output from the program.
-                    /// </summary>
-                    while (!processExe.StandardOutput.EndOfStream)
+                foreach (var inp in input)
+                {
+                    var processInfoExe = new ProcessStartInfo(exeFilePath, "");
+                    processInfoExe.UseShellExecute = false;
+                    processInfoExe.RedirectStandardInput = true;
+                    processInfoExe.RedirectStandardOutput = true;
+                    processInfoExe.RedirectStandardError = true;
+                    processInfoExe.CreateNoWindow = true;
+                    using (var processExe = new Process())
                     {
-                        lines += processExe.StandardOutput.ReadLine();
+                        processExe.StartInfo = processInfoExe;
+                        processExe.Start();
+                        ///<summary>
+                        ///Here we get the input for this miletone which is saved
+                        ///in a folder like /Assignment/Milestone
+                        ///</summary>
+                        ///<summary>
+                        ///We write the input to the command line
+                        /// </summary>
+                        processExe.StandardInput.WriteLine(inp);
+                        while (!processExe.StandardOutput.EndOfStream)
+                        {
+                            lines.Add(processExe.StandardOutput.ReadLine());
+                        }
                     }
-                    System.IO.File.WriteAllText(workingFolder + "userInput.txt", lines);
+                }
+                System.IO.File.WriteAllLines(workingFolder + "userOutput.txt", lines);
+                ///<summary>
+                ///Here we get the output from the program.
+                /// </summary>
+                ///<summary>
+                ///We get the expected output for this milestone and compare it 
+                ///to the output from the user program.
+                ///We add the result to the submission class
+                /// </summary>
+                /// 
 
-                    ///<summary>
-                    ///We get the expected output for this milestone and compare it 
-                    ///to the output from the user program.
-                    ///We add the result to the submission class
-                    /// </summary>
-                    /// 
-                    
-
-                    var outputPath = Server.MapPath("~/Code/")
+                var outputPath = Server.MapPath("~/Code/")
                                      + course.Name + "\\"
                                      + assignment.Title + "\\" 
                                      + milestone.Title 
                                      + "\\output.txt";
 
-                    var expectedOutput = System.IO.File.ReadAllText(outputPath);
-                    if(lines == expectedOutput)
-                    {
-                        submission.Result = "Accepted";
-                    }
-                    else
-                    {
-                        submission.Result = "Wrong answer";
+                    List<string> expectedOutput = System.IO.File.ReadAllLines(outputPath).ToList();
+                    for(int i=0; i < input.Count; i++)
+                    {   
+                        if (lines.ElementAt(i) == expectedOutput.ElementAt(i))
+                        {
+                            submission.Result = "Accepted";
+                        }
+                        else
+                        {
+                            submission.Result = "Wrong answer";
+                            break;
+                        }
                     }
                 }
-            }
 
             ///<summary>
             ///If we get here, there is no .exe file so the compiler has failed
@@ -335,7 +339,7 @@ namespace Mooshak2.Controllers
             else
             {
                 submission.Result = "Compile error";
-                System.IO.File.WriteAllText(workingFolder + "userInput.txt", output);
+                System.IO.File.WriteAllText(workingFolder + "userOutput.txt", output);
             }
             ///Save the new submission to the database
             ///</summary>
@@ -345,7 +349,7 @@ namespace Mooshak2.Controllers
             ///
             ///</summary>
             var model = _service.GetAssignmentByID(assignment.ID);
-                return View("Details",model);
+            return View("Details",model);
         }
 
         public ActionResult Results(int id)
@@ -371,13 +375,19 @@ namespace Mooshak2.Controllers
                                      + submission.Milestone + "\\"
                                      + submission.Title + "\\"
                                      + submission.Time.Value.ToString("yyyy-MM-dd HH.mm.ss")
-                                     + "\\userInput.txt";
+                                     + "\\userOutput.txt";
 
-            submission.Output = System.IO.File.ReadAllText(outputPath);
+            submission.Output = System.IO.File.ReadAllLines(outputPath).ToList();
 
-            submission.Input = System.IO.File.ReadAllText(inputPath);
-
-            submission.UserOutput = System.IO.File.ReadAllText(expectedPath);
+            submission.Input = System.IO.File.ReadAllLines(inputPath).ToList();
+            if (System.IO.File.Exists(expectedPath))
+            {
+                submission.UserOutput = System.IO.File.ReadAllLines(expectedPath).ToList();
+            }
+            else
+            {
+                submission.UserOutput = new List<string>();
+            }
 
             return View(submission);
         }
