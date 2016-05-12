@@ -60,22 +60,28 @@ function CreateCourse() {
             obj.students.push($(this).val());
         }
     });
-    
+    if (obj.Name == "" || obj.students.length == 0 || obj.teachers.length == 0) {
+        var html = '<div class="alert alert-danger" id="success " role="alert">';
+        html += '<p>You must fill out all the fields</p></div>';
+        $('#failed').html(html);
+    }
 
-    $.ajax({
-        type: "POST",
-        contentType: "application/json; charset=utf-8",
-        url: '/Course/CreateCourseJson',
-        data: JSON.stringify(obj) ,
-        cache: false,
-        dataType: "json",
-        success: function (result) {
-            console.log(result);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            
-        }
-    });
+    else {
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '/Course/CreateCourseJson',
+            data: JSON.stringify(obj),
+            cache: false,
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                window.location = "?message=success";
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+    }
 }
 
 function TestTeachers() {
@@ -103,13 +109,13 @@ function addMilestones() {
         html += '<div id="collapse' + no+ '" class="panel-collapse collapse">';
         html += '<div class="panel-body">';
         html += '<label for="mName' + no + '">Name</label>';
-        html += '<input type="text" class="form-control" id="mName' + no + '" name="mName' + no + '"/>';
+        html += '<input type="text" class="form-control" required id="mName' + no + '" name="mName' + no + '"/>';
         html += '<label for="mWeight">Weight(%)</label>';
-        html += '<input type="number" min="0" max="100" class="form-control" name="mWeight' + no +'" id="mWeight' + no + '"/>';
+        html += '<input type="number" min="0" max="100" required class="form-control" name="mWeight' + no +'" id="mWeight' + no + '"/>';
         html += '<label>Input';
-        html += '<input type="file" class="form-control" name="file" id="file" accept=".txt"/></label>';
+        html += '<input type="file" class="form-control" name="file" required id="file" accept=".txt"/></label>';
         html += '<label>Output';
-        html += '<input type="file" class="form-control" name="file" id="file" accept=".txt"/></label>';
+        html += '<input type="file" class="form-control" name="file" required id="file" accept=".txt"/></label>';
         html += '</div>';
         html += '</div></div></div>';
         no += 1;

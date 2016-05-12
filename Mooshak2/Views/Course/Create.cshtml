@@ -4,6 +4,17 @@
 }
 
 <h2>CreateCourse</h2>
+@if (Request["message"] == "success")
+{
+    <div class="alert alert-success" id="success" role="alert">
+        <p>
+            Successfully created a course!
+        </p>
+    </div>
+}
+<div id="failed">
+
+</div>
 @*@if (ViewBag.result == "Course successfully created!")
 {
     <div class="alert alert-success" role="alert">
@@ -29,7 +40,7 @@
                     @foreach (var student in Model.students)
                     {
                         <div>
-                            <input class="students" type="checkbox" value="@student.ID" id="@student.ID" /> @student.UserName
+                            <input class="students" required type="checkbox" value="@student.ID" id="@student.ID" /> @student.UserName
                         </div>
                     }
                 </div>
@@ -50,7 +61,7 @@
                     @foreach (var teacher in Model.teachers)
                     {
                         <div>
-                            <input class="teachers" type="checkbox" value="@teacher.Id" id="@teacher.Id" /> @teacher.Name
+                            <input class="teachers" required type="checkbox" value="@teacher.Id" id="@teacher.Id" /> @teacher.Name
                         </div>
                     }
                 </div>
