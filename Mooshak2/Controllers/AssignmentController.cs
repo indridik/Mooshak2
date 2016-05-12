@@ -109,7 +109,7 @@ namespace Mooshak2.Controllers
                 count++;
 
             }
-            ViewBag.Result = "Successfully created a course!";
+            ViewBag.Result = "Successfully created new assignment!";
 
             ///<summary>
             ///Save the description pdf file
