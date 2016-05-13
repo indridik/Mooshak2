@@ -35,10 +35,49 @@ namespace Mooshak2.Controllers
             CreateCourseModel model = service.InitCreate();
             return View(model);
         }
-        public ActionResult Edit()
+
+        [HttpPost]
+        public JsonResult AddTeacherToCourse(AddTeacherToCourseModel model)
         {
             CourseService service = new CourseService();
-            List<Course> courses = service.GetAllCourses();
+            return Json(service.AddTeacherToCourse(model.courseId, model.name));
+        }
+
+        [HttpPost]
+        public JsonResult AddStudentToCourse(AddStudentToCourseModel model)
+        {
+            CourseService service = new CourseService();
+            return Json(service.AddStudentToCourse(model.courseID, model.name));
+        }
+        [HttpPost]
+        public JsonResult RemoveTeacherFromCourse(RemoveTeacherFromCourseModel model)
+        {
+            CourseService service = new CourseService();
+            return Json(service.RemoveTeacherFromCourse(model.courseId, model.name));
+        }
+        [HttpPost]
+        public JsonResult RemoveStudentFromCourse(RemoveStudentFromCourseModel model)
+        {
+            CourseService service = new CourseService();
+            return Json(service.RemoveStudentFromCourse(model.courseId, model.name));
+        }
+        [HttpGet]
+        public JsonResult RemoveCourse(int id)
+        {
+            CourseService service = new CourseService();
+            return Json(service.DeleteCourse(id));
+            //return Json(service.RemoveCourse(model.courseId));
+        }
+        public ActionResult Edit()
+        {
+            CourseService cservice = new CourseService();
+            TeacherService tservice = new TeacherService();
+            StudentService sservice = new StudentService();
+            AssignmentsService aservice = new AssignmentsService();
+            List<Teacher> teachers = tservice.GetAllTeachers();
+            List<Student> students = sservice.GetAllStudents();
+            List<Course> courses = cservice.GetAllCourses();
+            
             EditCourseModel model = new EditCourseModel(courses);
             return View(model);
         }

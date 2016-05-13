@@ -16,7 +16,19 @@ namespace Mooshak2.Services
 
         public int GetTeacherIdByName(string name)
         {
-            return context.Teachers.FirstOrDefault(a => a.Name == name).Id;
+            try
+            {
+                return context.Teachers.FirstOrDefault(a => a.Name.ToLower() == name.ToLower()).Id;
+            }
+            catch (Exception ex)
+            {
+                //TODO LOG
+                return -1;
+            }
+        }
+        public List<Teacher> GetAllTeachers()
+        {
+            return context.Teachers.ToList();
         }
     }
 }

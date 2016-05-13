@@ -1,6 +1,7 @@
 ﻿//Ready function
 $(document).ready(function () {
-    //function that hides success messages when you create course/assignment
+    console.log("Mættur!");
+
     setTimeout(function () {
         $("#success").hide();
     }, 3000);
@@ -145,5 +146,107 @@ function addMilestones() {
     $(".milestones").html(html);
 }
 function AddTeacher() {
+    var name = $("#TeacherName").val()
+    var courseId = $("#EditSelect").val();
+    var obj = new Object();
+    obj.name = name;
+    obj.courseId = courseId;
 
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/AddTeacherToCourse',
+        data: JSON.stringify(obj),
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    }); 
+}
+function DeleteTeacher() {
+    var name = $("#TeacherName").val()
+    var courseId = $("#EditSelect").val();
+        var obj = new Object();
+        obj.name = name;
+        obj.courseId = courseId;
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '/Course/RemoveTeacherFromCourse',
+            data: JSON.stringify(obj),
+            cache: false,
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                window.location = "?message=success";
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+}
+function AddStudent() {
+    var name = $("#StudentName").val()
+    var courseId = $("#EditSelect").val();
+    var obj = new Object();
+    obj.name = name;
+    obj.courseId = courseId;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/AddStudentToCourse',
+        data: JSON.stringify(obj),
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
+}
+function DeleteStudent() {
+    var name = $("#StudentName").val()
+    var courseId = $("#EditSelect").val();
+    var obj = new Object();
+    obj.name = name;
+    obj.courseId = courseId;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/RemoveStudentFromCourse',
+        data: JSON.stringify(obj),
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
+}
+function DeleteCourse() {
+    var courseId = $("#EditSelect").val();
+    console.log(courseId);
+    $.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/RemoveCourse?id=' + courseId,
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
 }
