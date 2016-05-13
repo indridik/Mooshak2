@@ -20,7 +20,7 @@ namespace Mooshak2.Controllers
         private StudentService sService = new StudentService();
         private TeacherService tService = new TeacherService();
         
-[Authorize]
+        [Authorize]
         public ActionResult Index()
         {
 
@@ -83,6 +83,7 @@ namespace Mooshak2.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult AssignmentJson(int id)
         {
             var assignments = aService.GetAssignmentsInCourse(id);

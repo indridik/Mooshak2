@@ -26,7 +26,7 @@ namespace Mooshak2.Controllers
         {
             return View();
         }
-
+        [Authorize(Roles ="Teachers")]
         public ActionResult CreateNewAssignment(int teacherId)
         {
             TeacherService service = new TeacherService();
@@ -37,6 +37,7 @@ namespace Mooshak2.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Teachers")]
         public ActionResult Create()
         {
 
@@ -55,6 +56,7 @@ namespace Mooshak2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Teachers")]
         public ActionResult Create(List<HttpPostedFileBase> file, FormCollection collection)
         {
             var newAssignment = new Assignment();
@@ -148,7 +150,7 @@ namespace Mooshak2.Controllers
             RequestResponse response = service.CreateAssignment(model);
             return Json(response);
         }
-
+        [Authorize]
         public ActionResult Details(int id)
         {
             var model = _service.GetAssignmentByID(id);
@@ -156,6 +158,7 @@ namespace Mooshak2.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult Submit(HttpPostedFileBase file, FormCollection collection)
         {
             ///<summary>
@@ -351,7 +354,7 @@ namespace Mooshak2.Controllers
             var model = _service.GetAssignmentByID(assignment.ID);
             return View("Details",model);
         }
-
+        [Authorize]
         public ActionResult Results(int id)
         {
             SubmissionsService service = new SubmissionsService();
