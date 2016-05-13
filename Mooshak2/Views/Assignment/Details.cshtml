@@ -2,40 +2,42 @@
 @{
     ViewBag.Title = "Submit your code";
 }
-
-<div class="page-header">
-    <h1>@Model.Title</h1>
-    <h2>@Model.DueDate</h2>
-</div>
-
-<a href="~/Code/@Model.Course/@Model.Title/@(Model.Title).pdf" class="btn btn-primary" download>Download pdf</a>
-<br />
-<br />
-<div class="row">
-    <div class="col-md-4">
-        @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {   <select class="form-control" id="milestoneSelect" name="milestoneSelect">
-                @foreach (var mstone in Model.Milestones)
-                {
-                    <option value="@mstone.Title">@mstone.Title</option>
-                }
-            </select>
-            <br />
-            <input type="file" id="file" name="file" accept=".cpp,.zip"
-                   required="required" />
-            <br />
-            <label for="file">.zip, .cpp</label>
-            <br />
-            <input type="Submit" class="btn btn-primary" value="Submit" />
-            <br />
-            <br />
-        }
-
-        @if (ViewBag.Output != null)
-        {
-            <p>@ViewBag.Output</p>
-        }
+    
+    <div class="page-header">
+        <h1> @Model.Title</h1>
+        <h2>@Model.DueDate</h2>
     </div>
+
+    <br />
+    <br />
+
+    <div class="row">
+        <div class="col-md-4">
+            @using (Html.BeginForm("Submit", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {   <select class="form-control" id="milestoneSelect" name="milestoneSelect">
+            @foreach (var mstone in Model.Milestones)
+                {
+                <option value="@mstone.Title">@mstone.Title</option>
+            }
+        </select>
+        <br />
+        <input type="file" id="file" name="file" accept=".cpp,.zip"
+               required="required" />
+                <br />
+                <label for="file">.zip, .cpp</label>
+                <br />
+                <input type="Submit" class="btn btn-primary" value="Submit" />
+                <br />
+                <br />
+            }
+
+
+            @if (ViewBag.Output != null)
+            {
+                <p>@ViewBag.Output</p>
+            }
+        </div>
+
     <br />
     <style>
         .wrong {
@@ -80,4 +82,6 @@
             </tbody>
 
         </table>
+
 </div>
+

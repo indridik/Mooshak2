@@ -1,0 +1,12 @@
+enter three numbers.
+number1:
+number2:
+number3:
+3 + 12 = 24
+##END##
+enter three numbers.
+number1:
+number2:
+number3:
+4 + 20 = 34
+##END##

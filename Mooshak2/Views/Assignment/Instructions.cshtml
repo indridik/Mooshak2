@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Instructions";
+}
+<a href="~/Assignment/Create">Back</a>
+<h2>
+    Instructions for creating an assignment.
+</h2>
+<h3>Example: A simple program that takes in 2 numbers and adds them</h3>
+<pre>
+#include <iostream>
+using namespace std;
+    int main() {
+        int n1, n2;
+        cin >> n1;
+        cin >> n2;
+        cout << n1 << " + " << n2 << " = " << n1+n2;
+    }
+</pre>
+<h3>Input for each test should be in a single line</h3>
+<pre>
+3 4
+4 5
+5 6</pre>
+<h3>Output should be seperated with "##END##" after each test</h3>
+
+<pre>
+3 + 4 = 7
+##END##
+4 + 5 = 9
+##END##
+5 + 6 = 11
+##END##
+</pre>
+
+<h2>Input and output should be in two seperate .txt files</h2>

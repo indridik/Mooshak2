@@ -1,10 +1,11 @@
-﻿@model Mooshak2.Models.ViewModels.SubmissionViewModel
+﻿ @model Mooshak2.Models.ViewModels.SubmissionViewModel
 
 @if (Model.UserOutput.Count == 0)
-{   if (Model.Result == "Compile time error ")
+{
+    if (Model.Result == "Compile time error ")
     {
         <h1>Compile time error</h1>
-        <h2>Your program did not compile correctly</h2>
+        <h2>Your program did not compile correctly. Try compiling your code in Code::Blocks or your IDE of choice before submitting</h2>
     }
     else
     {
@@ -17,19 +18,29 @@ else
 {
     for (int i = 0; i < Model.Input.Count; i++)
     {
-    <h1>Test @(i+1)</h1>
-    <h2>Input:</h2>
-    <pre>@Model.Input.ElementAt(i)</pre>
-    <h2>Expected output:</h2>
-    <pre class="output">@Model.Output.ElementAt(i)</pre>
-    <h2>User output:</h2>
-    <pre class="userOutput">@Model.UserOutput.ElementAt(i)</pre>
-
-    <br />
-    <br />
-    <br />
-
+        <h1>Test @(i + 1)</h1>
+        <h2>Input:</h2>
+        <pre>@Model.Input.ElementAt(i)</pre>
+        <h2>Expected output</h2>
+        <pre class="output">
+        @for (int j = 0; j < Model.Output.ElementAt(i).Count; j++)
+        {
+            @Model.Output.ElementAt(i).ElementAt(j) <br />
+        }
+        </pre>
+        <h2>User Output</h2>
+        <pre >
+         @for (int j = 0; j < Model.UserOutput.ElementAt(i).Count; j++)
+         {
+             if (Model.UserOutput.ElementAt(i).ElementAt(j) == Model.Output.ElementAt(i).ElementAt(j))
+             {
+               <div style="background:#00910F;">@Model.UserOutput.ElementAt(i).ElementAt(j)</div><br />
+             }
+             else
+             {
+               <div style="background:#E15C1A;">@Model.UserOutput.ElementAt(i).ElementAt(j)</div><br />
+             }
+         }
+        </pre>
     }
-<a href="~/Code/@Model.Course/@Model.Assignment/@Model.Milestone/@Model.Title/@Model.Time.Value.ToString("yyyyMMddTHHmmss")/@Model.Title\.zip" class="btn btn-primary" download>Download your code</a>
 }
-

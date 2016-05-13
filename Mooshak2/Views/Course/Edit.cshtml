@@ -1,16 +1,17 @@
 ﻿@model Mooshak2.Models.EditCourseModel
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Edit";
 }
 
 <h2>Edit/Delete Courses</h2>
 <div>
-    <select class="form-control">
-        <option>Select Course</option>
+    <select class="form-control" id="EditSelect">
+        <option value="-1">Select Course</option> 
         @foreach (var course in Model.courses)
         {
-            <option name="@course.ID" id="@course.ID">@course.Name</option>
+            <option name="@course.ID" value="@course.ID">@course.Name</option>
         }
     </select>
 </div>
@@ -19,18 +20,19 @@
     <p><strong>Teacher to add/remove</strong></p>
     <input type="text" class="form-control" id="TeacherName" />
     <br />
-    <input type="submit" value="Add" class="btn btn-default" id="AddTeacher"/>
-    <input type="submit" value="Delete" class="btn btn-default"  id="RemoveTeacher"/>
+    <input type="button" value="Add" class="btn btn-default" id="AddTeacher" onclick="AddTeacher()"/>
+    <input type="button" value="Delete" class="btn btn-default"  id="RemoveTeacher" onclick="DeleteTeacher()"/>
     <br />
     <br />
     <p><strong> Student to add/remove </strong></p>
     <input type="text"  class="form-control" id="StudentName"/>
     <br />
-    <input type="submit" value="Add" class="btn btn-default" id="AddStudent"/>
-    <input type="submit" value="Delete" class="btn btn-default" id="DeleteStudent"/>    
+    <input type="button" value="Add" class="btn btn-default" id="AddStudent" onclick="AddStudent()"/>
+    <input type="button" value="Delete" class="btn btn-default" id="DeleteStudent" onclick="DeleteStudent()"/>    
 </div>
 <div>
     <br />
-    <input type="submit" value="Delete course" class="btn btn-default" id="DeleteCourse"/>
+    <input type="button" value="Delete course" class="btn btn-default" id="DeleteCourse" onclick="DeleteCourse()"/>
 </div>
 
+@*Aldrei nota submit nema þú sért að nota form!*@

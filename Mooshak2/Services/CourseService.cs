@@ -12,6 +12,27 @@ namespace Mooshak2.Services
 {
     public class CourseService
     {
+
+        public RequestResponse DeleteCourse(int id)
+        {
+            try
+            {
+                Course c = context.Courses.FirstOrDefault(a => a.ID == id);
+                if (c == null)
+                    return new RequestResponse();
+
+                context.TeachersInCourses.DeleteAllOnSubmit(c.TeachersInCourses);
+                context.StudentsInCourses.DeleteAllOnSubmit(c.StudentsInCourses);
+                context.Courses.DeleteOnSubmit(c);
+                context.SubmitChanges();
+                return new RequestResponse();
+            }
+            catch (Exception ex)
+            {
+                //TODO log
+                return new RequestResponse(ex.Message, Status.Error);
+            }
+        }
         public CreateCourseModel InitCreate()
         {
             List<Teacher> teachers = context.Teachers.ToList();
@@ -46,6 +67,15 @@ namespace Mooshak2.Services
             List<Course> courses = context.Courses.ToList();
             return courses;
         }
+        public Course GetCourseFromId(int courseId)
+        {
+            Course course = context.Courses.FirstOrDefault(a => a.ID == courseId);
+            if(course == null)
+            {
+                return null;
+            }
+            return course;
+        }
         internal RequestResponse CreateCourse(Course model)
         {
             try
@@ -62,10 +92,19 @@ namespace Mooshak2.Services
             }
         }
 
-        internal RequestResponse AddTeacherToCourse(int courseId, int teacherId)
+        internal RequestResponse AddTeacherToCourse(int courseId, string teachersName)
         {
             try
             {
+                TeacherService teacherService = new TeacherService();
+                int teacherId = teacherService.GetTeacherIdByName(teachersName);
+                if (teacherId == -1)
+                    return new RequestResponse("Teacher does not exist", Status.Error);
+                if (context.TeachersInCourses.Any(a => a.CourseId == courseId && a.TeacherId == teacherId))
+                    return new RequestResponse("Teacher already in course", Status.Error);
+
+                
+
                 TeachersInCourse newteacher = new TeachersInCourse()
                 {
                     CourseId = courseId,
@@ -81,9 +120,17 @@ namespace Mooshak2.Services
                 return new RequestResponse(ex.Message, Status.Error);
             }
         }
-        internal RequestResponse AddStudentToCourse(int courseId, int studentId)
+        internal RequestResponse AddStudentToCourse(int courseId, string studentName)
         {
-            try {
+                try
+                {
+                StudentService service = new StudentService();
+                int studentId = service.GetStudentIdByName(studentName);
+                if (studentId == -1)
+                    return new RequestResponse("Student does not exist", Status.Error);
+                if (context.StudentsInCourses.Any(a => a.CourseId == courseId && a.StudentId == studentId))
+                    return new RequestResponse("Student already in course", Status.Error);
+
                 StudentsInCourse newStudent = new StudentsInCourse()
                 {
 
@@ -101,15 +148,18 @@ namespace Mooshak2.Services
                 return new RequestResponse(ex.Message, Status.Error);
             }
         }
-        internal RequestResponse RemoveStudentFromtCourse(int courseId, int studentId)
+        internal RequestResponse RemoveStudentFromCourse(int courseId, string studentName)
         {
             try
             {
+                StudentService service = new StudentService();
+                int studentId = service.GetStudentIdByName(studentName);
                 StudentsInCourse student = context.StudentsInCourses.FirstOrDefault(a => a.CourseId == courseId && a.StudentId == studentId);
                 if (student == null)
                     return new RequestResponse("Student not found", Status.Error);
 
                 context.StudentsInCourses.DeleteOnSubmit(student);
+                context.SubmitChanges();
                 return new RequestResponse();
             }
             catch(Exception ex)
@@ -119,10 +169,12 @@ namespace Mooshak2.Services
             }
 
         }
-        internal RequestResponse RemoveTeacherFromCourse(int courseId, int teacherId)
+        internal RequestResponse RemoveTeacherFromCourse(int courseId, string teacherName)
         {
             try
             {
+                TeacherService teacherService = new TeacherService();
+                int teacherId = teacherService.GetTeacherIdByName(teacherName);
                 TeachersInCourse teacher = context.TeachersInCourses.FirstOrDefault(a => a.CourseId == courseId && a.TeacherId == teacherId);
                 if (teacher == null)
                     return new RequestResponse("Teacher not found", Status.Error);
@@ -137,7 +189,35 @@ namespace Mooshak2.Services
                 return new RequestResponse(ex.Message, Status.Error);
             }
         }
+        internal RequestResponse RemoveCourse(int courseId)
+        {
+            try
+            {
+                CourseService service = new CourseService();
+                Course course = service.GetCourseFromId(courseId);
+                if (course == null)
+                    return new RequestResponse("Course not found", Status.Error);
+                List<TeachersInCourse> teachers = context.TeachersInCourses.Where(a => a.CourseId == courseId).ToList();
+                List<StudentsInCourse> students = context.StudentsInCourses.Where(a => a.CourseId == courseId).ToList();
 
+                foreach (var teach in teachers)
+                {
+                    context.TeachersInCourses.DeleteOnSubmit(teach);
+                }
+                foreach (var stud in students)
+                {
+                    context.StudentsInCourses.DeleteOnSubmit(stud);
+                }
+                context.Courses.DeleteOnSubmit(course);
+                context.SubmitChanges();
+                return new RequestResponse();
+            }
+            catch(Exception ex)
+            {
+                LogService.LogError("RemoveCourse", ex);
+                return new RequestResponse(ex.Message, Status.Error);
+            }
+        }
         public void UpdateCourse(string name, int id)
         {
             Course courseToEdit = context.Courses.FirstOrDefault(a => a.ID == id);
@@ -160,5 +240,7 @@ namespace Mooshak2.Services
                 return new List<Course>();
             }
         }
+
+       
     }
 }

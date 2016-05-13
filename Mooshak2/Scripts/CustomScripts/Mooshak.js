@@ -1,6 +1,7 @@
 ﻿//Ready function
 $(document).ready(function () {
-    //function that hides success messages when you create course/assignment
+    console.log("Mættur!");
+
     setTimeout(function () {
         $("#success").hide();
     }, 3000);
@@ -133,7 +134,7 @@ function addMilestones() {
         html += '<input type="text" class="form-control" required id="mName' + no + '" name="mName' + no + '"/>';
         html += '<label for="mWeight">Weight(%)</label>';
         html += '<input type="number" min="0" max="100" required class="form-control" name="mWeight' + no +'" id="mWeight' + no + '"/>';
-        html += '<label>Input'; //vantar svo checker að milestones addi alltaf uppí 100%
+        html += '<label>Input';
         html += '<input type="file" class="form-control" name="file" required id="file" accept=".txt"/></label>';
         html += '<label>Output';
         html += '<input type="file" class="form-control" name="file" required id="file" accept=".txt"/></label>';
@@ -145,5 +146,107 @@ function addMilestones() {
     $(".milestones").html(html);
 }
 function AddTeacher() {
+    var name = $("#TeacherName").val()
+    var courseId = $("#EditSelect").val();
+    var obj = new Object();
+    obj.name = name;
+    obj.courseId = courseId;
 
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/AddTeacherToCourse',
+        data: JSON.stringify(obj),
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    }); 
+}
+function DeleteTeacher() {
+    var name = $("#TeacherName").val()
+    var courseId = $("#EditSelect").val();
+        var obj = new Object();
+        obj.name = name;
+        obj.courseId = courseId;
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json; charset=utf-8",
+            url: '/Course/RemoveTeacherFromCourse',
+            data: JSON.stringify(obj),
+            cache: false,
+            dataType: "json",
+            success: function (result) {
+                console.log(result);
+                window.location = "?message=success";
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            }
+        });
+}
+function AddStudent() {
+    var name = $("#StudentName").val()
+    var courseId = $("#EditSelect").val();
+    var obj = new Object();
+    obj.name = name;
+    obj.courseId = courseId;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/AddStudentToCourse',
+        data: JSON.stringify(obj),
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
+}
+function DeleteStudent() {
+    var name = $("#StudentName").val()
+    var courseId = $("#EditSelect").val();
+    var obj = new Object();
+    obj.name = name;
+    obj.courseId = courseId;
+
+    $.ajax({
+        type: "POST",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/RemoveStudentFromCourse',
+        data: JSON.stringify(obj),
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
+}
+function DeleteCourse() {
+    var courseId = $("#EditSelect").val();
+    console.log(courseId);
+    $.ajax({
+        type: "GET",
+        contentType: "application/json; charset=utf-8",
+        url: '/Course/RemoveCourse?id=' + courseId,
+        cache: false,
+        dataType: "json",
+        success: function (result) {
+            console.log(result);
+            window.location = "?message=success";
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        }
+    });
 }

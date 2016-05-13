@@ -22,29 +22,64 @@ namespace Mooshak2.Controllers
         {
             return View();
         }
-        [Authorize]
         public ActionResult Details(int id)
         {
             var viewModel = _service.GetCourseByID(id);
 
             return View(viewModel);
         }
-        [Authorize(Roles = "Administrators")]
+
         public ActionResult Create()
         {
             CourseService service = new CourseService();
             CreateCourseModel model = service.InitCreate();
             return View(model);
         }
-        [Authorize(Roles = "Administrators")]
-        public ActionResult Edit()
+
+        [HttpPost]
+        public JsonResult AddTeacherToCourse(AddTeacherToCourseModel model)
         {
             CourseService service = new CourseService();
-            List<Course> courses = service.GetAllCourses();
+            return Json(service.AddTeacherToCourse(model.courseId, model.name));
+        }
+
+        [HttpPost]
+        public JsonResult AddStudentToCourse(AddStudentToCourseModel model)
+        {
+            CourseService service = new CourseService();
+            return Json(service.AddStudentToCourse(model.courseID, model.name));
+        }
+        [HttpPost]
+        public JsonResult RemoveTeacherFromCourse(RemoveTeacherFromCourseModel model)
+        {
+            CourseService service = new CourseService();
+            return Json(service.RemoveTeacherFromCourse(model.courseId, model.name));
+        }
+        [HttpPost]
+        public JsonResult RemoveStudentFromCourse(RemoveStudentFromCourseModel model)
+        {
+            CourseService service = new CourseService();
+            return Json(service.RemoveStudentFromCourse(model.courseId, model.name));
+        }
+        [HttpGet]
+        public JsonResult RemoveCourse(int id)
+        {
+            CourseService service = new CourseService();
+            return Json(service.DeleteCourse(id));
+        }
+        public ActionResult Edit()
+        {
+            CourseService cservice = new CourseService();
+            TeacherService tservice = new TeacherService();
+            StudentService sservice = new StudentService();
+            AssignmentsService aservice = new AssignmentsService();
+            List<Teacher> teachers = tservice.GetAllTeachers();
+            List<Student> students = sservice.GetAllStudents();
+            List<Course> courses = cservice.GetAllCourses();
+            
             EditCourseModel model = new EditCourseModel(courses);
             return View(model);
         }
-        [Authorize(Roles = "Administrators")]
         public ActionResult CreateCourse(CourseViewModel viewModel)
         {
             CourseService courseService = new CourseService();
