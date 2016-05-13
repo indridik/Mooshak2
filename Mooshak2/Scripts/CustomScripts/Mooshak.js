@@ -132,7 +132,7 @@ function addMilestones() {
         html += '<label for="mName' + no + '">Name</label>';
         html += '<input type="text" class="form-control" required id="mName' + no + '" name="mName' + no + '"/>';
         html += '<label for="mWeight">Weight(%)</label>';
-        html += '<input type="number" min="0" max="100" required class="form-control" name="mWeight' + no +'" id="mWeight' + no + '"/>';
+        html += '<input type="number" min="0" max="100" required class="form-control weight" name="mWeight' + no +'" id="mWeight' + no + '"/>';
         html += '<label>Input'; //vantar svo checker að milestones addi alltaf uppí 100%
         html += '<input type="file" class="form-control" name="file" required id="file" accept=".txt"/></label>';
         html += '<label>Output';
@@ -146,4 +146,14 @@ function addMilestones() {
 }
 function AddTeacher() {
 
+}
+
+function CheckWeight() {
+    var sum = 0;
+    $(".weight").each(function() {
+        sum += $(this).val();
+    })
+    if (sum != 100) {
+        var ble = ":("
+    }
 }
