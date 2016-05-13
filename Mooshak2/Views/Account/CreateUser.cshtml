@@ -3,7 +3,8 @@
     ViewBag.Title = "Create new user";
 }
 
-<h2>@ViewBag.Title.</h2>
+<fieldset class="scheduler-border">
+    <legend class="scheduler-border">@ViewBag.Title</legend>
 
 @using (Html.BeginForm("CreateUser", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
@@ -21,7 +22,6 @@
         </div>
     }
 
-    <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
@@ -57,6 +57,7 @@
         </div>
     </div>
 }
+</fieldset>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
