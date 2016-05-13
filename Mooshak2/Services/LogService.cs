@@ -7,7 +7,10 @@ using System.Web;
 namespace Mooshak2.Services
 {
     public static class LogService
-    {
+    {/// <summary>
+    ///  Error log that sends error msg to Error Logger table in database
+    /// </summary>
+
         public static void LogError(string method, Exception ex)
         {
             MooshakDataContext context = new MooshakDataContext();
