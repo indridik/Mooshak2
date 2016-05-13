@@ -1,0 +1,8 @@
+Microsoft Windows [Version 10.0.10586]
+(c) 2015 Microsoft Corporation. All rights reserved.
+
+C:\Users\Gunnlaugur\Documents\GitHub\Mooshak2\Mooshak2\Code\Gagnaskipan\Project 3\lab 3\indridi@ru.is\2016-05-13 14.48.15>"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat"
+
+C:\Users\Gunnlaugur\Documents\GitHub\Mooshak2\Mooshak2\Code\Gagnaskipan\Project 3\lab 3\indridi@ru.is\2016-05-13 14.48.15>cl.exe /nologo /EHsc main.cpp
+
+C:\Users\Gunnlaugur\Documents\GitHub\Mooshak2\Mooshak2\Code\Gagnaskipan\Project 3\lab 3\indridi@ru.is\2016-05-13 14.48.15>exit
