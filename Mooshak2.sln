@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mooshak2", "Mooshak2\Mooshak2.csproj", "{AACAA2BA-D3CC-4A3F-97B2-747170375410}"
 EndProject
-Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "ModelingProject1", "ModelingProject1\ModelingProject1.modelproj", "{41ACA87D-0945-4047-98DC-80E55897E9BB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{AACAA2BA-D3CC-4A3F-97B2-747170375410}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AACAA2BA-D3CC-4A3F-97B2-747170375410}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AACAA2BA-D3CC-4A3F-97B2-747170375410}.Release|Any CPU.Build.0 = Release|Any CPU
-		{41ACA87D-0945-4047-98DC-80E55897E9BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{41ACA87D-0945-4047-98DC-80E55897E9BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{41ACA87D-0945-4047-98DC-80E55897E9BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{41ACA87D-0945-4047-98DC-80E55897E9BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
