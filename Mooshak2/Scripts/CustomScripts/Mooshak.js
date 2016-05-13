@@ -154,6 +154,6 @@ function CheckWeight() {
         sum += $(this).val();
     })
     if (sum != 100) {
-        var ble = ":("
+        var ble = ":( Weight has to add up to 100."
     }
 }
