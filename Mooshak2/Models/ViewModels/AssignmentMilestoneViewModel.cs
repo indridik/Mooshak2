@@ -24,7 +24,7 @@ namespace Mooshak2.Models.ViewModels
             this.Title = milestone.Title;
             this.Submissions = new List<SubmissionViewModel>();
             var userName = System.Web.HttpContext.Current.User.Identity.Name;
-            var submissions = milestone.Submissions.Where(x  => x.MilestoneID == milestone.ID).OrderByDescending(x => x.ID).OrderBy(x => x.Result).ToList();
+            var submissions = milestone.Submissions.Where(x  => x.MilestoneID == milestone.ID).ToList();
             if(!(HttpContext.Current.User.IsInRole("Teachers") || HttpContext.Current.User.IsInRole("Administrators")))
             {
                 submissions = submissions.Where(x => x.UserName_ == userName).ToList();

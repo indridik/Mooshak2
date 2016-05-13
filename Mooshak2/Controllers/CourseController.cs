@@ -66,7 +66,6 @@ namespace Mooshak2.Controllers
         {
             CourseService service = new CourseService();
             return Json(service.DeleteCourse(id));
-            //return Json(service.RemoveCourse(model.courseId));
         }
         public ActionResult Edit()
         {

@@ -1,8 +1,0 @@
-enter three numbers.number1:number2:number3:19651218 + 19651218 + 19704787 = 59007223
-##END##
-enter three numbers.number1:number2:number3:19651218 + 19651218 + 19704787 = 59007223
-##END##
-enter three numbers.number1:number2:number3:19651218 + 19651218 + 19704787 = 59007223
-##END##
-enter three numbers.number1:number2:number3:19651218 + 19651218 + 19704787 = 59007223
-##END##

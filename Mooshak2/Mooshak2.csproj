@@ -339,7 +339,6 @@
     <Content Include="Content\bootstrap-datetimepicker-build.less" />
     <Content Include="ClassDiagram2.cd" />
     <Content Include="ClassDiagram3.cd" />
-    <Content Include="ClassDiagram4.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\CustomScripts\Mooshak.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

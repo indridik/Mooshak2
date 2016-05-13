@@ -2,10 +2,10 @@
 @{
     ViewBag.Title = "Create New Assignment";
 }
-
+<a href="~/Assignment/Instructions">Instructions</a>
 <div id="assignmentControl">
-    <h2>Create new assignment</h2>
-    @if (ViewBag.result == "Successfully created a course!")
+    <h2>CreateNewAssignment</h2>
+    @if (ViewBag.result == "Successfully created new assignment!")
     {
         <div class="alert alert-success" id="success" role="alert">
             <p>@ViewBag.result</p>
@@ -23,9 +23,9 @@
         <label for="assignmentName">Assignment Name </label>
         <input type="text" required class="form-control" id="assignmentName" name="assignmentName" /><br />
         <label for="date">Opening date</label>
-        <input type="date" id="date" name="date" required class="form-control" /><br />
+        <input type="date"  required class="form-control" /><br />
         <label for="time">Publishing time</label>
-        <input type="time" id="time" name="time" required class="form-control" />
+        <input type="time" required class="form-control" />
         <label for="date">Closing date</label>
         <input type="date" id="date" name="date" required class="form-control" /><br />
         <label for="time">Closing time</label>
