@@ -1,20 +1,19 @@
 ﻿@model Mooshak2.Models.ViewModels.TeachersAssignment
 @{
-    ViewBag.Title = "CreateNewAssignment";
+    ViewBag.Title = "Create New Assignment";
 }
 
-<h2>CreateNewAssignment</h2>
-<a href="~/Assignment/Instructions">Instructions</a>
-@if (ViewBag.result == "Successfully created a course!")
-{
-    <div class="alert alert-success" id="success" role="alert">
-        <p>@ViewBag.result</p>
-    </div>
-}
-<br />
-@using (Html.BeginForm("Create", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <label for="courseSelect">Your courses</label>
+<div id="assignmentControl">
+    <h2>CreateNewAssignment</h2>
+    @if (ViewBag.result == "Successfully created a course!")
+    {
+        <div class="alert alert-success" id="success" role="alert">
+            <p>@ViewBag.result</p>
+        </div>
+    }
+    @using (Html.BeginForm("Create", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label for="courseSelect">Your courses</label>
         <select id="courseSelect" name="courseSelect" class="form-control">
             @foreach (var c in Model.courses)
             {
@@ -24,31 +23,32 @@
         <label for="assignmentName">Assignment Name </label>
         <input type="text" required class="form-control" id="assignmentName" name="assignmentName" /><br />
         <label for="date">Opening date</label>
-        <input type="date"  required class="form-control" /><br />
+        <input type="date" id="date" name="date" required class="form-control" /><br />
         <label for="time">Publishing time</label>
-        <input type="time" required class="form-control" />
+        <input type="time" id="time" name="time" required class="form-control" />
         <label for="date">Closing date</label>
-        <input type="date" id="date" name="date"  required class="form-control" /><br/>
+        <input type="date" id="date" name="date" required class="form-control" /><br />
         <label for="time">Closing time</label>
-        <input type="time" id="time" name="time" required class="form-control"/>   
+        <input type="time" id="time" name="time" required class="form-control" />
         <label for="pdf">Description(.pdf)</label>
-                <input type="file" required name="file" class="form-control" id="pdf" /><br />
+        <input type="file" required name="file" class="form-control" id="pdf" /><br />
                 <label for="noOfMilestones">Number of Milestones</label>
                 <input type="number" class="form-control" onchange="addMilestones()" id="noOfMilestones" name="noOfMilestones" min="1">
-                //<input type="button" class="form-control" onclick="addMilestones()" value="Add milestones">
-                <style>
-                    .milestones {
-                        position: absolute;
-                        margin-left: 40%;
-                        margin-top: -30%;
-                        width: 50%;
-                    }
-                </style>
-                <div class="panel-group milestones" id="accordion">
+        //<input type="button" class="form-control" onclick="addMilestones()" value="Add milestones">
+        <style>
+            .milestones {
+                position: absolute;
+                margin-left: 40%;
+                margin-top: -30%;
+                width: 50%;
+            }
+        </style>
+        <div class="panel-group milestones" id="accordion">
 
-                </div>
+        </div>
 
 
                 <input type="submit" id="submit" class="form-control" value="Create Assigment" />
-                }
+    }
+</div>
 
