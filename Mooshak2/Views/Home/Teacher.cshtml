@@ -43,9 +43,11 @@
         </div>
     </fieldset>
 </form>
-
-<div class="resize">
-    <div class="list-group">
-        <a href="~/Assignment/Create" class="list-group-item">Create an Assignment</a>
+@if (User.IsInRole("Teachers"))
+{
+    <div class="resize">
+        <div class="list-group">
+            <a href="~/Assignment/Create" class="list-group-item">Create an Assignment</a>
+        </div>
     </div>
-</div>
+}
