@@ -1,8 +1,0 @@
-hjalmar er bertri en frikki
-##END##
-frikki er bertri en hjalmar
-##END##
-fannar er bertri en frikki
-##END##
-frikki er bertri en fannar
-##END##

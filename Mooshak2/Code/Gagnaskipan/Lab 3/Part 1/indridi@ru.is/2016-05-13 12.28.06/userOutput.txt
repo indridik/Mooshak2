@@ -1,8 +1,0 @@
-hjalmar er betri en frikki
-##END##
-frikki er betri en hjalmar
-##END##
-fannar er betri en frikki
-##END##
-frikki er betri en fannar
-##END##

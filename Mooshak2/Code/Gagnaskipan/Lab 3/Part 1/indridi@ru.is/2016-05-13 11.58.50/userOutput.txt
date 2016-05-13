@@ -1,9 +1,0 @@
-Microsoft Windows [Version 10.0.10586]
-(c) 2015 Microsoft Corporation. All rights reserved.
-
-C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Lab 3\Part 1\indridi@ru.is\2016-05-13 11.58.50>"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat"
-C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Lab 3\Part 1\indridi@ru.is\2016-05-13 11.58.50>cl.exe /nologo /EHsc main.cpp
-main.cpp
-c1xx: fatal error C1083: Cannot open source file: 'main.cpp': No such file or directory
-
-C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Lab 3\Part 1\indridi@ru.is\2016-05-13 11.58.50>exit

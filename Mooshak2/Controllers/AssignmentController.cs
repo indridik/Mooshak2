@@ -12,7 +12,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Diagnostics;
 using Microsoft.Owin.Security;
-using System.Globalization;
 
 namespace Mooshak2.Controllers
 {
@@ -61,7 +60,13 @@ namespace Mooshak2.Controllers
         [HttpPost]
         public ActionResult Create(List<HttpPostedFileBase> file, FormCollection collection)
         {
+            ///<summary>
+            ///Get all the assignment data from the form
+            /// </summary>
             var newAssignment = new Assignment();
+            ///<summary>
+            ///Convert date and time string to a DateTime variable
+            /// </summary>
             newAssignment.Title = collection["assignmentName"];
             string datetimeStr = collection["date"].ToString() + " " + collection["time"].ToString();
             DateTime datetime = new DateTime();
@@ -77,12 +82,18 @@ namespace Mooshak2.Controllers
             string courseName = course.name;
             int mNumber = Convert.ToInt32(collection["noOfMilestones"]);
             int count = 1;
+            ///<summary>
+            ///Add all milestones to the assignment
+            /// </summary>
             for (int i=1; i <= mNumber; i++)
             {
                 Milestone milestone = new Milestone();
                 milestone.Title = collection["mName" + i];
                 milestone.Weight = Convert.ToInt32(collection["mWeight" + i]);
                 newAssignment.Milestones.Add(milestone);
+                ///<summary>
+                ///Save the input file
+                /// </summary>
                 var input = file.ElementAt(count);
                 string filename = input.FileName;
                 System.IO.Directory.CreateDirectory(Server.MapPath("~/Code/")
@@ -97,6 +108,10 @@ namespace Mooshak2.Controllers
                                             + "input.txt");
                 input.SaveAs(inputPath);
                 count++;
+                
+                ///<summary>
+                ///Save the output file
+                /// </summary>
                 var output = file.ElementAt(count);
                 filename = output.FileName;
                 System.IO.Directory.CreateDirectory(Server.MapPath("~/Code/")
@@ -113,6 +128,10 @@ namespace Mooshak2.Controllers
                 count++;
 
             }
+            ///<summary>
+            ///Add a message to the user, letting him know that
+            ///the operation as been successful
+            /// </summary>
             ViewBag.Result = "Successfully created new assignment!";
 
             ///<summary>
@@ -129,15 +148,18 @@ namespace Mooshak2.Controllers
                                         +".pdf");
             pdf.SaveAs(path);
 
-
+            ///<summary>
+            ///Add the new assignment entry to the database
+            /// </summary>
             context.Assignments.InsertOnSubmit(newAssignment);
             context.SubmitChanges();
-            //TODO only allow authenticated teachers to create assignment
+
+            ///<summary>
+            ///Create the model to return to the view
+            /// </summary>
             string teachersName = AuthenticationManager.User.Identity.Name;  //commenta út til að leyfa fleiri en teacher
 
             TeacherService service = new TeacherService();
-
-            //int id = 1; //hardcoded dabs
             int id = service.GetTeacherIdByName(teachersName); //commenta út ef nota á hardcoded dabs
 
             Teacher t = service.GetTeacherById(id);
@@ -146,6 +168,8 @@ namespace Mooshak2.Controllers
 
             return View(model);
         }
+
+
         public JsonResult Create(Assignment model)
         {
             AssignmentsService service = new AssignmentsService();
@@ -188,7 +212,7 @@ namespace Mooshak2.Controllers
                                          + course.Name + "\\"
                                          + assignment.Title + "\\"
                                          + milestone.Title + "\\"
-                                         + username+ "\\"
+                                         + username + "\\"
                                          + time + "\\");
 
                 path = Path.Combine(Server.MapPath("~/Code/")
@@ -202,9 +226,7 @@ namespace Mooshak2.Controllers
 
 
             ///<summary>
-            ///If this is a zip file then we unzip it into the same folder. A user
-            ///will always upload a main.cpp file so if it exists then this is not
-            ///a zip file.
+            ///If this is a zip file then we unzip it into the same folder.
             ///</summary>
             string extractPath = Server.MapPath("~/Code/")
                                          + course.Name + "\\"
@@ -221,6 +243,8 @@ namespace Mooshak2.Controllers
             ///<summary>
             ///The base of this code comes from Dabs but I have modified it to
             ///suit our needs
+            ///Commens from him are not in this summary format but in
+            ///sing line comments marked by //
             ///</summary>
             var workingFolder = Server.MapPath("~/Code/")
                                          + course.Name + "\\"
@@ -271,6 +295,9 @@ namespace Mooshak2.Controllers
             // we try to execute the code:
             if (System.IO.File.Exists(exeFilePath))
             {
+                ///<summary>
+                ///Get the input from the input file
+                /// </summary>
                 var inputPath = Server.MapPath("~/Code/")
                                     + course.Name + "\\"
                                     + assignment.Title + "\\"
@@ -279,6 +306,9 @@ namespace Mooshak2.Controllers
                 List<string> input = System.IO.File.ReadAllLines(inputPath).ToList();
                 List<string> lines = new List<string>();
 
+                ///<summary>
+                ///Foreach input test, we execute the program
+                /// </summary>
                 foreach (var inp in input)
                 {
                     var processInfoExe = new ProcessStartInfo(exeFilePath, "");
@@ -292,18 +322,37 @@ namespace Mooshak2.Controllers
                         processExe.StartInfo = processInfoExe;
                         processExe.Start();
                         ///<summary>
-                        ///Here we get the input for this miletone which is saved
-                        ///in a folder like /Assignment/Milestone
-                        ///</summary>
-                        ///<summary>
                         ///We write the input to the command line
                         /// </summary>
                         processExe.StandardInput.WriteLine(inp);
+                        ///<summary>
+                        ///Get all the output from the program
+                        /// </summary>
+                        if (!processExe.WaitForExit(30000))
+                        {
+                            submission.Result = "Runtime error";
+                            ///Save the new submission to the database
+                            ///</summary>
+                            context.Submissions.InsertOnSubmit(submission);
+                            context.SubmitChanges();
+                            ///<summary>
+                            ///get model to return to the view
+                            ///</summary>
+                            var viewmodel = _service.GetAssignmentByID(assignment.ID);
+                            return View("Details", viewmodel);
+                        }
+
                         while (!processExe.StandardOutput.EndOfStream)
                         {
                             lines.Add(processExe.StandardOutput.ReadLine());
                         }
                     }
+                    ///<summary>
+                    ///Efter each output test, we add this ##END##
+                    ///operator to indicate that each test has finished. This is
+                    ///so it is easier to read this when we display
+                    ///the results
+                    /// </summary>
                     lines.Add("##END##");
                 }
                 System.IO.File.WriteAllLines(workingFolder + "userOutput.txt", lines);
@@ -334,31 +383,31 @@ namespace Mooshak2.Controllers
                 }
                 var expectedPath = Server.MapPath("~/Code/")
                                      + course.Name + "\\"
-                                     + assignment.Title + "\\" 
-                                     + milestone.Title 
+                                     + assignment.Title + "\\"
+                                     + milestone.Title
                                      + "\\output.txt";
 
                 List<string> expectedOutput = new List<string>();
                 List<List<string>> outputResults = new List<List<string>>();
                 bool accepted = false;
-                    foreach (var line in System.IO.File.ReadLines(expectedPath))
-                    {
-
-                        if (line == "##END##")
-                        {
-                            outputResults.Add(expectedOutput);
-                            expectedOutput = new List<string>();
-                        }
-                        else
-                        {
-                            expectedOutput.Add(line);
-                        }
-                    }
-                    for(int i=0; i < outputResults.Count; i++)
+                foreach (var line in System.IO.File.ReadLines(expectedPath))
                 {
-                    for(int j=0; j < outputResults.ElementAt(i).Count; j++)
+
+                    if (line == "##END##")
                     {
-                        if(outputResults.ElementAt(i).ElementAt(j) != userResults.ElementAt(i).ElementAt(j))
+                        outputResults.Add(expectedOutput);
+                        expectedOutput = new List<string>();
+                    }
+                    else
+                    {
+                        expectedOutput.Add(line);
+                    }
+                }
+                for (int i = 0; i < outputResults.Count; i++)
+                {
+                    for (int j = 0; j < outputResults.ElementAt(i).Count; j++)
+                    {
+                        if (outputResults.ElementAt(i).ElementAt(j) != userResults.ElementAt(i).ElementAt(j))
                         {
                             accepted = false;
                             break;
@@ -373,23 +422,27 @@ namespace Mooshak2.Controllers
                         break;
                     }
                 }
-                    if(accepted)
+                if (accepted)
                 {
                     submission.Result = "Accepted";
                 }
-                else
+                else if (!accepted)
                 {
                     submission.Result = "Wrong answer";
                 }
 
-                }
-
+            }
             ///<summary>
-            ///If we get here, there is no .exe file so the compiler has failed
+            ///if there is no exe file then the compiler failed
             ///</summary>
-            else
+            if (!(System.IO.File.Exists(exeFilePath)))
             {
+
                 submission.Result = "Compile error";
+                ///<summary>
+                ///Write the compiler output error to a file so the
+                ///teacher can see it
+                /// </summary>
                 System.IO.File.WriteAllText(workingFolder + "userOutput.txt", output);
             }
             ///Save the new submission to the database
@@ -397,7 +450,7 @@ namespace Mooshak2.Controllers
             context.Submissions.InsertOnSubmit(submission);
             context.SubmitChanges();
             ///<summary>
-            ///
+            ///get model to return to the view
             ///</summary>
             var model = _service.GetAssignmentByID(assignment.ID);
             return View("Details",model);
@@ -405,9 +458,15 @@ namespace Mooshak2.Controllers
 
         public ActionResult Results(int id)
         {
+            ///<summary>
+            ///Get the submission the user wants to view
+            /// </summary>
             SubmissionsService service = new SubmissionsService();
             var submission = service.GetSubmissionByID(id);
 
+            ///<summary>
+            ///Map the paths to the input, expected output and the user output
+            /// </summary>
             var outputPath = Server.MapPath("~/Code/")
                              + submission.Course + "\\"
                              + submission.Assignment + "\\"
@@ -429,14 +488,17 @@ namespace Mooshak2.Controllers
                                      + "\\userOutput.txt";
 
 
-            List<List<string>> results = new List<List<string>>();
+            ///<summary>
+            ///Get the expected output for this milestone
+            /// </summary>
+            List<List<string>> output = new List<List<string>>();
                 List<string> tempList = new List<string>();
                 foreach (var line in System.IO.File.ReadLines(outputPath))
                 {
 
                     if (line == "##END##")
                     {
-                        results.Add(tempList);
+                        output.Add(tempList);
                         tempList = new List<string>();
                     }
                     else
@@ -444,8 +506,14 @@ namespace Mooshak2.Controllers
                         tempList.Add(line);
                     }
                 }
-                submission.Output = results;
+
+                submission.Output = output;
+
                 submission.Input = System.IO.File.ReadAllLines(inputPath).ToList();
+
+                ///<summary>
+                ///Get the user output for this milestone
+                /// </summary>
                 List<List<string>> userResults = new List<List<string>>();
                 if (System.IO.File.Exists(userPath))
                 {
@@ -463,8 +531,7 @@ namespace Mooshak2.Controllers
                             temp.Add(line);
                         }
                     }
-                    submission.UserOutput = userResults;
-                    //submission.UserOutput = System.IO.File.ReadAllLines(expectedPath).ToList();
+                submission.UserOutput = userResults;
                 }
                 else
                 {
