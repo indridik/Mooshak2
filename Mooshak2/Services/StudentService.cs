@@ -13,5 +13,9 @@ namespace Mooshak2.Services
         {
             return context.Students.FirstOrDefault(a => a.UserName == name).ID;
         }
+        public List<Student> GetAllStudents()
+        {
+            return context.Students.ToList();
+        }
     }
 }

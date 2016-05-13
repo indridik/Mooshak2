@@ -28,4 +28,49 @@ namespace Mooshak2.Models
             this.courses = c;
         }
     }
+
+    public class AddTeacherToCourseModel
+    {
+        public string  name { get; set; }
+        public int courseId { get; set; }
+        public AddTeacherToCourseModel()
+        {
+
+        }
+    }
+    public class RemoveTeacherFromCourseModel
+    {
+        public string name { get; set; }
+        public int courseId { get; set; }
+        public RemoveTeacherFromCourseModel()
+        {
+
+        }
+    }
+    public class RemoveCourseModel
+    {
+        public int courseId { get; set; }
+        public RemoveCourseModel()
+        {
+
+        }
+    }
+    public class RemoveStudentFromCourseModel
+    {
+        public string name { get; set; }
+        public int courseId { get; set; }
+        public RemoveStudentFromCourseModel()
+        {
+
+        }
+    }
+    public class AddStudentToCourseModel
+    {
+        public string name { get; set; }
+        public int courseID { get; set; }
+        public AddStudentToCourseModel()
+        {
+
+        }
+    }
 }

@@ -39,7 +39,7 @@ namespace Mooshak2.Controllers
             }
         }
         
-        [DoNotAuthorize(Roles ="Teachers")]
+        //[DoNotAuthorize(Roles ="Teachers")]
         public ActionResult Student()
         {
             IdentityManager manager = new IdentityManager();
