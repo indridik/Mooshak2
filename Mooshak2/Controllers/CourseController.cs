@@ -22,6 +22,7 @@ namespace Mooshak2.Controllers
         {
             return View();
         }
+        [Authorize]
         public ActionResult Details(int id)
         {
             var viewModel = _service.GetCourseByID(id);
@@ -29,6 +30,7 @@ namespace Mooshak2.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Administrators")]
         public ActionResult Create()
         {
             CourseService service = new CourseService();
@@ -67,6 +69,7 @@ namespace Mooshak2.Controllers
             CourseService service = new CourseService();
             return Json(service.DeleteCourse(id));
         }
+        [Authorize(Roles = "Administrators")]
         public ActionResult Edit()
         {
             CourseService cservice = new CourseService();
@@ -80,6 +83,7 @@ namespace Mooshak2.Controllers
             EditCourseModel model = new EditCourseModel(courses);
             return View(model);
         }
+        [Authorize(Roles = "Administrators")]
         public ActionResult CreateCourse(CourseViewModel viewModel)
         {
             CourseService courseService = new CourseService();
