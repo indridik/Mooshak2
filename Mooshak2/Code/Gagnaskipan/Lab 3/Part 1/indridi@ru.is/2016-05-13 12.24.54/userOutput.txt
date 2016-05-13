@@ -1,0 +1,9 @@
+Microsoft Windows [Version 10.0.10586]
+(c) 2015 Microsoft Corporation. All rights reserved.
+
+C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Lab 3\Part 1\indridi@ru.is\2016-05-13 12.24.54>"C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\vcvars32.bat"
+C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Lab 3\Part 1\indridi@ru.is\2016-05-13 12.24.54>cl.exe /nologo /EHsc main.cpp
+main.cpp
+main.cpp(2): fatal error C1083: Cannot open include file: 'binarysearchtree.cpp': No such file or directory
+
+C:\Users\Hjalmar\Desktop\Mooshak2\Mooshak2\Code\Gagnaskipan\Lab 3\Part 1\indridi@ru.is\2016-05-13 12.24.54>exit

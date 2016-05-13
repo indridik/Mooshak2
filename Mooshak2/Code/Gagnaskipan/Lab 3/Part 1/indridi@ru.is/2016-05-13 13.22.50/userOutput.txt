@@ -1,0 +1,8 @@
+hjalmar er betri en frikki
+##END##
+frikki er betri en hjalmar
+##END##
+hello er betri en hello
+##END##
+hello er betri en hello
+##END##

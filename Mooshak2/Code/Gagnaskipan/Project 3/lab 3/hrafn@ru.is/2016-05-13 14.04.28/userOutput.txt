@@ -1,0 +1,24 @@
+enter three numbers.
+number1:
+number2:
+number3:
+515241 + 515241 + 568869 = 1599351
+##END##
+enter three numbers.
+number1:
+number2:
+number3:
+515241 + 515241 + 568869 = 1599351
+##END##
+enter three numbers.
+number1:
+number2:
+number3:
+515241 + 515241 + 568869 = 1599351
+##END##
+enter three numbers.
+number1:
+number2:
+number3:
+515241 + 515241 + 568869 = 1599351
+##END##

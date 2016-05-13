@@ -13,8 +13,8 @@ namespace Mooshak2.Models.ViewModels
         public SubmissionViewModel()
         {
             Input = new List<string>();
-            Output = new List<string>();
-            UserOutput = new List<string>();
+            Output = new List<List<string>>();
+            UserOutput = new List<List<string>>();
         }
         public SubmissionViewModel(Submission submission)
         {
@@ -32,8 +32,8 @@ namespace Mooshak2.Models.ViewModels
 
         public string Title { get; set; }
         public List<string> Input { get; set; }
-        public List<string> Output { get; set; }
-        public List<string> UserOutput { get; set; }
+        public List<List<string>> Output { get; set; }
+        public List<List<string>> UserOutput { get; set; }
         public string Assignment { get; set; }
         public int ID { get; set; }
         /// <summary>

@@ -22,6 +22,10 @@ namespace Mooshak2.Controllers
         private AssignmentsService _service = new AssignmentsService();
 
         // GET: Assignments
+        public ActionResult Instructions()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();
@@ -208,7 +212,7 @@ namespace Mooshak2.Controllers
                                          + milestone.Title + "\\"
                                          + username + "\\"
                                          + time + "\\";
-            if (Path.GetExtension(extractPath) == ".zip")
+            if (Path.GetExtension(path) == ".zip")
             {
                 ZipFile.ExtractToDirectory(path, extractPath);
             }
@@ -300,6 +304,7 @@ namespace Mooshak2.Controllers
                             lines.Add(processExe.StandardOutput.ReadLine());
                         }
                     }
+                    lines.Add("##END##");
                 }
                 System.IO.File.WriteAllLines(workingFolder + "userOutput.txt", lines);
                 ///<summary>
@@ -311,26 +316,72 @@ namespace Mooshak2.Controllers
                 ///We add the result to the submission class
                 /// </summary>
                 /// 
+                var outputPath = workingFolder + "userOutput.txt";
+                List<string> outPut = new List<string>();
+                List<List<string>> userResults = new List<List<string>>();
+                foreach (var line in System.IO.File.ReadLines(outputPath))
+                {
 
-                var outputPath = Server.MapPath("~/Code/")
+                    if (line == "##END##")
+                    {
+                        userResults.Add(outPut);
+                        outPut = new List<string>();
+                    }
+                    else
+                    {
+                        outPut.Add(line);
+                    }
+                }
+                var expectedPath = Server.MapPath("~/Code/")
                                      + course.Name + "\\"
                                      + assignment.Title + "\\" 
                                      + milestone.Title 
                                      + "\\output.txt";
 
-                    List<string> expectedOutput = System.IO.File.ReadAllLines(outputPath).ToList();
-                    for(int i=0; i < input.Count; i++)
-                    {   
-                        if (lines.ElementAt(i) == expectedOutput.ElementAt(i))
+                List<string> expectedOutput = new List<string>();
+                List<List<string>> outputResults = new List<List<string>>();
+                bool accepted = false;
+                    foreach (var line in System.IO.File.ReadLines(expectedPath))
+                    {
+
+                        if (line == "##END##")
                         {
-                            submission.Result = "Accepted";
+                            outputResults.Add(expectedOutput);
+                            expectedOutput = new List<string>();
                         }
                         else
                         {
-                            submission.Result = "Wrong answer";
-                            break;
+                            expectedOutput.Add(line);
                         }
                     }
+                    for(int i=0; i < outputResults.Count; i++)
+                {
+                    for(int j=0; j < outputResults.ElementAt(i).Count; j++)
+                    {
+                        if(outputResults.ElementAt(i).ElementAt(j) != userResults.ElementAt(i).ElementAt(j))
+                        {
+                            accepted = false;
+                            break;
+                        }
+                        else
+                        {
+                            accepted = true;
+                        }
+                    }
+                    if (!accepted)
+                    {
+                        break;
+                    }
+                }
+                    if(accepted)
+                {
+                    submission.Result = "Accepted";
+                }
+                else
+                {
+                    submission.Result = "Wrong answer";
+                }
+
                 }
 
             ///<summary>
@@ -369,7 +420,7 @@ namespace Mooshak2.Controllers
                                      + submission.Milestone
                                      + "\\input.txt";
 
-            var expectedPath = Server.MapPath("~/Code/")
+            var userPath = Server.MapPath("~/Code/")
                                      + submission.Course + "\\"
                                      + submission.Assignment + "\\"
                                      + submission.Milestone + "\\"
@@ -377,20 +428,51 @@ namespace Mooshak2.Controllers
                                      + submission.Time.Value.ToString("yyyy-MM-dd HH.mm.ss")
                                      + "\\userOutput.txt";
 
-            submission.Output = System.IO.File.ReadAllLines(outputPath).ToList();
 
-            submission.Input = System.IO.File.ReadAllLines(inputPath).ToList();
-            if (System.IO.File.Exists(expectedPath))
-            {
-                submission.UserOutput = System.IO.File.ReadAllLines(expectedPath).ToList();
-            }
-            else
-            {
-                submission.UserOutput = new List<string>();
-            }
+            List<List<string>> results = new List<List<string>>();
+                List<string> tempList = new List<string>();
+                foreach (var line in System.IO.File.ReadLines(outputPath))
+                {
 
-            return View(submission);
-        }
+                    if (line == "##END##")
+                    {
+                        results.Add(tempList);
+                        tempList = new List<string>();
+                    }
+                    else
+                    {
+                        tempList.Add(line);
+                    }
+                }
+                submission.Output = results;
+                submission.Input = System.IO.File.ReadAllLines(inputPath).ToList();
+                List<List<string>> userResults = new List<List<string>>();
+                if (System.IO.File.Exists(userPath))
+                {
+                    List<string> temp = new List<string>();
+                    foreach (var line in System.IO.File.ReadLines(userPath))
+                    {
+
+                        if (line == "##END##")
+                        {
+                            userResults.Add(temp);
+                            temp = new List<string>();
+                        }
+                        else
+                        {
+                            temp.Add(line);
+                        }
+                    }
+                    submission.UserOutput = userResults;
+                    //submission.UserOutput = System.IO.File.ReadAllLines(expectedPath).ToList();
+                }
+                else
+                {
+                    submission.UserOutput = new List<List<string>>();
+                }
+
+                return View(submission);
+            }
 
         private IAuthenticationManager AuthenticationManager
         {
